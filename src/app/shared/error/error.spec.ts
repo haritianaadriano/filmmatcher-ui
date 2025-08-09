@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Http } from './http';
+import { ErrorHttpComponent } from './error.component';
 
 describe('Http', () => {
-  let component: Http;
-  let fixture: ComponentFixture<Http>;
+  let component: ErrorHttpComponent;
+  let fixture: ComponentFixture<ErrorHttpComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Http],
+      imports: [ErrorHttpComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Http);
+    fixture = TestBed.createComponent(ErrorHttpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-http',
   imports: [],
-  templateUrl: './http.html',
-  styleUrl: './http.css',
+  templateUrl: './error.html',
+  styleUrl: './error.css',
 })
-export class Http {}
+export class ErrorHttpComponent {}
