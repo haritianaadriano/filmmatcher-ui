@@ -1,9 +1,20 @@
 import { Component } from '@angular/core';
+import { Login } from '../../../types/login.type';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {}
+export class LoginComponent {
+  user = new Login();
+
+  onSubmit() {
+    if (this.user.email && this.user.password) {
+      console.log('Email:', this.user.email);
+      console.log('Mot de passe:', this.user.password);
+    }
+  }
+}
