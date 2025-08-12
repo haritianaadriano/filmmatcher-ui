@@ -1,9 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })

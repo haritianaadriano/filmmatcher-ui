@@ -44,12 +44,11 @@
   </div>
 
   <!-- Menu mobile -->
-  <div
-    *ngIf="menuOpen"
-    class="flex flex-col space-y-2 bg-gray-800 p-4 md:hidden"
-  >
-    <a href="/movies" class="text-white hover:text-blue-500">Movies</a>
-    <a href="/actors" class="text-white hover:text-blue-500">Actors</a>
-    <a href="/directors" class="text-white hover:text-blue-500">Directors</a>
-  </div>
+  @if (menuOpen) {
+    <div class="flex flex-col space-y-2 bg-gray-800 p-4 md:hidden">
+      <a href="/movies" class="text-white hover:text-blue-500">Movies</a>
+      <a href="/actors" class="text-white hover:text-blue-500">Actors</a>
+      <a href="/directors" class="text-white hover:text-blue-500">Directors</a>
+    </div>
+  }
 </nav>
