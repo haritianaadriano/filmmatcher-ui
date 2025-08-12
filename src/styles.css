@@ -1,1 +1,17 @@
-@import "tailwindcss"; /* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Mistrully";
+  src: url("assets/fonts/Mistrully.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-anton {
+  font-family: "Anton", sans-serif;
+}
+
+.font-mistrully {
+  font-family: "Mistrully", sans-serif;
+}
