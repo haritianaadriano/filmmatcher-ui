@@ -1,22 +1,55 @@
-<div>
-  <nav class="">
-    <div
-      class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
-    >
-      <a href="/" class="flex flex-col items-center leading-none">
-        <span class="font-anton font-semibold text-5xl">Instant</span>
-        <span class="font-mistrully font-semibold text-4xl text-blue-600 -mt-2"
-          >Crush</span
-        >
-      </a>
+<nav class="w-full bg-gray-900">
+  <div class="flex flex-wrap items-center justify-between p-4">
+    <!-- Logo -->
+    <a href="/" class="flex flex-col items-center leading-none ml-4 md:ml-10">
+      <span
+        class="font-anton font-semibold text-3xl sm:text-4xl md:text-5xl text-white"
+        >Instant</span
+      >
+      <span
+        class="font-mistrully font-semibold text-2xl sm:text-3xl md:text-4xl text-blue-400 -mt-1 md:-mt-2"
+        >Crush</span
+      >
+    </a>
 
-      <div class="hidden md:flex md:items-center md:space-x-4">
-        <a href="/movies" class="text-gray-700 hover:text-blue-500">Movies</a>
-        <a href="/actors" class="text-gray-700 hover:text-blue-500">Actors</a>
-        <a href="/directors" class="text-gray-700 hover:text-blue-500"
-          >Directors</a
-        >
-      </div>
+    <!-- Menu desktop -->
+    <div class="hidden md:flex md:items-center md:space-x-6 mr-4 md:mr-10">
+      <a href="/movies" class="text-white hover:text-blue-500">Movies</a>
+      <a href="/actors" class="text-white hover:text-blue-500">Actors</a>
+      <a href="/directors" class="text-white hover:text-blue-500">Directors</a>
     </div>
-  </nav>
-</div>
+
+    <!-- Burger button mobile -->
+    <button
+      class="md:hidden text-white focus:outline-none mr-4"
+      aria-label="Toggle menu"
+      (click)="toggleMenu()"
+    >
+      <!-- Icône burger simple -->
+      <svg
+        class="w-8 h-8"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"
+        ></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Menu mobile -->
+  <div
+    *ngIf="menuOpen"
+    class="flex flex-col space-y-2 bg-gray-800 p-4 md:hidden"
+  >
+    <a href="/movies" class="text-white hover:text-blue-500">Movies</a>
+    <a href="/actors" class="text-white hover:text-blue-500">Actors</a>
+    <a href="/directors" class="text-white hover:text-blue-500">Directors</a>
+  </div>
+</nav>
