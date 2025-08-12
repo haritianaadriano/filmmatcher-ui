@@ -8,12 +8,22 @@ import { Navbar } from '../../shared/navbar/navbar';
   styleUrl: './home.css',
 })
 export class Home implements OnInit, OnDestroy {
-  phrases: string[] = ['Story', 'Moment', 'Movie', 'Love'];
+  phrases: string[] = ['Story', 'Moment', 'Memories', 'Movie', 'Love'];
   currentPhrase: string = this.phrases[0];
   intervalId?: any;
   fade = false;
 
   constructor(private cd: ChangeDetectorRef) {}
+
+  getColor(phrase: string): string {
+    if (phrase === 'Love' || phrase === 'Memories') {
+      return '#FF007A'; // pink
+    }
+    if (phrase === 'Moment' || phrase === 'Movie') {
+      return '#007BFF'; // blue
+    }
+    return '#FFD600'; // yellow as default
+  }
 
   ngOnInit(): void {
     let index = 0;

@@ -4,7 +4,7 @@
 
   <!-- Hero Section -->
   <section
-    class="relative flex items-center px-[80px] py-16 flex-grow min-h-[400px]"
+    class="relative flex items-center px-4 sm:px-8 md:px-16 lg:px-32 xl:px-[150px] py-16 flex-grow min-h-[400px]"
     style="
       background-image: url(&quot;https://m.media-amazon.com/images/M/MV5BYTQyNTRmYjItMDBjYi00YWNhLWEwMmQtNzJhODNiNjEzOWJlXkEyXkFqcGc@._V1_.jpg&quot;);
       background-size: cover;
@@ -23,7 +23,7 @@
       <p
         class="mb-6 font-mistrully text-3xl md:text-5xl transition-opacity duration-500"
         [class.fade]="fade"
-        [style.color]="currentPhrase === 'Love' ? '#FF007A' : '#FFD600'"
+        [style.color]="getColor(currentPhrase)"
       >
         {{ currentPhrase }}
       </p>
@@ -31,7 +31,7 @@
       <button
         class="bg-blue-600 px-6 py-3 rounded-lg hover:bg-blue-700 transition"
       >
-        Call to Action
+        Search your crush
       </button>
     </div>
 
