@@ -8,9 +8,9 @@
   }
   100% {
     transform: translateY(-50%);
-  }
+  } /* Ajuste selon la hauteur du contenu */
 }
 
 .animate-scroll-up {
-  animation: scroll-up 20s linear infinite;
+  animation: scroll-up 40s linear infinite;
 }
