@@ -64,7 +64,9 @@
 <!-- Features of the app -->
 <section class="py-16 bg-gray-900">
   <div class="max-w-7xl mx-auto px-4">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center"
+    >
       <!-- Feature Card 1 -->
       <div
         class="rounded-xl p-6 shadow-lg hover:shadow-2xl transition border border-gray-800 bg-gray-900 flex flex-col items-center"
@@ -191,7 +193,40 @@
         </p>
       </div>
 
-      <!-- Feature Card 5 -->
+      <!-- Feature Card 4 -->
+      <div
+        class="rounded-xl p-6 shadow-lg hover:shadow-2xl transition border border-gray-800 bg-gray-900"
+      >
+        <div class="flex flex-row space-x-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-10 h-10 text-white bg-gray-800 rounded-xl mb-4"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z"
+            />
+          </svg>
+
+          <h3 class="text-xl mb-2 font-anton text-white text-center">
+            Own movie
+          </h3>
+        </div>
+        <p class="text-gray-300">
+          As a filmmaker, you can showcase your own movies by providing detailed
+          information, including synopsis, cast, crew, and production notes.
+          Share your work with the community and receive constructive ratings
+          and reviews from viewers, fostering engagement and feedback for your
+          creations.
+        </p>
+      </div>
+
+      <!-- Feature Card 6 -->
       <div
         class="rounded-xl p-6 shadow-lg hover:shadow-2xl transition border border-gray-800 bg-gray-900"
       >
@@ -221,6 +256,65 @@
           personalized film-watching experience together.
         </p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-blue-500 relative overflow-visible">
+  <div
+    class="max-w-3xl mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-start"
+  >
+    <!-- Texte à gauche -->
+    <div class="text-center md:text-left max-w-lg mx-auto md:mx-0">
+      <h2 class="text-3xl font-bold mb-4 text-gray-900 font-anton">
+        Always be fresh with updated movies
+      </h2>
+      <p class="text-white mb-8">
+        Stay tuned with the latest movie releases and trends, ensuring you never
+        miss out on the next big hit or hidden gem.
+      </p>
+    </div>
+
+    <!-- Liste de films à droite (responsive & scrollable si besoin) -->
+    <div class="relative w-full mx-auto md:mx-0 min-h-[24rem]">
+      <ng-container *ngFor="let movie of moviesTemplate; let i = index">
+        <div
+          class="absolute flex items-center bg-white rounded-lg overflow-hidden shadow-lg"
+          [ngStyle]="{
+            top: i * 1.5 + 'rem',
+            left: i * 1.5 + 'rem',
+            'z-index': 10 - i,
+          }"
+        >
+          <img
+            [src]="movie.imageUrl"
+            [alt]="movie.title"
+            class="w-32 h-36 object-cover sm:w-28 sm:h-32 md:w-32 md:h-36"
+          />
+          <span
+            class="ml-4 text-gray-900 font-anton font-semibold text-sm sm:text-xs md:text-lg truncate"
+          >
+            {{ movie.title }}
+          </span>
+          <!-- Rating block -->
+          <div class="flex items-center space-x-2 ml-auto mr-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 sm:w-3 sm:h-3 md:w-5 md:h-5 text-yellow-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.951a1 1 0 00.95.69h4.148c.969 0 1.371 1.24.588 1.81l-3.36 2.44a1 1 0 00-.364 1.118l1.286 3.951c.3.921-.755 1.688-1.538 1.118l-3.36-2.44a1 1 0 00-1.176 0l-3.36 2.44c-.783.57-1.838-.197-1.538-1.118l1.286-3.951a1 1 0 00-.364-1.118L2.027 9.378c-.783-.57-.38-1.81.588-1.81h4.148a1 1 0 00.95-.69l1.286-3.951z"
+              />
+            </svg>
+            <span
+              class="text-gray-700 font-semibold text-xs sm:text-[10px] md:text-sm"
+              >{{ movie.rate }}</span
+            >
+          </div>
+        </div>
+      </ng-container>
     </div>
   </div>
 </section>

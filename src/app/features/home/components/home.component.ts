@@ -16,6 +16,26 @@ import { HomeService } from '../services/home.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  moviesTemplate: any[] = [
+    {
+      title: 'Mecredi',
+      imageUrl:
+        'https://m.media-amazon.com/images/M/MV5BZGQxYWFlNzgtODZjMS00YmM5LWEzZWMtOGVmODMzYjIyODZiXkEyXkFqcGc@._V1_.jpg',
+      rate: 8,
+    },
+    {
+      title: 'Happy Gilmore 2',
+      imageUrl:
+        'https://m.media-amazon.com/images/M/MV5BYTQyNTRmYjItMDBjYi00YWNhLWEwMmQtNzJhODNiNjEzOWJlXkEyXkFqcGc@._V1_.jpg',
+      rate: 6.3,
+    },
+    {
+      title: 'Dexter: Resurrection',
+      imageUrl:
+        'https://m.media-amazon.com/images/M/MV5BMzgxNzUwZTctMzliNi00MDUwLWE4YzctNjgwMDE2OWQwNzMxXkEyXkFqcGc@._V1_.jpg',
+      rate: 7.5,
+    },
+  ];
   phrases: string[] = ['Story', 'Moment', 'Memories', 'Movie', 'Love'];
   cards = [];
   currentPhrase: string = this.phrases[0];
