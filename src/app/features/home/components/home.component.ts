@@ -5,16 +5,19 @@ import {
   OnInit,
   NgZone,
 } from '@angular/core';
-import { Navbar } from '../../shared/navbar/navbar';
+import { Navbar } from '../../../shared/navbar/navbar';
+import { CommonModule } from '@angular/common';
+import { HomeService } from '../services/home.service';
 
 @Component({
   selector: 'app-home',
-  imports: [Navbar],
-  templateUrl: './home.html',
-  styleUrls: ['./home.css'],
+  imports: [Navbar, CommonModule],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css'],
 })
-export class Home implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
   phrases: string[] = ['Story', 'Moment', 'Memories', 'Movie', 'Love'];
+  cards = [];
   currentPhrase: string = this.phrases[0];
   intervalId?: any;
   fade = false;
@@ -22,6 +25,7 @@ export class Home implements OnInit, OnDestroy {
   constructor(
     private cd: ChangeDetectorRef,
     private ngZone: NgZone,
+    private homeService: HomeService,
   ) {}
 
   getColor(phrase: string): string {
@@ -36,6 +40,18 @@ export class Home implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     let index = 0;
+
+    // Correct subscription
+    this.homeService.getImageUrls().subscribe({
+      next: (data: any) => {
+        this.cards = data;
+        this.cd.detectChanges(); // forcer la détection des changements
+      },
+      error: (error: any) => {
+        console.error('Error fetching data:', error);
+      },
+    });
+
     // Exécuter setInterval hors de la zone Angular
     this.ngZone.runOutsideAngular(() => {
       this.intervalId = setInterval(() => {
