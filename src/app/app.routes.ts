@@ -12,6 +12,11 @@ export const routes: Routes = [
         (m) => m.ContactComponent,
       ),
   },
+  {
+    path: 'about',
+    loadComponent: () =>
+      import('./features/about/about.component').then((m) => m.AboutComponent),
+  },
   { path: 'auth/login', component: LoginComponent },
   { path: '**', component: ErrorHttpComponent },
 ];
