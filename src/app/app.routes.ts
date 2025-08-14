@@ -5,6 +5,13 @@ import { HomeComponent } from './features/home/components/home.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
+  {
+    path: 'contact',
+    loadComponent: () =>
+      import('./features/contact/contact.component').then(
+        (m) => m.ContactComponent,
+      ),
+  },
   { path: 'auth/login', component: LoginComponent },
   { path: '**', component: ErrorHttpComponent },
 ];

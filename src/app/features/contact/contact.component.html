@@ -1,0 +1,59 @@
+<div class="min-h-screen bg-gray-900 flex flex-col">
+  <!-- Navbar -->
+  <app-navbar></app-navbar>
+
+  <!-- Hero / Contact Section -->
+  <section class="grid grid-cols-1 md:grid-cols-2 flex-1 gap-8 p-8 mt-25">
+    <!-- Left Column: Contact Info -->
+    <div
+      class="bg-gray-800 flex flex-col items-center justify-center p-8 rounded-lg"
+    >
+      <h1 class="text-3xl md:text-5xl text-white text-center font-anton mb-4">
+        Contact <span class="font-mistrully">Us</span>
+      </h1>
+      <p class="text-white text-center mb-2">
+        For general inquiries, bugs or feature requests, you can email us at:
+      </p>
+      <a
+        href="mailto:support@example.com"
+        class="text-blue-400 hover:underline text-lg"
+      >
+        hei.adriano.4&#64;gmail.com
+      </a>
+      <p class="text-gray-400 text-center mt-4">
+        Or register on our platform for other ways to contact us.
+      </p>
+    </div>
+
+    <!-- Right Column: Useful Links -->
+    <div class="bg-gray-800 p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl text-white mb-4 text-center">Other useful link</h2>
+      <table class="w-full text-left text-white">
+        <tbody>
+          <tr class="border-b border-gray-700">
+            <td class="py-2">Home</td>
+            <td><a href="/" class="text-blue-400 hover:underline">View</a></td>
+          </tr>
+          <tr class="border-b border-gray-700">
+            <td class="py-2">Features</td>
+            <td>
+              <a href="/features" class="text-blue-400 hover:underline">View</a>
+            </td>
+          </tr>
+          <tr class="border-b border-gray-700">
+            <td class="py-2">Register</td>
+            <td>
+              <a href="/register" class="text-blue-400 hover:underline">View</a>
+            </td>
+          </tr>
+          <tr>
+            <td class="py-2">Support</td>
+            <td>
+              <a href="/support" class="text-blue-400 hover:underline">View</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
