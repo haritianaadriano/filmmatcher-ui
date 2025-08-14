@@ -1,6 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
 @font-face {
   font-family: "Mistrully";
   src: url("assets/fonts/Mistrully.ttf") format("truetype");
