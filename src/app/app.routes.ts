@@ -17,6 +17,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/about/about.component').then((m) => m.AboutComponent),
   },
+  {
+    path: 'movies',
+    loadComponent: () =>
+      import('./features/movies/components/movies.component').then(
+        (m) => m.MoviesComponent,
+      ),
+  },
   { path: 'auth/login', component: LoginComponent },
   { path: '**', component: ErrorHttpComponent },
 ];

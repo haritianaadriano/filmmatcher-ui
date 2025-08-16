@@ -1,0 +1,81 @@
+<div class="bg-gray-900 min-h-screen flex flex-col">
+  <app-navbar></app-navbar>
+
+  <!-- Main Section -->
+  <section class="grid grid-cols-1 md:grid-cols-2 flex-1 gap-6 mt-30 px-6">
+    <!-- Left side : Description (centrée au milieu) -->
+    <div class="flex flex-col items-center justify-center text-center">
+      <h1 class="text-3xl md:text-5xl text-white font-anton mb-4">
+        Movies <span class="font-mistrully">List</span>
+      </h1>
+      <p class="text-white mb-2">Explore our extensive collection of movies.</p>
+      <p class="text-gray-400 mt-4">
+        Discover and enjoy more by joining
+        <span class="font-mistrully">Us</span>.
+      </p>
+    </div>
+
+    <!-- Right side : Suggested Movies -->
+    <div class="bg-gray-800 rounded-2xl shadow-lg p-6">
+      <h2 class="text-2xl font-semibold text-white mb-6 text-center">
+        Suggested Movies
+      </h2>
+
+      <!-- Cards in column -->
+      <div class="flex flex-col gap-6">
+        <!-- Card -->
+        <div
+          class="bg-gray-700 rounded-xl shadow hover:shadow-lg transition overflow-hidden flex"
+        >
+          <img
+            src="https://via.placeholder.com/120x160"
+            alt="Inception Poster"
+            class="w-32 h-auto object-cover"
+          />
+          <div class="p-4 flex flex-col">
+            <h3 class="text-lg font-bold text-white mb-2">Inception</h3>
+            <p class="text-gray-300 text-sm">
+              A skilled thief is given a chance at redemption if he can
+              successfully perform inception, planting an idea into someone's
+              subconscious.
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="bg-gray-700 rounded-xl shadow hover:shadow-lg transition overflow-hidden flex"
+        >
+          <img
+            src="https://via.placeholder.com/120x160"
+            alt="Interstellar Poster"
+            class="w-32 h-auto object-cover"
+          />
+          <div class="p-4 flex flex-col">
+            <h3 class="text-lg font-bold text-white mb-2">Interstellar</h3>
+            <p class="text-gray-300 text-sm">
+              A team of explorers travel through a wormhole in space in an
+              attempt to ensure humanity's survival.
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="bg-gray-700 rounded-xl shadow hover:shadow-lg transition overflow-hidden flex"
+        >
+          <img
+            src="https://via.placeholder.com/120x160"
+            alt="The Matrix Poster"
+            class="w-32 h-auto object-cover"
+          />
+          <div class="p-4 flex flex-col">
+            <h3 class="text-lg font-bold text-white mb-2">The Matrix</h3>
+            <p class="text-gray-300 text-sm">
+              A computer hacker learns about the true nature of his reality and
+              his role in the war against its controllers.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
