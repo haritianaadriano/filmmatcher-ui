@@ -13,7 +13,7 @@ export type Movie = {
   duration_seconds: number;
   genres: string[];
   meta_critic: {
-    scrore: number;
+    score: number;
     review_count: number;
   };
 };
