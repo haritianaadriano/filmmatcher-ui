@@ -20,6 +20,7 @@ export class Navbar {
     if (this.searchValue.trim()) {
       this.router.navigate(['/movies'], {
         queryParams: { search: this.searchValue },
+        queryParamsHandling: 'merge',
       });
     } else {
       this.router.navigate(['/movies']);

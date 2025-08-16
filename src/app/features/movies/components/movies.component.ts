@@ -1,48 +1,87 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Navbar } from '../../../shared/navbar/navbar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MoviesService } from '../service/movies.service';
+import { Movie } from '../../../types/movie.type';
 
 @Component({
-  selector: 'app-component',
+  selector: 'app-movies',
+  standalone: true,
   imports: [Navbar, CommonModule],
   templateUrl: './movies.component.html',
-  styleUrl: './movies.component.css',
+  styleUrls: ['./movies.component.css'],
 })
 export class MoviesComponent implements OnInit {
-  constructor(private route: ActivatedRoute) {}
   searchQuery = '';
+  movies: Movie[] = [];
+  filteredMovies: Movie[] = [];
+  loading = true;
+  moviesLoaded = false; // 👈 indique si on a reçu la réponse
 
-  movies = [
-    {
-      title: 'Inception',
-      description:
-        'A skilled thief is given a chance at redemption if he can successfully perform inception.',
-      image: 'https://via.placeholder.com/120x160',
-    },
-    {
-      title: 'Interstellar',
-      description: 'A team of explorers travel through a wormhole in space.',
-      image: 'https://via.placeholder.com/120x160',
-    },
-    {
-      title: 'The Matrix',
-      description:
-        'A computer hacker learns about the true nature of his reality.',
-      image: 'https://via.placeholder.com/120x160',
-    },
-  ];
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private movieService: MoviesService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit(): void {
+    // écoute du query param
     this.route.queryParams.subscribe((params) => {
       this.searchQuery = params['search'] || '';
+      this.applyFilter();
+    });
+
+    // chargement initial de tous les films
+    this.movieService.getMovies().subscribe({
+      next: (movies: Movie[]) => {
+        this.movies = movies;
+        this.applyFilter();
+      },
+      error: () => {
+        this.movies = [];
+        this.applyFilter();
+      },
     });
   }
 
-  get filteredMovies() {
-    if (!this.searchQuery) return this.movies;
-    return this.movies.filter((movie) =>
-      movie.title.toLowerCase().includes(this.searchQuery.toLowerCase()),
-    );
+  applyFilter(): void {
+    this.loading = true;
+    this.moviesLoaded = false;
+    this.filteredMovies = [];
+    this.cdr.detectChanges(); // 👈 force la détection pour voir le skeleton immédiatement
+
+    // met à jour le query param
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { search: this.searchQuery || null },
+      queryParamsHandling: 'merge',
+    });
+
+    if (!this.searchQuery) {
+      // pas de recherche → afficher tous les films
+      this.filteredMovies = this.movies;
+      this.loading = false;
+      this.moviesLoaded = true;
+      this.cdr.detectChanges();
+      return;
+    }
+
+    // recherche par titre
+    this.movieService.getMoviesByTitle(this.searchQuery).subscribe({
+      next: (movies: Movie[]) => {
+        this.filteredMovies = movies;
+        this.loading = false;
+        this.moviesLoaded = true;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.filteredMovies = [];
+        this.loading = false;
+        this.moviesLoaded = true;
+        this.cdr.detectChanges();
+      },
+    });
   }
 }
