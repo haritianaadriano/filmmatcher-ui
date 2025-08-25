@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './features/auth/login/login.component';
 import { ErrorHttpComponent } from './shared/error/error.component';
 import { HomeComponent } from './features/home/components/home.component';
 
@@ -24,6 +23,19 @@ export const routes: Routes = [
         (m) => m.MoviesComponent,
       ),
   },
-  { path: 'auth/login', component: LoginComponent },
+  {
+    path: 'auth/login',
+    loadComponent: () =>
+      import('./features/auth/login/login.component').then(
+        (m) => m.LoginComponent,
+      ),
+  },
+  {
+    path: 'auth/signup',
+    loadComponent: () =>
+      import('./features/auth/signup/signup.component').then(
+        (m) => m.SignupComponent,
+      ),
+  },
   { path: '**', component: ErrorHttpComponent },
 ];

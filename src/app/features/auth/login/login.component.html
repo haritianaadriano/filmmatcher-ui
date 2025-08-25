@@ -1,6 +1,9 @@
-<div class="w-full h-screen flex items-center justify-center bg-gray-100">
-  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
-    <h2 class="text-2xl font-bold mb-6 text-center">Connexion</h2>
+<div class="w-full h-screen flex items-center justify-center bg-gray-200">
+  <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-sm">
+    <h2 class="text-2xl font-bold mb-6 text-center">
+      <span class="font-anton font-black">Instant</span>
+      <span class="font-mistrully font-black ml-2">Crush</span>
+    </h2>
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <label for="email" class="block mb-2 font-medium text-gray-700"
         >Email</label
@@ -8,20 +11,20 @@
       <input
         type="email"
         id="email"
-        class="w-full mb-4 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        placeholder="ton.email@example.com"
+        class="w-full mb-4 px-4 py-2 border border-gray-300 placeholder-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="your.email@example.com"
         required
         name="email"
         [(ngModel)]="user.email"
       />
 
       <label for="password" class="block mb-2 font-medium text-gray-700"
-        >Mot de passe</label
+        >Password</label
       >
       <input
         type="password"
         id="password"
-        class="w-full mb-6 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="w-full mb-6 px-4 py-2 border placeholder-gray-400 border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="••••••••"
         required
         name="password"
@@ -31,9 +34,9 @@
       <button
         type="submit"
         [disabled]="!loginForm.form.valid"
-        class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+        class="w-full bg-black text-white py-2 rounded hover:bg-blue-700 transition"
       >
-        Se connecter
+        <span class="font-anton">Login</span>
       </button>
     </form>
   </div>
