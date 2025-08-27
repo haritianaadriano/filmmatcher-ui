@@ -1,12 +1,21 @@
 import { TestBed } from '@angular/core/testing';
 
 import { MoviesService } from './movies.service';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('Service', () => {
   let service: MoviesService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideZonelessChangeDetection(),
+      ],
+    });
     service = TestBed.inject(MoviesService);
   });
 
