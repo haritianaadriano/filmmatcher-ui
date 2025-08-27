@@ -37,36 +37,36 @@
           >
             <!-- Image -->
             <img
-              [src]="movie.image.url"
-              [alt]="movie.primary_title"
+              [src]="movie.primaryImage.url"
+              [alt]="movie.originalTitle"
               class="w-full h-48 object-cover rounded-t-xl"
             />
 
             <!-- Infos -->
             <div class="p-4 flex flex-col flex-1">
               <h3 class="text-lg font-bold text-white mb-2">
-                {{ movie.primary_title }}
+                {{ movie.originalTitle }}
               </h3>
               <p class="text-gray-300 text-sm line-clamp-8">
                 {{
-                  movie.description ||
-                    "Note: searching description is available when you get movie by one"
+                  movie.plot ||
+                    "Note: explore more description by registering an account."
                 }}
               </p>
 
               <!-- Rating badge -->
               <div
-                *ngIf="movie.meta_critic?.score != null"
+                *ngIf="movie.metacritic?.score != null"
                 [ngClass]="{
-                  'bg-orange-500': movie.meta_critic.score < 3.5,
+                  'bg-orange-500': movie.metacritic.score < 3.5,
                   'bg-yellow-500':
-                    movie.meta_critic.score >= 3.5 &&
-                    movie.meta_critic.score <= 6.5,
-                  'bg-green-500': movie.meta_critic.score > 6.5,
+                    movie.metacritic.score >= 3.5 &&
+                    movie.metacritic.score <= 6.5,
+                  'bg-green-500': movie.metacritic.score > 6.5,
                 }"
                 class="inline-block px-2 py-1 text-white text-sm font-semibold rounded mt-auto w-max shadow"
               >
-                score: {{ movie.meta_critic.score }}
+                score: {{ movie.metacritic.score }}
               </div>
             </div>
           </div>

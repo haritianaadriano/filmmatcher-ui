@@ -3,7 +3,7 @@ import { Navbar } from '../../../shared/navbar/navbar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MoviesService } from '../service/movies.service';
-import { Movie } from '../../../types/movie.type';
+import { TitlesResponse, Title } from '../../../types/movie.type';
 
 @Component({
   selector: 'app-movies',
@@ -14,10 +14,10 @@ import { Movie } from '../../../types/movie.type';
 })
 export class MoviesComponent implements OnInit {
   searchQuery = '';
-  movies: Movie[] = [];
-  filteredMovies: Movie[] = [];
+  movies: Title[] = [];
+  filteredMovies: Title[] = [];
   loading = true;
-  moviesLoaded = false; // 👈 indique si on a reçu la réponse
+  moviesLoaded = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,8 +35,8 @@ export class MoviesComponent implements OnInit {
 
     // chargement initial de tous les films
     this.movieService.getMovies().subscribe({
-      next: (movies: Movie[]) => {
-        this.movies = movies;
+      next: (response: TitlesResponse) => {
+        this.movies = response.titles ?? [];
         this.applyFilter();
       },
       error: () => {
@@ -62,26 +62,26 @@ export class MoviesComponent implements OnInit {
     if (!this.searchQuery) {
       // pas de recherche → afficher tous les films
       this.filteredMovies = this.movies;
-      this.loading = false;
-      this.moviesLoaded = true;
-      this.cdr.detectChanges();
+      this.handleMoviesLoaded();
       return;
     }
 
     // recherche par titre
     this.movieService.getMoviesByTitle(this.searchQuery).subscribe({
-      next: (movies: Movie[]) => {
-        this.filteredMovies = movies;
-        this.loading = false;
-        this.moviesLoaded = true;
-        this.cdr.detectChanges();
+      next: (response: TitlesResponse) => {
+        this.filteredMovies = response.titles ?? [];
+        this.handleMoviesLoaded();
       },
       error: () => {
         this.filteredMovies = [];
-        this.loading = false;
-        this.moviesLoaded = true;
-        this.cdr.detectChanges();
+        this.handleMoviesLoaded();
       },
     });
+  }
+
+  private handleMoviesLoaded(): void {
+    this.loading = false;
+    this.moviesLoaded = true;
+    this.cdr.detectChanges();
   }
 }

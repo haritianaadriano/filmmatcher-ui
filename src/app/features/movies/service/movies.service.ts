@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Movie } from '../../../types/movie.type';
+import { TitlesResponse } from '../../../types/movie.type';
 
 @Injectable({
   providedIn: 'root',
@@ -9,15 +9,15 @@ import { Movie } from '../../../types/movie.type';
 export class MoviesService {
   private http = inject(HttpClient);
 
-  getMovies(): Observable<Movie[]> {
-    return this.http.get<Movie[]>(
-      'https://instantcrush-api-latest.onrender.com/movies/free',
-    );
+  //TODO: Do not forget to change the URL with your own API
+
+  getMovies(): Observable<TitlesResponse> {
+    return this.http.get<TitlesResponse>('https://api.imdbapi.dev/titles');
   }
 
-  getMoviesByTitle(title: string): Observable<Movie[]> {
-    return this.http.get<Movie[]>(
-      `https://instantcrush-api-latest.onrender.com/movies/free?query=${title}`,
+  getMoviesByTitle(title: string): Observable<TitlesResponse> {
+    return this.http.get<TitlesResponse>(
+      `https://api.imdbapi.dev/search/titles?query=${title}`,
     );
   }
 }
