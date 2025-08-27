@@ -56,17 +56,17 @@
 
               <!-- Rating badge -->
               <div
-                *ngIf="movie.metacritic?.score != null"
+                *ngIf="movie.rating?.aggregateRating != null"
                 [ngClass]="{
-                  'bg-orange-500': movie.metacritic.score < 3.5,
+                  'bg-orange-500': movie.rating.aggregateRating < 3.5,
                   'bg-yellow-500':
-                    movie.metacritic.score >= 3.5 &&
-                    movie.metacritic.score <= 6.5,
-                  'bg-green-500': movie.metacritic.score > 6.5,
+                    movie.rating.aggregateRating >= 3.5 &&
+                    movie.rating.aggregateRating <= 6.8,
+                  'bg-green-500': movie.rating.aggregateRating > 6.8,
                 }"
                 class="inline-block px-2 py-1 text-white text-sm font-semibold rounded mt-auto w-max shadow"
               >
-                score: {{ movie.metacritic.score }}
+                score: {{ movie.rating.aggregateRating }}
               </div>
             </div>
           </div>
