@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { collectionsGenres } from '../../../types/collections_genre';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../services/services.service';
 
 @Component({
   selector: 'app-signup',
@@ -15,14 +16,17 @@ import { CommonModule } from '@angular/common';
   templateUrl: './signup.component.html',
   styleUrl: './signup.css',
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
   currentStep = 1;
 
   accountForm: FormGroup;
   preferencesForm: FormGroup;
-  genres = collectionsGenres;
+  genres: string[] = [];
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+  ) {
     this.accountForm = this.fb.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
@@ -31,8 +35,11 @@ export class SignupComponent {
     });
 
     this.preferencesForm = this.fb.group({
-      liked_genre: [[]],
+      liked_genres: [[]],
     });
+  }
+  ngOnInit(): void {
+    this.genres = collectionsGenres;
   }
 
   nextStep() {
@@ -48,6 +55,10 @@ export class SignupComponent {
       ...this.accountForm.value,
       ...this.preferencesForm.value,
     };
-    console.log('Final data:', payload);
+    this.authService.signup(payload).subscribe({
+      next: (response: any) => {
+        console.log('Signup successful:', response);
+      },
+    });
   }
 }

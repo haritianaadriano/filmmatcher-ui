@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Login } from '../../../types/login.type';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../services/services.service';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +11,17 @@ import { CommonModule } from '@angular/common';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  constructor(private authService: AuthService) {}
   user = new Login();
 
   onSubmit() {
-    if (this.user.email && this.user.password) {
-      console.log('Email:', this.user.email);
-      console.log('Mot de passe:', this.user.password);
-    }
+    this.authService.signin(this.user).subscribe({
+      next: (response: any) => {
+        console.log('Login successful:', response);
+      },
+      error: (error: any) => {
+        console.error('Login failed:', error);
+      },
+    });
   }
 }
