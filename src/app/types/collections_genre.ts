@@ -1,0 +1,17 @@
+export const collectionsGenres = [
+  'COMEDY',
+  'DRAMA',
+  'HORROR',
+  'THRILLER',
+  'FANTASY',
+  'ACTION',
+  'ROMANCE',
+  'MYSTERY',
+  'WESTERN',
+  'ADVENTURE',
+  'DOCUMENTARY',
+  'CRIME',
+  'ANIMATION',
+  'MUSICAL',
+  'SCIENCE_FICTION',
+];
