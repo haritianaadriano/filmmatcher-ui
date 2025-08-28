@@ -66,7 +66,7 @@
 
       <button
         type="button"
-        class="w-full bg-black text-white py-2 rounded hover:bg-gray-700 transition"
+        class="w-full bg-black text-white py-2 rounded hover:bg-gray-700 transition font-anton"
         (click)="nextStep()"
         [disabled]="!accountForm.valid"
       >
@@ -93,7 +93,7 @@
             type="radio"
             formControlName="sex"
             value="F"
-            class="form-radio"
+            class="form-radio font-anton"
           />
           Female
         </label>
@@ -115,14 +115,14 @@
       <div class="flex justify-between mt-6">
         <button
           type="button"
-          class="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400 transition"
+          class="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400 transition font-anton"
           (click)="prevStep()"
         >
           Back
         </button>
         <button
           type="button"
-          class="bg-black text-white px-4 py-2 rounded hover:bg-gray-700 transition"
+          class="bg-black text-white px-4 py-2 rounded hover:bg-gray-700 transition font-anton"
           (click)="finish()"
         >
           Finish

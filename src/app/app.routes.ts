@@ -37,5 +37,10 @@ export const routes: Routes = [
         (m) => m.SignupComponent,
       ),
   },
+  {
+    path: 'profile',
+    loadComponent: () =>
+      import('./features/profile/profile.component').then((m) => m.Profile),
+  },
   { path: '**', component: ErrorHttpComponent },
 ];
