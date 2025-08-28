@@ -1,33 +1,67 @@
-<div class="max-w-md mx-auto mt-8 p-6 bg-white shadow rounded-lg">
-  <h2 class="text-2xl font-bold mb-4">User Profile</h2>
+<div class="relative flex justify-center items-start min-h-screen bg-gray-900 overflow-hidden p-6">
+  <!-- Carrés néon dispersés et nets -->
+  <div
+    class="absolute w-80 h-80 top-10 left-10 opacity-80 rotate-3 rounded-full"
+    style="background: linear-gradient(135deg, #00E5FF, #FF007A);"
+  ></div>
 
-  <div class="mb-3">
-    <span class="font-semibold">Full Name:</span>
-    <span>John Doe</span>
-  </div>
+  <div
+    class="absolute w-64 h-64 bottom-20 left-1/4 opacity-80 -rotate-6 rounded-full"
+    style="background: linear-gradient(135deg, #FF007A, #FFD600);"
+  ></div>
 
-  <div class="mb-3">
-    <span class="font-semibold">Username:</span>
-    <span>johndoe123</span>
-  </div>
+  <div
+    class="absolute w-56 h-56 top-1/3 right-10 opacity-80 rotate-12 rounded-full"
+    style="background: linear-gradient(135deg, #FFD600, #00E5FF);"
+  ></div>
 
-  <div class="mb-3">
-    <span class="font-semibold">Email:</span>
-    <span>john.doe@example.com</span>
-  </div>
+  <!-- Container central pour les cartes -->
+  <div class="relative z-10 flex flex-col md:flex-row gap-6 w-full max-w-5xl">
+    <!-- Carte verticale gauche -->
+    <div class="bg-white shadow-2xl rounded-lg p-6 flex flex-col gap-4 md:w-1/3">
+      <h2 class="text-2xl font-bold mb-4 text-center md:text-left">Profile</h2>
+      <div>
+        <span class="font-semibold">First Name: </span>
+        <span>John</span>
+      </div>
+      <div>
+        <span class="font-semibold">Last Name: </span>
+        <span>Doe</span>
+      </div>
+      <div>
+        <span class="font-semibold">Username: </span>
+        <span>johndoe123</span>
+      </div>
+      <div>
+        <span class="font-semibold">Registered On: </span>
+        <span>August 28, 2025, 06:20 AM</span>
+      </div>
+    </div>
 
-  <div class="mb-3">
-    <span class="font-semibold">Registered On:</span>
-    <span>August 28, 2025, 06:20 AM</span>
-  </div>
+    <!-- Colonne droite -->
+    <div class="flex flex-col gap-6 md:w-2/3">
+      <!-- Carte infos supplémentaires -->
+      <div class="bg-white shadow-2xl rounded-lg p-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+      <h2 class="text-2xl font-bold mb-4 text-center md:text-left">Basic info</h2>
+        </div>
+        <div class="text-center md:text-left">
+          <span class="font-semibold">Sex:</span>
+          <span>Male</span>
+        </div>
+        <div class="text-center md:text-left">
+          <span class="font-semibold">Email:</span>
+          <span>john.doe@example.com</span>
+        </div>
+      </div>
 
-  <div class="mb-3">
-    <span class="font-semibold">Sex:</span>
-    <span>Male</span>
-  </div>
-
-  <div class="mb-3">
-    <span class="font-semibold">Favorite Genres:</span>
-    <span>Comedy, Action, Drama</span>
+      <!-- Carte genres -->
+      <div class="bg-white shadow-2xl rounded-lg p-6 flex flex-wrap gap-4">
+        <span class="font-semibold w-full">Favorite Genres:</span>
+        <span class="bg-gray-200 px-3 py-1 rounded">Comedy</span>
+        <span class="bg-gray-200 px-3 py-1 rounded">Action</span>
+        <span class="bg-gray-200 px-3 py-1 rounded">Drama</span>
+      </div>
+    </div>
   </div>
 </div>
