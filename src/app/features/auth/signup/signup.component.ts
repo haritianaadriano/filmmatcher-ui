@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { collectionsGenres } from '../../../types/collections_genre';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../services/services.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -36,6 +36,7 @@ export class SignupComponent implements OnInit {
 
     this.preferencesForm = this.fb.group({
       liked_genres: [[]],
+      sex: ['M', Validators.required],
     });
   }
   ngOnInit(): void {

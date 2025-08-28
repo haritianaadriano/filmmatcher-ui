@@ -76,9 +76,33 @@
 
     <!-- STEP 2 : Preferences -->
     <form *ngIf="currentStep === 2" [formGroup]="preferencesForm">
-      <label class="block mb-2 font-medium text-gray-700"
-        >Favorite Movies Genres (optional)</label
-      >
+      <!-- Sex radio buttons -->
+      <label class="block mb-2 font-medium text-gray-700">Sex</label>
+      <div class="flex gap-4 mb-6">
+        <label class="flex items-center gap-2">
+          <input
+            type="radio"
+            formControlName="sex"
+            value="M"
+            class="form-radio"
+          />
+          Male
+        </label>
+        <label class="flex items-center gap-2">
+          <input
+            type="radio"
+            formControlName="sex"
+            value="F"
+            class="form-radio"
+          />
+          Female
+        </label>
+      </div>
+
+      <!-- Favorite Movies Genres -->
+      <label class="block mb-2 font-medium text-gray-700">
+        Favorite Movies Genres (optional)
+      </label>
       <select
         formControlName="liked_genres"
         multiple
