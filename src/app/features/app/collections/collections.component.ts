@@ -28,9 +28,9 @@ export class AppCollectionsComponent implements OnInit {
       id: 'action-movies',
       title: 'Action Movies',
       posters: [
-        'https://m.media-amazon.com/images/M/MV5BNTBhNWJjZWItYzY3NS00M2NkLThmOWYtYTlmNzBmN2UxZWFjXkEyXkFqcGc._V1_.jpg',
-        'https://m.media-amazon.com/images/M/MV5BOGIyNGRiNzgtOWQxZC00YzJmLThlZTYtYTMyMDk0YWZjMTk5XkEyXkFqcGc._V1_.jpg',
-        'https://m.media-amazon.com/images/M/MV5BMzgxNzUwZTctMzliNi00MDUwLWE4YzctNjgwMDE2OWQwNzMxXkEyXkFqcGc._V1_.jpg',
+        'https://m.media-amazon.com/images/M/MV5BMDJiMDM4YzYtOWY3Zi00ODEwLTgxNjAtOTdiMDc2ZDI1MjczXkEyXkFqcGc@._V1_.jpg',
+        'https://m.media-amazon.com/images/M/MV5BZGQ5NGEyYTItMjNiMi00Y2EwLTkzOWItMjc5YjJiMjMyNTI0XkEyXkFqcGc@._V1_.jpg',
+        'https://m.media-amazon.com/images/M/MV5BYjY0OWZkYjEtYzBmZC00NThhLWFjOGYtM2Q5NDA5MWJjZGVkXkEyXkFqcGc@._V1_.jpg',
       ],
       description: 'High-octane action-packed movies.',
       genre: 'Action',

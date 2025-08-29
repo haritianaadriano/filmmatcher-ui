@@ -28,7 +28,7 @@ export class AuthService {
   public refreshToken(): Observable<Authenticated> {
     return this.http
       .get<Authenticated>(
-        'https://instantcrush-api-preprod.onrender.com/auth/whoami',
+        'https://intense-kamilah-personal-organization-adr-f5362332.koyeb.app/auth/whoami',
         {
           headers: {
             Authorization: `Bearer ${this.getToken()}`,
@@ -45,7 +45,7 @@ export class AuthService {
   signup(data: any): Observable<Authenticated> {
     return this.http
       .post<UserProfile>(
-        'https://instantcrush-api-preprod.onrender.com/auth/signup',
+        'https://intense-kamilah-personal-organization-adr-f5362332.koyeb.app/auth/signup',
         data,
       )
       .pipe(
@@ -58,7 +58,7 @@ export class AuthService {
   signin(data: any): Observable<Authenticated> {
     return this.http
       .post<Authenticated>(
-        'https://instantcrush-api-preprod.onrender.com/auth/signin',
+        'https://intense-kamilah-personal-organization-adr-f5362332.koyeb.app/auth/signin',
         data,
       )
       .pipe(
