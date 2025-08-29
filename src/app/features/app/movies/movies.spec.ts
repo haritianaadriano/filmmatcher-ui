@@ -10,9 +10,8 @@ describe('Movies', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppMoviesComponent],
-      providers: [provideZonelessChangeDetection()]
-    })
-    .compileComponents();
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AppMoviesComponent);
     component = fixture.componentInstance;
