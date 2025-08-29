@@ -38,9 +38,16 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'profile',
+    path: 'app/profile',
     loadComponent: () =>
       import('./features/profile/profile.component').then((m) => m.Profile),
+  },
+  {
+    path: 'app/movies',
+    loadComponent: () =>
+      import('./features/app/movies/app-movies.component').then(
+        (m) => m.AppMoviesComponent,
+      ),
   },
   { path: '**', component: ErrorHttpComponent },
 ];
