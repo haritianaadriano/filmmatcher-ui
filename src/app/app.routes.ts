@@ -56,5 +56,12 @@ export const routes: Routes = [
         (m) => m.AppSearchMovieComponent,
       ),
   },
+  {
+    path: 'app/collections',
+    loadComponent: () =>
+      import('./features/app/collections/collections.component').then(
+        (m) => m.AppCollectionsComponent,
+      ),
+  },
   { path: '**', component: ErrorHttpComponent },
 ];
