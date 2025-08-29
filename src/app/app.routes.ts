@@ -49,5 +49,12 @@ export const routes: Routes = [
         (m) => m.AppMoviesComponent,
       ),
   },
+  {
+    path: 'app/search',
+    loadComponent: () =>
+      import('./features/app/search/search.component').then(
+        (m) => m.AppSearchMovieComponent,
+      ),
+  },
   { path: '**', component: ErrorHttpComponent },
 ];
