@@ -11,7 +11,7 @@ export class MoviesService {
   private http = inject(HttpClient);
   private authService = inject(AuthService);
 
-  getMoviesByCategory(category: string): Observable<MovieApi[]> {
+  getMoviesByCategory(category: string, page: number): Observable<MovieApi[]> {
     const token = this.authService.getToken();
 
     if (!token) {
@@ -25,7 +25,7 @@ export class MoviesService {
     return this.http
       .get<
         MovieApi[]
-      >(`https://intense-kamilah-personal-organization-adr-f5362332.koyeb.app/movies?category=${category}&page=1&page_size=20`, { headers })
+      >(`https://intense-kamilah-personal-organization-adr-f5362332.koyeb.app/movies?category=${category}&page=${page}&page_size=20`, { headers })
       .pipe(
         catchError((error) => {
           console.error('Error fetching movies', error);

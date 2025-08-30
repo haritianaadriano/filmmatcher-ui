@@ -53,6 +53,26 @@
             </li>
           </ul>
         </div>
+
+        <div class="flex items-center gap-2">
+          <button
+            class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+            (click)="goToPage(currentPage - 1)"
+            [disabled]="currentPage === 1"
+          >
+            Prev
+          </button>
+
+          <span>Page {{ currentPage }} / {{ totalPages }}</span>
+
+          <button
+            class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+            (click)="goToPage(currentPage + 1)"
+            [disabled]="currentPage === totalPages"
+          >
+            Next
+          </button>
+        </div>
       </div>
 
       <!-- Movies List with scroll -->
@@ -60,6 +80,12 @@
         class="flex flex-col gap-4 p-6 overflow-y-auto"
         style="max-height: calc(100vh - 220px)"
       >
+        <div
+          *ngIf="isLoading"
+          class="absolute inset-0 flex justify-center items-center bg-white bg-opacity-75 z-20 text-gray-500 text-lg font-medium"
+        >
+          Loading...
+        </div>
         <div
           *ngFor="let movie of movies"
           class="bg-gray-50 p-4 rounded shadow hover:shadow-lg flex flex-col md:flex-row gap-4"

@@ -14,15 +14,22 @@ import { concatMap } from 'rxjs';
 })
 export class AppMoviesComponent implements OnInit {
   private moviesService = inject(MoviesService);
-  private authSerivce = inject(AuthService);
+  private authService = inject(AuthService);
   private cdr = inject(ChangeDetectorRef);
+
   categories = ['TRENDING', 'POPULAR', 'TOP_RATED', 'UPCOMING', 'NOW_PLAYING'];
   selectedCategory = 'POPULAR';
+  currentPage = 1;
+  totalPages = 50;
   isDropdownOpen = false;
 
   movies: MovieApi[] = [];
   isLoading = false;
   errorMessage: string | null = null;
+
+  ngOnInit(): void {
+    this.loadMovies(this.selectedCategory, this.currentPage);
+  }
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
@@ -30,20 +37,28 @@ export class AppMoviesComponent implements OnInit {
 
   selectCategory(category: string) {
     this.selectedCategory = category;
+    this.currentPage = 1;
     this.isDropdownOpen = false;
-    this.fetchMovies(category);
+    this.loadMovies(category, this.currentPage);
   }
 
-  ngOnInit(): void {
+  goToPage(page: number) {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    this.loadMovies(this.selectedCategory, this.currentPage);
+  }
+
+  private loadMovies(category: string, page: number) {
     this.isLoading = true;
     this.errorMessage = null;
+    this.movies = [];
+    this.cdr.detectChanges();
 
-    this.authSerivce
+    // Toujours refresh token avant d'appeler l'API
+    this.authService
       .refreshToken()
       .pipe(
-        concatMap(() => {
-          return this.moviesService.getMoviesByCategory(this.selectedCategory);
-        }),
+        concatMap(() => this.moviesService.getMoviesByCategory(category, page)),
       )
       .subscribe({
         next: (movies) => {
@@ -59,21 +74,5 @@ export class AppMoviesComponent implements OnInit {
           this.cdr.detectChanges();
         },
       });
-  }
-
-  private fetchMovies(category: string) {
-    this.isLoading = true;
-    this.errorMessage = null;
-    this.moviesService.getMoviesByCategory(category).subscribe({
-      next: (movies) => {
-        this.movies = movies;
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Error fetching movies', err);
-        this.errorMessage = 'Failed to load movies';
-        this.isLoading = false;
-      },
-    });
   }
 }

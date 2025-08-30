@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AppMoviesComponent } from './app-movies.component';
 import { provideZonelessChangeDetection } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('Movies', () => {
   let component: AppMoviesComponent;
@@ -10,7 +12,9 @@ describe('Movies', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppMoviesComponent],
-      providers: [provideZonelessChangeDetection()],
+      providers: [provideZonelessChangeDetection(), 
+        provideHttpClient(),
+        provideHttpClientTesting(),],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppMoviesComponent);
