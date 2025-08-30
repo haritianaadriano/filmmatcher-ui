@@ -10,6 +10,7 @@ import { UserProfile } from '../../../types/user.type';
 export class AuthService {
   private http = inject(HttpClient);
   private TOKEN_KEY = 'auth_token';
+  private USER_KEY = 'user_email';
 
   constructor() {}
 
@@ -19,10 +20,15 @@ export class AuthService {
     );
   }
 
-  public setToken(token: string): void {
+  public setToken(token: string, email: string): void {
     if (this.isBrowser()) {
       sessionStorage.setItem(this.TOKEN_KEY, token);
+      sessionStorage.setItem(this.USER_KEY, email);
     }
+  }
+
+  public getUserEmail() {
+    return this.isBrowser() ? sessionStorage.getItem(this.USER_KEY) : null;
   }
 
   public getToken(): string | null {
@@ -32,6 +38,7 @@ export class AuthService {
   public clearToken(): void {
     if (this.isBrowser()) {
       sessionStorage.removeItem(this.TOKEN_KEY);
+      sessionStorage.removeItem(this.USER_KEY);
     }
   }
 
@@ -47,7 +54,7 @@ export class AuthService {
       )
       .pipe(
         tap((response) => {
-          this.setToken(response.token);
+          this.setToken(response.token, response.email);
         }),
       );
   }
@@ -73,7 +80,7 @@ export class AuthService {
       )
       .pipe(
         tap((response) => {
-          this.setToken(response.token);
+          this.setToken(response.token, response.email);
         }),
       );
   }

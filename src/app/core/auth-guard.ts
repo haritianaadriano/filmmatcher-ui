@@ -14,6 +14,7 @@ export const authGuard: CanActivateFn = (
 ): Observable<boolean> => {
   const authService = inject(AuthService);
   const router = inject(Router);
+
   return authService.refreshToken().pipe(
     map(() => true),
     catchError(() => {

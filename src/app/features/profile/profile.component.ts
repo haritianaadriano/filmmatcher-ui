@@ -1,10 +1,54 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { DashboardNav } from '../../shared/dashboard-nav/dashboard-nav.component';
+import { ProfileService } from './services/profile.service';
+import { AuthService } from '../auth/services/auth.service';
+import { UserProfile } from '../../types/user.type';
+import { CommonModule } from '@angular/common';
+import { concatMap } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
-  imports: [DashboardNav],
+  imports: [DashboardNav, CommonModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.css',
 })
-export class Profile {}
+export class Profile implements OnInit {
+  private profileService = inject(ProfileService);
+  private authService = inject(AuthService);
+  private cdr = inject(ChangeDetectorRef);
+
+  userProfile: UserProfile | null = null;
+  isLoading = true;
+  errorMessage: string | null = null;
+
+  ngOnInit(): void {
+    this.isLoading = true;
+    this.errorMessage = null;
+
+    this.authService
+      .refreshToken()
+      .pipe(
+        concatMap(() => {
+          const email = this.authService.getUserEmail();
+          if (!email) {
+            throw new Error('User email not found');
+          }
+          return this.profileService.getUserProfileByEmail(email);
+        }),
+      )
+      .subscribe({
+        next: (profile) => {
+          this.userProfile = profile;
+          this.isLoading = false;
+          this.cdr.detectChanges(); // force update du DOM
+          console.log('Profile loaded', profile);
+        },
+        error: (err) => {
+          this.errorMessage = err.message || 'Failed to load profile';
+          this.isLoading = false;
+          this.cdr.detectChanges();
+          console.error('Error fetching profile', err);
+        },
+      });
+  }
+}
