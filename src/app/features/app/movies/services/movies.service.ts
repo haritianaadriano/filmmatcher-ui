@@ -1,0 +1,36 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { AuthService } from '../../../auth/services/auth.service';
+import { MovieApi } from '../../../../types/movies-api.type';
+import { catchError, Observable, throwError } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class MoviesService {
+  private http = inject(HttpClient);
+  private authService = inject(AuthService);
+
+  getMoviesByCategory(category: string): Observable<MovieApi[]> {
+    const token = this.authService.getToken();
+
+    if (!token) {
+      return throwError(() => new Error('User is not authenticated'));
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http
+      .get<
+        MovieApi[]
+      >(`https://intense-kamilah-personal-organization-adr-f5362332.koyeb.app/movies?category=${category}&page=1&page_size=20`, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching movies', error);
+          return throwError(() => error);
+        }),
+      );
+  }
+}
