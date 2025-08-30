@@ -12,9 +12,11 @@ describe('Movies', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppMoviesComponent],
-      providers: [provideZonelessChangeDetection(), 
+      providers: [
+        provideZonelessChangeDetection(),
         provideHttpClient(),
-        provideHttpClientTesting(),],
+        provideHttpClientTesting(),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppMoviesComponent);
