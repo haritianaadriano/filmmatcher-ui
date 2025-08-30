@@ -13,16 +13,26 @@ export class AuthService {
 
   constructor() {}
 
+  private isBrowser(): boolean {
+    return (
+      typeof window !== 'undefined' && typeof sessionStorage !== 'undefined'
+    );
+  }
+
   public setToken(token: string): void {
-    sessionStorage.setItem(this.TOKEN_KEY, token);
+    if (this.isBrowser()) {
+      sessionStorage.setItem(this.TOKEN_KEY, token);
+    }
   }
 
   public getToken(): string | null {
-    return sessionStorage.getItem(this.TOKEN_KEY);
+    return this.isBrowser() ? sessionStorage.getItem(this.TOKEN_KEY) : null;
   }
 
   public clearToken(): void {
-    sessionStorage.removeItem(this.TOKEN_KEY);
+    if (this.isBrowser()) {
+      sessionStorage.removeItem(this.TOKEN_KEY);
+    }
   }
 
   public refreshToken(): Observable<Authenticated> {

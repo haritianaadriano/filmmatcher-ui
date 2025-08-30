@@ -1,9 +1,11 @@
 import { Routes } from '@angular/router';
 import { ErrorHttpComponent } from './shared/error/error.component';
 import { HomeComponent } from './features/home/components/home.component';
+import { authGuard } from './core/auth-guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
+
   {
     path: 'contact',
     loadComponent: () =>
@@ -23,6 +25,8 @@ export const routes: Routes = [
         (m) => m.MoviesComponent,
       ),
   },
+
+  // AUTH
   {
     path: 'auth/login',
     loadComponent: () =>
@@ -37,31 +41,41 @@ export const routes: Routes = [
         (m) => m.SignupComponent,
       ),
   },
+
+  // APP (protégé par le guard)
   {
-    path: 'app/profile',
-    loadComponent: () =>
-      import('./features/profile/profile.component').then((m) => m.Profile),
+    path: 'app',
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./features/profile/profile.component').then((m) => m.Profile),
+      },
+      {
+        path: 'movies',
+        loadComponent: () =>
+          import('./features/app/movies/app-movies.component').then(
+            (m) => m.AppMoviesComponent,
+          ),
+      },
+      {
+        path: 'search',
+        loadComponent: () =>
+          import('./features/app/search/search.component').then(
+            (m) => m.AppSearchMovieComponent,
+          ),
+      },
+      {
+        path: 'collections',
+        loadComponent: () =>
+          import('./features/app/collections/collections.component').then(
+            (m) => m.AppCollectionsComponent,
+          ),
+      },
+    ],
   },
-  {
-    path: 'app/movies',
-    loadComponent: () =>
-      import('./features/app/movies/app-movies.component').then(
-        (m) => m.AppMoviesComponent,
-      ),
-  },
-  {
-    path: 'app/search',
-    loadComponent: () =>
-      import('./features/app/search/search.component').then(
-        (m) => m.AppSearchMovieComponent,
-      ),
-  },
-  {
-    path: 'app/collections',
-    loadComponent: () =>
-      import('./features/app/collections/collections.component').then(
-        (m) => m.AppCollectionsComponent,
-      ),
-  },
+
+  // 404
   { path: '**', component: ErrorHttpComponent },
 ];
