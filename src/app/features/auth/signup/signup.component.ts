@@ -12,6 +12,7 @@ import {
 import { collectionsGenres } from '../../../types/collections_genre';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -21,6 +22,8 @@ import { AuthService } from '../services/auth.service';
 })
 export class SignupComponent implements OnInit {
   currentStep = 1;
+  isLoading = false;
+  errorMessage = '';
 
   accountForm: FormGroup;
   preferencesForm: FormGroup;
@@ -29,6 +32,7 @@ export class SignupComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private router: Router,
   ) {
     this.accountForm = this.fb.group(
       {
@@ -60,6 +64,7 @@ export class SignupComponent implements OnInit {
   }
 
   finish() {
+    this.isLoading = true;
     const payload = {
       ...this.accountForm.value,
       ...this.preferencesForm.value,
@@ -67,6 +72,17 @@ export class SignupComponent implements OnInit {
     this.authService.signup(payload).subscribe({
       next: (response: any) => {
         console.log('Signup successful:', response);
+        this.isLoading = false;
+        this.router.navigate(['/app/movies']);
+      },
+      error: (error) => {
+        console.error('Signup failed:', error);
+        this.isLoading = false;
+        if (error.status === 400) {
+          this.errorMessage = error.error?.message || 'Invalid signup data';
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again.';
+        }
       },
     });
   }

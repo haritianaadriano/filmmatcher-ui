@@ -56,11 +56,19 @@
 
       <button
         type="submit"
-        [disabled]="!loginForm.form.valid"
+        [disabled]="!loginForm.form.valid || isLoading"
         class="w-full bg-black text-white py-2 rounded hover:bg-blue-700 transition"
       >
-        <span class="font-anton">Login</span>
+        <span *ngIf="!isLoading" class="font-anton">Login</span>
+        <span *ngIf="isLoading" class="font-anton">Loading...</span>
       </button>
     </form>
+    <!-- Message d'erreur -->
+    <div
+      *ngIf="errorMessage"
+      class="mt-4 text-red-600 text-sm text-center font-medium"
+    >
+      {{ errorMessage }}
+    </div>
   </div>
 </div>
