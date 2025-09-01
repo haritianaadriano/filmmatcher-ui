@@ -25,7 +25,7 @@ export class MoviesService {
     return this.http
       .get<
         MovieApi[]
-      >(`https://intense-kamilah-personal-organization-adr-f5362332.koyeb.app/movies?category=${category}&page=${page}&page_size=20`, { headers })
+      >(`https://instantcrush-api-preprod.onrender.com/movies?category=${category}&page=${page}&page_size=20`, { headers })
       .pipe(
         catchError((error) => {
           console.error('Error fetching movies', error);

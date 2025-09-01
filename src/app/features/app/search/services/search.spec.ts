@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Search } from './search.service';
+import { SearchService } from './search.service';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('Search', () => {
-  let service: Search;
+  let service: SearchService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -16,7 +16,7 @@ describe('Search', () => {
         provideZonelessChangeDetection(),
       ],
     });
-    service = TestBed.inject(Search);
+    service = TestBed.inject(SearchService);
   });
 
   it('should be created', () => {

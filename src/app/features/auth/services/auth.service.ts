@@ -14,6 +14,8 @@ export class AuthService {
 
   constructor() {}
 
+  //TODO: use .env app to store api url, and not changing manually the url
+
   private isBrowser(): boolean {
     return (
       typeof window !== 'undefined' && typeof sessionStorage !== 'undefined'
@@ -45,7 +47,7 @@ export class AuthService {
   public refreshToken(): Observable<Authenticated> {
     return this.http
       .get<Authenticated>(
-        'https://intense-kamilah-personal-organization-adr-f5362332.koyeb.app/auth/whoami',
+        'https://instantcrush-api-preprod.onrender.com/auth/whoami',
         {
           headers: {
             Authorization: `Bearer ${this.getToken()}`,
@@ -62,7 +64,7 @@ export class AuthService {
   signup(data: any): Observable<Authenticated> {
     return this.http
       .post<UserProfile>(
-        'https://intense-kamilah-personal-organization-adr-f5362332.koyeb.app/auth/signup',
+        'https://instantcrush-api-preprod.onrender.com/auth/signup',
         data,
       )
       .pipe(
@@ -75,7 +77,7 @@ export class AuthService {
   signin(data: any): Observable<Authenticated> {
     return this.http
       .post<Authenticated>(
-        'https://intense-kamilah-personal-organization-adr-f5362332.koyeb.app/auth/signin',
+        'https://instantcrush-api-preprod.onrender.com/auth/signin',
         data,
       )
       .pipe(

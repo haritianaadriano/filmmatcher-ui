@@ -24,7 +24,7 @@ export class ProfileService {
 
     return this.http
       .get<UserProfile>(
-        `https://intense-kamilah-personal-organization-adr-f5362332.koyeb.app/users?email=${email}`,
+        `https://instantcrush-api-preprod.onrender.com/users?email=${email}`,
         { headers },
       )
       .pipe(
