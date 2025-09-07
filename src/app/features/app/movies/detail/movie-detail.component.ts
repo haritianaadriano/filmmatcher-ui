@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { DashboardNav } from '../../../../shared/dashboard-nav/dashboard-nav.component';
+import { ActivatedRoute } from '@angular/router';
+import { MoviesService } from '../services/movies.service';
+import { MovieDetailsApi } from '../../../../types/movies-api.type';
 
 @Component({
   selector: 'app-id',
@@ -8,7 +11,19 @@ import { DashboardNav } from '../../../../shared/dashboard-nav/dashboard-nav.com
   styleUrl: './id.css',
 })
 export class MovieDetailComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private movieService = inject(MoviesService);
+
+  movie: MovieDetailsApi | null = null;
+  isLoading = true;
+
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.movieService.getMovieById(id).subscribe((data) => {
+        this.movie = data;
+        this.isLoading = false;
+      });
+    }
   }
 }
