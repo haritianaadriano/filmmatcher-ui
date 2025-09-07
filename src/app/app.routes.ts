@@ -5,7 +5,6 @@ import { authGuard } from './core/auth-guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-
   {
     path: 'contact',
     loadComponent: () =>

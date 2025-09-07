@@ -88,12 +88,12 @@
         </div>
         <div
           *ngFor="let movie of movies"
-          class="bg-gray-50 p-4 rounded shadow hover:shadow-lg flex flex-col md:flex-row gap-4"
+          class="bg-gray-50 p-4 rounded shadow hover:shadow-lg flex flex-col md:flex-row gap-4 cursor-pointer"
+          (click)="onSelectMovie(movie)"
         >
           <!-- Poster -->
           <div
-            class="w-24 h-36 bg-gray-200 rounded flex-shrink-0 overflow-hidden cursor-pointer"
-            (click)="onSelectMovie(movie)"
+            class="w-24 h-36 bg-gray-200 rounded flex-shrink-0 overflow-hidden"
           >
             <img
               *ngIf="movie.image?.url"
