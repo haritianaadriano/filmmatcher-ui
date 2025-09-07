@@ -5,6 +5,7 @@ import { MoviesService } from './services/movies.service';
 import { MovieApi } from '../../../types/movies-api.type';
 import { AuthService } from '../../auth/services/auth.service';
 import { concatMap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-features-movies',
@@ -16,6 +17,7 @@ export class AppMoviesComponent implements OnInit {
   private moviesService = inject(MoviesService);
   private authService = inject(AuthService);
   private cdr = inject(ChangeDetectorRef);
+  private router = inject(Router);
 
   categories = ['TRENDING', 'POPULAR', 'TOP_RATED', 'UPCOMING', 'NOW_PLAYING'];
   selectedCategory = 'POPULAR';
@@ -46,6 +48,10 @@ export class AppMoviesComponent implements OnInit {
     if (page < 1 || page > this.totalPages) return;
     this.currentPage = page;
     this.loadMovies(this.selectedCategory, this.currentPage);
+  }
+
+  onSelectMovie(movie: MovieApi) {
+    this.router.navigate(['/movies', movie.id]);
   }
 
   private loadMovies(category: string, page: number) {

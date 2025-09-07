@@ -4,10 +4,12 @@ import {
   OnDestroy,
   OnInit,
   NgZone,
+  inject,
 } from '@angular/core';
 import { Navbar } from '../../../shared/navbar/navbar';
 import { CommonModule } from '@angular/common';
 import { HomeService } from '../services/home.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +18,7 @@ import { HomeService } from '../services/home.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  private router = inject(Router);
   moviesTemplate: any[] = [
     {
       title: 'Mecredi',
@@ -47,6 +50,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     private ngZone: NgZone,
     private homeService: HomeService,
   ) {}
+
+  goToSignin() {
+    this.router.navigate(['/auth/login']);
+  }
 
   getColor(phrase: string): string {
     if (phrase === 'Love' || phrase === 'Memories') {

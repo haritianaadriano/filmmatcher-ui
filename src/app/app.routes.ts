@@ -60,6 +60,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'movies/:id',
+        loadComponent: () =>
+          import('./features/app/movies/detail/movie-detail.component').then(
+            (m) => m.MovieDetailComponent,
+          ),
+      },
+      {
         path: 'search',
         loadComponent: () =>
           import('./features/app/search/search.component').then(

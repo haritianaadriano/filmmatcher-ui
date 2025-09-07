@@ -92,7 +92,8 @@
         >
           <!-- Poster -->
           <div
-            class="w-24 h-36 bg-gray-200 rounded flex-shrink-0 overflow-hidden"
+            class="w-24 h-36 bg-gray-200 rounded flex-shrink-0 overflow-hidden cursor-pointer"
+            (click)="onSelectMovie(movie)"
           >
             <img
               *ngIf="movie.image?.url"
