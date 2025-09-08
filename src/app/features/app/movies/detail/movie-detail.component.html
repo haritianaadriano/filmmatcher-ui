@@ -1,8 +1,11 @@
 <app-dashboard-nav></app-dashboard-nav>
 
 <!-- Loader -->
-<div *ngIf="isLoading" class="flex items-center justify-center min-h-screen">
-  <p class="text-lg text-gray-200">Loading...</p>
+<div
+  *ngIf="isLoading"
+  class="flex items-center justify-center min-h-screen text-center"
+>
+  <p class="text-lg text-black">Loading...</p>
 </div>
 
 <!-- Contenu -->
@@ -46,7 +49,7 @@
             </p>
             <p>
               <span class="font-semibold">Duration:</span>
-              {{ movie.duration_seconds / 60 }} min
+              {{ formattedDuration }}
             </p>
             <p>
               <span class="font-semibold">Genres:</span>
@@ -54,7 +57,7 @@
             </p>
             <p *ngIf="movie.meta_critic">
               <span class="font-semibold">Meta Critic:</span>
-              {{ movie.meta_critic.score }} / 100 ({{
+              {{ movie.meta_critic.score }} / 10 ({{
                 movie.meta_critic.review_count
               }}
               reviews)

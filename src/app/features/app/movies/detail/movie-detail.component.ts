@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { DashboardNav } from '../../../../shared/dashboard-nav/dashboard-nav.component';
 import { ActivatedRoute } from '@angular/router';
 import { MoviesService } from '../services/movies.service';
@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 export class MovieDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private movieService = inject(MoviesService);
+  private cdr = inject(ChangeDetectorRef);
 
   movie?: MovieDetailsApi; // plus besoin de `null`
   isLoading = true;
@@ -27,10 +28,23 @@ export class MovieDetailComponent implements OnInit {
       next: (data) => {
         this.movie = data;
         this.isLoading = false;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.isLoading = false;
       },
     });
+  }
+
+  //TODO: export and use as utils
+  get formattedDuration(): string {
+    if (!this.movie) return '';
+    const totalMinutes = Math.floor(this.movie.duration_seconds / 60);
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    return `${hours.toString().padStart(2, '0')}:${minutes
+      .toString()
+      .padStart(2, '0')}`;
   }
 }
