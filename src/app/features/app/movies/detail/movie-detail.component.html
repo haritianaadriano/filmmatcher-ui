@@ -1,3 +1,69 @@
 <app-dashboard-nav></app-dashboard-nav>
 
-<p>id works!</p>
+<!-- Loader -->
+<div *ngIf="isLoading" class="flex items-center justify-center min-h-screen">
+  <p class="text-lg text-gray-200">Loading...</p>
+</div>
+
+<!-- Contenu -->
+<div
+  *ngIf="!isLoading && movie"
+  class="relative min-h-screen text-white"
+  [ngStyle]="{
+    'background-image':
+      'linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(' +
+      movie.backdrop_path +
+      ')',
+    'background-size': 'cover',
+    'background-position': 'center',
+  }"
+>
+  <div class="relative z-10 flex justify-center items-center min-h-screen p-6">
+    <div
+      class="bg-white/90 backdrop-blur-md text-gray-900 rounded-2xl shadow-2xl p-8 max-w-3xl w-full"
+    >
+      <!-- Infos film -->
+      <div class="flex flex-col sm:flex-row gap-6">
+        <img
+          [src]="movie.image.url"
+          [alt]="movie.primary_title"
+          class="w-40 h-60 object-cover rounded-lg shadow-md"
+        />
+
+        <div class="flex-1">
+          <h1 class="text-3xl font-bold">{{ movie.primary_title }}</h1>
+          <h2 class="text-md text-gray-600 italic">
+            {{ movie.original_title }}
+          </h2>
+          <p class="mt-2 text-sm text-gray-500 italic" *ngIf="movie.tagline">
+            "{{ movie.tagline }}"
+          </p>
+
+          <div class="mt-4 text-sm space-y-2">
+            <p>
+              <span class="font-semibold">Release:</span>
+              {{ movie.release_date | date }}
+            </p>
+            <p>
+              <span class="font-semibold">Duration:</span>
+              {{ movie.duration_seconds / 60 }} min
+            </p>
+            <p>
+              <span class="font-semibold">Genres:</span>
+              {{ movie.genres.join(", ") }}
+            </p>
+            <p *ngIf="movie.meta_critic">
+              <span class="font-semibold">Meta Critic:</span>
+              {{ movie.meta_critic.score }} / 100 ({{
+                movie.meta_critic.review_count
+              }}
+              reviews)
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <p class="mt-6 text-gray-700">{{ movie.description }}</p>
+    </div>
+  </div>
+</div>

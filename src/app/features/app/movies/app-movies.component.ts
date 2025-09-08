@@ -51,7 +51,7 @@ export class AppMoviesComponent implements OnInit {
   }
 
   onSelectMovie(movie: MovieApi) {
-    this.router.navigate(['/movies', movie.id]);
+    this.router.navigate(['/app/movies', movie.id]);
   }
 
   private loadMovies(category: string, page: number) {
