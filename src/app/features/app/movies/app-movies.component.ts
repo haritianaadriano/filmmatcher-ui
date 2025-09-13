@@ -20,7 +20,15 @@ export class AppMoviesComponent implements OnInit {
   private router = inject(Router);
 
   categories = ['TRENDING', 'POPULAR', 'TOP_RATED', 'UPCOMING', 'NOW_PLAYING'];
-  genres = ["Romance", "Action", "Comedy", "Horror", "Drama", "Sci-Fi", "Documentary"];
+  genres = [
+    'Romance',
+    'Action',
+    'Comedy',
+    'Horror',
+    'Drama',
+    'Sci-Fi',
+    'Documentary',
+  ];
   selectedCategory = 'POPULAR';
   selectedGenre = '';
   currentPage = 1;
@@ -68,8 +76,8 @@ export class AppMoviesComponent implements OnInit {
     this.router.navigate(['/app/movies', movie.id]);
   }
 
-private loadMoviesByGenre(genre: string, page: number) {
-  this.isLoading = true;
+  private loadMoviesByGenre(genre: string, page: number) {
+    this.isLoading = true;
     this.errorMessage = null;
     this.movies = [];
     this.cdr.detectChanges();
@@ -78,7 +86,9 @@ private loadMoviesByGenre(genre: string, page: number) {
     this.authService
       .refreshToken()
       .pipe(
-        concatMap(() => this.moviesService.getMoviesByGenre(genre, this.currentPage)),
+        concatMap(() =>
+          this.moviesService.getMoviesByGenre(genre, this.currentPage),
+        ),
       )
       .subscribe({
         next: (movies) => {
@@ -94,7 +104,7 @@ private loadMoviesByGenre(genre: string, page: number) {
           this.cdr.detectChanges();
         },
       });
-}
+  }
 
   private loadMovies(category: string, page: number) {
     this.isLoading = true;

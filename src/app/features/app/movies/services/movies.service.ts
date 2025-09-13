@@ -58,7 +58,6 @@ export class MoviesService {
       );
   }
 
-
   getMoviesByCategory(category: string, page: number): Observable<MovieApi[]> {
     const token = this.authService.getToken();
 

@@ -44,7 +44,7 @@
 
           <div class="mt-4 text-sm space-y-2">
             <p>
-              <span class="font-semibold">Release:</span>
+              <span class="font-semibold">Release-on:</span>
               {{ movie.release_date | date }}
             </p>
             <p>
@@ -54,6 +54,18 @@
             <p>
               <span class="font-semibold">Genres:</span>
               {{ movie.genres.join(", ") }}
+            </p>
+            <p *ngIf="productionCountriesStr">
+              <span class="font-semibold">Production Countries:</span>
+              {{ productionCountriesStr }}
+            </p>
+            <p *ngIf="spokenLanguagesStr">
+              <span class="font-semibold">Languages:</span>
+              {{ spokenLanguagesStr }}
+            </p>
+            <p *ngIf="movie.casting?.length">
+              <span class="font-semibold">Cast:</span>
+              {{ movie.casting.join(", ") }}
             </p>
             <p *ngIf="movie.meta_critic">
               <span class="font-semibold">Meta Critic:</span>

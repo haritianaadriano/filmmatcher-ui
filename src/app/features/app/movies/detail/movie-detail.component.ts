@@ -19,6 +19,8 @@ export class MovieDetailComponent implements OnInit {
 
   movie?: MovieDetailsApi; // plus besoin de `null`
   isLoading = true;
+  productionCountriesStr = '';
+  spokenLanguagesStr = '';
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -34,17 +36,33 @@ export class MovieDetailComponent implements OnInit {
         this.isLoading = false;
       },
     });
+
+    if (this.movie) {
+      this.productionCountriesStr =
+        this.movie.production_countries?.map((c: any) => c.name).join(', ') ??
+        '';
+
+      this.spokenLanguagesStr =
+        this.movie.spoken_languages
+          ?.map((l: any) => l.english_name)
+          .join(', ') ?? '';
+    }
   }
 
   //TODO: export and use as utils
   get formattedDuration(): string {
-    if (!this.movie) return '';
-    const totalMinutes = Math.floor(this.movie.duration_seconds / 60);
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
+  if (!this.movie?.duration_seconds) return '';
 
-    return `${hours.toString().padStart(2, '0')}:${minutes
+  const totalMinutes = Math.floor(this.movie.duration_seconds / 60);
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+
+  if (hours > 0) {
+    return `${hours.toString().padStart(2, '0')}h ${minutes
       .toString()
       .padStart(2, '0')}`;
+  } else {
+    return `${minutes} min`; // < 1h
   }
+}
 }

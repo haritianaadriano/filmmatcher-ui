@@ -35,6 +35,7 @@ export interface MovieDetailsApi {
   is_adult: boolean;
   duration_seconds: number;
   genres: string[];
+  casting: string[]; // Changement ici
   meta_critic: {
     score: number;
     review_count: number;
