@@ -20,10 +20,13 @@ export class AppMoviesComponent implements OnInit {
   private router = inject(Router);
 
   categories = ['TRENDING', 'POPULAR', 'TOP_RATED', 'UPCOMING', 'NOW_PLAYING'];
+  genres = ["Romance", "Action", "Comedy", "Horror", "Drama", "Sci-Fi", "Documentary"];
   selectedCategory = 'POPULAR';
+  selectedGenre = '';
   currentPage = 1;
   totalPages = 50;
   isDropdownOpen = false;
+  isGenreDropdownOpen = false;
 
   movies: MovieApi[] = [];
   isLoading = false;
@@ -37,11 +40,22 @@ export class AppMoviesComponent implements OnInit {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
+  toggleGenreDropdown() {
+    this.isGenreDropdownOpen = !this.isGenreDropdownOpen;
+  }
+
   selectCategory(category: string) {
     this.selectedCategory = category;
     this.currentPage = 1;
     this.isDropdownOpen = false;
     this.loadMovies(category, this.currentPage);
+  }
+
+  selectGenre(genre: string) {
+    this.selectedGenre = genre;
+    this.currentPage = 1;
+    this.isDropdownOpen = false;
+    this.loadMoviesByGenre(genre, this.currentPage);
   }
 
   goToPage(page: number) {
@@ -53,6 +67,34 @@ export class AppMoviesComponent implements OnInit {
   onSelectMovie(movie: MovieApi) {
     this.router.navigate(['/app/movies', movie.id]);
   }
+
+private loadMoviesByGenre(genre: string, page: number) {
+  this.isLoading = true;
+    this.errorMessage = null;
+    this.movies = [];
+    this.cdr.detectChanges();
+
+    // Toujours refresh token avant d'appeler l'API
+    this.authService
+      .refreshToken()
+      .pipe(
+        concatMap(() => this.moviesService.getMoviesByGenre(genre, this.currentPage)),
+      )
+      .subscribe({
+        next: (movies) => {
+          this.movies = movies;
+          this.isLoading = false;
+          this.cdr.detectChanges();
+          console.log('Movies loaded', movies);
+        },
+        error: (err) => {
+          console.error('Error fetching movies', err);
+          this.errorMessage = err.message || 'Failed to load movies';
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        },
+      });
+}
 
   private loadMovies(category: string, page: number) {
     this.isLoading = true;

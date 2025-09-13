@@ -35,6 +35,30 @@ export class MoviesService {
       );
   }
 
+  getMoviesByGenre(genre: string, page: number): Observable<MovieApi[]> {
+    const token = this.authService.getToken();
+
+    if (!token) {
+      return throwError(() => new Error('User is not authenticated'));
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http
+      .get<
+        MovieApi[]
+      >(`https://instantcrush-api-preprod.onrender.com/movies?genre=${genre}&page=${page}&page_size=20`, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching movies', error);
+          return throwError(() => error);
+        }),
+      );
+  }
+
+
   getMoviesByCategory(category: string, page: number): Observable<MovieApi[]> {
     const token = this.authService.getToken();
 
