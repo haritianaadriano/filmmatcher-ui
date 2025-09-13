@@ -51,18 +51,6 @@ export class MovieDetailComponent implements OnInit {
 
   //TODO: export and use as utils
   get formattedDuration(): string {
-  if (!this.movie?.duration_seconds) return '';
-
-  const totalMinutes = Math.floor(this.movie.duration_seconds / 60);
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
-
-  if (hours > 0) {
-    return `${hours.toString().padStart(2, '0')}h ${minutes
-      .toString()
-      .padStart(2, '0')}`;
-  } else {
-    return `${minutes} min`; // < 1h
+    return this.movie?.duration_seconds + ' seconds';
   }
-}
 }

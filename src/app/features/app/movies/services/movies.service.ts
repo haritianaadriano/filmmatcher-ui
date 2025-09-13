@@ -35,7 +35,12 @@ export class MoviesService {
       );
   }
 
-  getMoviesByGenre(genre: string, page: number): Observable<MovieApi[]> {
+  getMoviesByGenre(
+    genre: string,
+    category: string,
+    page: number,
+    imdbToken: string,
+  ): Observable<MovieApi[]> {
     const token = this.authService.getToken();
 
     if (!token) {
@@ -49,7 +54,7 @@ export class MoviesService {
     return this.http
       .get<
         MovieApi[]
-      >(`https://instantcrush-api-preprod.onrender.com/movies?genre=${genre}&page=${page}&page_size=20`, { headers })
+      >(`https://instantcrush-api-preprod.onrender.com/movies?genre=${genre}&category=${category}&page=${page}&page_size=20&imdb_token=${imdbToken}`, { headers })
       .pipe(
         catchError((error) => {
           console.error('Error fetching movies', error);

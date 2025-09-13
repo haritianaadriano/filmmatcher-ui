@@ -55,24 +55,35 @@
               <span class="font-semibold">Genres:</span>
               {{ movie.genres.join(", ") }}
             </p>
-            <p *ngIf="productionCountriesStr">
+            <p>
               <span class="font-semibold">Production Countries:</span>
-              {{ productionCountriesStr }}
+              {{ productionCountriesStr || "Not available" }}
             </p>
-            <p *ngIf="spokenLanguagesStr">
+
+            <p>
               <span class="font-semibold">Languages:</span>
-              {{ spokenLanguagesStr }}
+              {{ spokenLanguagesStr || "Not available" }}
             </p>
-            <p *ngIf="movie.casting?.length">
+
+            <p>
               <span class="font-semibold">Cast:</span>
-              {{ movie.casting.join(", ") }}
-            </p>
-            <p *ngIf="movie.meta_critic">
-              <span class="font-semibold">Meta Critic:</span>
-              {{ movie.meta_critic.score }} / 10 ({{
-                movie.meta_critic.review_count
+              {{
+                movie.casting.length
+                  ? movie.casting.join(", ")
+                  : "Not available"
               }}
-              reviews)
+            </p>
+
+            <p>
+              <span class="font-semibold">Meta Critic:</span>
+              {{
+                movie.meta_critic
+                  ? movie.meta_critic.score +
+                    " / 10 (" +
+                    movie.meta_critic.review_count +
+                    " reviews)"
+                  : "Not available"
+              }}
             </p>
           </div>
         </div>

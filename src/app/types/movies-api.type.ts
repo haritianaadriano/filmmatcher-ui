@@ -18,6 +18,7 @@ export interface MovieApi {
     review_count: number;
   } | null;
   saved_on: string; // ou Date si tu veux convertir en Date
+  imdb_token: string;
 }
 
 export interface MovieDetailsApi {

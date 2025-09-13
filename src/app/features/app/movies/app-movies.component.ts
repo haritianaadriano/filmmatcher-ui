@@ -63,20 +63,27 @@ export class AppMoviesComponent implements OnInit {
     this.selectedGenre = genre;
     this.currentPage = 1;
     this.isDropdownOpen = false;
-    this.loadMoviesByGenre(genre, this.currentPage);
+    this.loadMoviesByGenre(genre, this.selectedCategory, this.currentPage, '');
   }
 
   goToPage(page: number) {
     if (page < 1 || page > this.totalPages) return;
     this.currentPage = page;
-    this.loadMovies(this.selectedCategory, this.currentPage);
+    if (this.selectedGenre) {
+      // grab imdbToken from previous page's list
+
+      const imdbToken = this.movies.length > 0 ? this.movies[0].imdb_token : '';
+      this.loadMoviesByGenre(this.selectedGenre, this.selectedCategory, this.currentPage, imdbToken);
+    } else {
+      this.loadMovies(this.selectedCategory, this.currentPage);
+    }
   }
 
   onSelectMovie(movie: MovieApi) {
     this.router.navigate(['/app/movies', movie.id]);
   }
 
-  private loadMoviesByGenre(genre: string, page: number) {
+  private loadMoviesByGenre(genre: string, category: string, page: number, imdbToken: string) {
     this.isLoading = true;
     this.errorMessage = null;
     this.movies = [];
@@ -87,7 +94,12 @@ export class AppMoviesComponent implements OnInit {
       .refreshToken()
       .pipe(
         concatMap(() =>
-          this.moviesService.getMoviesByGenre(genre, this.currentPage),
+          this.moviesService.getMoviesByGenre(
+            genre,
+            category,
+            this.currentPage,
+            imdbToken,
+          ),
         ),
       )
       .subscribe({
