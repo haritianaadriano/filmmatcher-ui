@@ -28,8 +28,9 @@ export class AppMoviesComponent implements OnInit {
     'Drama',
     'Sci-Fi',
     'Documentary',
+    'Animation',
   ];
-  selectedCategory = 'POPULAR';
+  selectedCategory = 'TRENDING';
   selectedGenre = '';
   currentPage = 1;
   totalPages = 50;
@@ -73,7 +74,12 @@ export class AppMoviesComponent implements OnInit {
       // grab imdbToken from previous page's list
 
       const imdbToken = this.movies.length > 0 ? this.movies[0].imdb_token : '';
-      this.loadMoviesByGenre(this.selectedGenre, this.selectedCategory, this.currentPage, imdbToken);
+      this.loadMoviesByGenre(
+        this.selectedGenre,
+        this.selectedCategory,
+        this.currentPage,
+        imdbToken,
+      );
     } else {
       this.loadMovies(this.selectedCategory, this.currentPage);
     }
@@ -83,7 +89,12 @@ export class AppMoviesComponent implements OnInit {
     this.router.navigate(['/app/movies', movie.id]);
   }
 
-  private loadMoviesByGenre(genre: string, category: string, page: number, imdbToken: string) {
+  private loadMoviesByGenre(
+    genre: string,
+    category: string,
+    page: number,
+    imdbToken: string,
+  ) {
     this.isLoading = true;
     this.errorMessage = null;
     this.movies = [];
