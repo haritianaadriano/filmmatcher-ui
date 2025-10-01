@@ -4,6 +4,7 @@ import { MovieDetailComponent } from './movie-detail.component';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('MovieDetailComponent', () => {
   let component: MovieDetailComponent;
@@ -16,7 +17,7 @@ describe('MovieDetailComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting(),
       ],
-      imports: [MovieDetailComponent],
+      imports: [MovieDetailComponent, RouterTestingModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MovieDetailComponent);
