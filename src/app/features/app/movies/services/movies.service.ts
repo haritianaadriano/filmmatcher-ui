@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
 import { MovieApi, MovieDetailsApi } from '../../../../types/movies-api.type';
 import { catchError, Observable, throwError } from 'rxjs';
+import { environment } from '../../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -23,10 +24,7 @@ export class MoviesService {
     });
 
     return this.http
-      .get<MovieDetailsApi>(
-        `https://instantcrush-api-preprod.onrender.com/movies/${id}`,
-        { headers },
-      )
+      .get<MovieDetailsApi>(`${environment.apiURL}/movies/${id}`, { headers })
       .pipe(
         catchError((error) => {
           console.error('Error fetching movies', error);
@@ -54,7 +52,7 @@ export class MoviesService {
     return this.http
       .get<
         MovieApi[]
-      >(`https://instantcrush-api-preprod.onrender.com/movies?genre=${genre}&category=${category}&page=${page}&page_size=20&imdb_token=${imdbToken}`, { headers })
+      >(`${environment.apiURL}/movies?genre=${genre}&category=${category}&page=${page}&page_size=20&imdb_token=${imdbToken}`, { headers })
       .pipe(
         catchError((error) => {
           console.error('Error fetching movies', error);
@@ -77,7 +75,7 @@ export class MoviesService {
     return this.http
       .get<
         MovieApi[]
-      >(`https://instantcrush-api-preprod.onrender.com/movies?category=${category}&page=${page}&page_size=20`, { headers })
+      >(`${environment.apiURL}/movies?category=${category}&page=${page}&page_size=20`, { headers })
       .pipe(
         catchError((error) => {
           console.error('Error fetching movies', error);

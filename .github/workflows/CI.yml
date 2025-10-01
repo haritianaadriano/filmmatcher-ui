@@ -1,4 +1,4 @@
-name: CI - Build and Test Angular Application
+name: CI - Build and Test Angular Instant Crush
 description: Build, test, and check code format for an Angular application on push or pull request to prod or preprod branches.
 
 on:
@@ -41,7 +41,7 @@ jobs:
         run: npm ci
 
       - name: Build Angular application
-        run: npm run build -- --configuration production
+        run: npx ng build --configuration production
         
       - name: Run unit tests
         run: npx ng test --no-watch --no-progress --browsers=ChromeHeadless

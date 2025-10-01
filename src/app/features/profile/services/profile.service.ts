@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { UserProfile } from '../../../types/user.type';
 import { AuthService } from '../../auth/services/auth.service';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -23,10 +24,9 @@ export class ProfileService {
     });
 
     return this.http
-      .get<UserProfile>(
-        `https://instantcrush-api-preprod.onrender.com/users?email=${email}`,
-        { headers },
-      )
+      .get<UserProfile>(`${environment.apiURL}/users?email=${email}`, {
+        headers,
+      })
       .pipe(
         catchError((error) => {
           console.error('Error fetching user profile', error);

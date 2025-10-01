@@ -6,4 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './tvshows.component.html',
   styleUrl: './tvshows.css',
 })
-export class Tvshows {}
+export class AppTvShowComponent {}
