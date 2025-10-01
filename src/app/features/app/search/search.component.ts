@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { SearchService } from './services/search.service';
 import { AuthService } from '../../auth/services/auth.service';
 import { MovieApi } from '../../../types/movies-api.type';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -16,6 +17,7 @@ export class AppSearchMovieComponent implements OnInit {
   private searchService = inject(SearchService);
   private authService = inject(AuthService);
   private cdr = inject(ChangeDetectorRef);
+  private router = inject(Router);
 
   searchQuery = '';
   movies: MovieApi[] = [];
@@ -24,6 +26,10 @@ export class AppSearchMovieComponent implements OnInit {
 
   ngOnInit(): void {
     this.filteredMovies = [...this.movies];
+  }
+
+  onSelectMovie(movie: MovieApi) {
+    this.router.navigate(['/app/movies', movie.id]);
   }
 
   onSearchClick() {
