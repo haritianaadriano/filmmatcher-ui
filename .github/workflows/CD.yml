@@ -1,0 +1,48 @@
+name: CD - Deploy Instant Crush to Vercel
+
+on:
+  push:
+    branches: ["prod", "preprod"]
+  pull_request:
+    branches: ["prod"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      PREPROD_URL_DEPLOYMENT_HOOK: ${{ secrets.PREPROD_URL_DEPLOYMENT_HOOK }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Trigger Vercel Deploy
+        run: |
+          # Déterminer l'URL en fonction de la branche
+          if [[ "${GITHUB_REF##*/}" == "prod" ]]; then
+            VERCEL_URL="https://api.vercel.com/v1/integrations/deploy/prj_PROD_ID/PROD_TOKEN"
+          elif [[ "${GITHUB_REF##*/}" == "preprod" ]]; then
+            VERCEL_URL="${{secrets.PREPROD_URL_DEPLOYMENT_HOOK}}"
+          else
+            echo "No deployment configured for this branch"
+            exit 0
+          fi
+
+          # Faire le POST et récupérer le code HTTP et le body
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "$VERCEL_URL" \
+
+          # Séparer le body et le code HTTP
+          HTTP_BODY=$(echo "$RESPONSE" | sed '$d')
+          HTTP_STATUS=$(echo "$RESPONSE" | tail -n1)
+
+          echo "HTTP Status: $HTTP_STATUS"
+          echo "Response payload: $HTTP_BODY"
+
+          # Vérifier si le POST a échoué
+          if [[ "$HTTP_STATUS" -ge 400 ]]; then
+            echo "Deployment failed"
+            exit 1
+          else
+            echo "Deployment succeeded"
+          fi
