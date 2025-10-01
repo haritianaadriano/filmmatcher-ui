@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
 import { catchError, throwError } from 'rxjs';
 import { MovieApi } from '../../../../types/movies-api.type';
+import { environment } from '../../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,7 @@ export class SearchService {
     return this.http
       .get<
         MovieApi[]
-      >(`https://instantcrush-api-preprod.onrender.com/movies?query=${title}&page=1`, { headers })
+      >(`${environment.apiURL}/movies?query=${title}&page=1`, { headers })
       .pipe(
         catchError((error) => {
           console.error('Error fetching movies', error);
