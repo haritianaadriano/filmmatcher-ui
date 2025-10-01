@@ -1,25 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppTvShowComponent } from './tvshows.component';
-import { provideZonelessChangeDetection } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { Tvshows } from './tvshows';
 
 describe('Tvshows', () => {
-  let component: AppTvShowComponent;
-  let fixture: ComponentFixture<AppTvShowComponent>;
+  let component: Tvshows;
+  let fixture: ComponentFixture<Tvshows>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [
-        provideZonelessChangeDetection(),
-        provideHttpClient(),
-        provideHttpClientTesting(),
-      ],
-      imports: [AppTvShowComponent],
+      imports: [Tvshows],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AppTvShowComponent);
+    fixture = TestBed.createComponent(Tvshows);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

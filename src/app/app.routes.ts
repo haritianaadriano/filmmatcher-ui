@@ -66,13 +66,6 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'tvshows',
-        loadComponent: () =>
-          import('./features/app/tvshows/tvshows.component').then(
-            (m) => m.AppTvShowComponent,
-          ),
-      },
-      {
         path: 'search',
         loadComponent: () =>
           import('./features/app/search/search.component').then(
