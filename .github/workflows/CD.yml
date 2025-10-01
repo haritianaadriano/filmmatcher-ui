@@ -23,7 +23,7 @@ jobs:
           if [[ "${GITHUB_REF##*/}" == "prod" ]]; then
             VERCEL_URL="https://api.vercel.com/v1/integrations/deploy/prj_PROD_ID/PROD_TOKEN"
           elif [[ "${GITHUB_REF##*/}" == "preprod" ]]; then
-            VERCEL_URL="${{secrets.PREPROD_URL_DEPLOYMENT_HOOK}}"
+            VERCEL_URL="${PREPROD_URL_DEPLOYMENT_HOOK}"
           else
             echo "No deployment configured for this branch"
             exit 0
@@ -31,6 +31,8 @@ jobs:
 
           # Faire le POST et récupérer le code HTTP et le body
           RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "$VERCEL_URL" \
+            -H "Content-Type: application/json" \
+            -d '{}')
 
           # Séparer le body et le code HTTP
           HTTP_BODY=$(echo "$RESPONSE" | sed '$d')
