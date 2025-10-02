@@ -33,7 +33,10 @@ export class TvshowsService {
       );
   }
 
-  getTvShows(page: number): Observable<TvShowApi[]> {
+  getTvShowsByCategory(
+    category: string,
+    page: number,
+  ): Observable<TvShowApi[]> {
     const token = this.authService.getToken();
 
     if (!token) {
@@ -47,7 +50,7 @@ export class TvshowsService {
     return this.http
       .get<
         TvShowApi[]
-      >(`${environment.apiURL}/tvshows?page=${page}`, { headers })
+      >(`${environment.apiURL}/tvshows?page=${page}&category=${category}`, { headers })
       .pipe(
         catchError((error) => {
           console.error('Error fetching movies', error);
