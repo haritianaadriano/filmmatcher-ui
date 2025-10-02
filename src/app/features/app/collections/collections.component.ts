@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Collection } from '../../../types/collection.type';
+import { CollectionApi } from '../../../types/collection.type';
 import { collectionsGenres } from '../../../types/collections_genre';
 
 @Component({
@@ -23,7 +23,7 @@ export class AppCollectionsComponent implements OnInit {
   genres: string[] = [];
 
   placeholder = 'https://via.placeholder.com/150';
-  collections: Collection[] = [
+  collections: CollectionApi[] = [
     {
       id: 'action-movies',
       title: 'Action Movies',
@@ -62,7 +62,7 @@ export class AppCollectionsComponent implements OnInit {
 
     let { description, name, genre } = this.createForm.value;
 
-    const collection: Collection = {
+    const collection: CollectionApi = {
       description: description.trim(),
       name: name.trim(),
       genre, // <-- ajouté
