@@ -8,6 +8,10 @@ export interface TvShowApi {
   popularity: number;
   poster_path: string;
   backdrop_path: string;
+  meta_critic: {
+    score: number;
+    review_count: number;
+  } | null;
 }
 
 export interface TvShowDetailsApi {

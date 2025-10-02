@@ -68,7 +68,7 @@ export const routes: Routes = [
       {
         path: 'tvshows',
         loadComponent: () =>
-          import('./features/app/tvshows/tvshows.component').then(
+          import('./features/app/tvshows/app-tvshows.component').then(
             (m) => m.AppTvShowComponent,
           ),
       },

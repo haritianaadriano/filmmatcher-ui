@@ -1,1 +1,172 @@
-<p>tvshows works with some refactor!</p>
+<div class="relative flex flex-col lg:flex-row min-h-screen bg-gray-100 p-6">
+  <app-dashboard-nav></app-dashboard-nav>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col lg:mr-6">
+    <!-- Header -->
+    <div class="bg-white rounded-lg p-8 shadow-lg mb-6 lg:ml-18">
+      <h1 class="text-2xl md:text-3xl font-anton mb-4 text-center">
+        Discover our TV Series and Shows
+      </h1>
+    </div>
+
+    <!-- Movies Section -->
+    <div class="bg-white rounded-lg shadow-lg relative lg:ml-18 flex flex-col">
+      <!-- Dropdown fixed -->
+      <div
+        class="sticky top-0 bg-white z-10 p-6 rounded-lg border-gray-200 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+      >
+        <h2 class="text-xl font-semibold">Select your TV Show category</h2>
+
+        <!-- Dropdown Angular -->
+        <div class="relative" (click)="toggleDropdown()">
+          <button
+            class="bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded inline-flex items-center"
+          >
+            {{ selectedCategory }}
+            <svg
+              class="w-4 h-4 ml-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </button>
+
+          <ul
+            *ngIf="isDropdownOpen"
+            class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg z-50"
+          >
+            <li
+              *ngFor="let category of categories"
+              (click)="selectCategory(category)"
+              class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+            >
+              {{ category }}
+            </li>
+          </ul>
+        </div>
+
+        <h2 class="text-xl font-semibold">Genres</h2>
+
+        <div class="flex items-center gap-2">
+          <button
+            class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+            (click)="goToPage(currentPage - 1)"
+            [disabled]="currentPage === 1"
+          >
+            Prev
+          </button>
+
+          <span>Page {{ currentPage }} / {{ totalPages }}</span>
+
+          <button
+            class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+            (click)="goToPage(currentPage + 1)"
+            [disabled]="currentPage === totalPages"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      <!-- Movies List with scroll -->
+      <div
+        class="flex flex-col gap-4 p-6 overflow-y-auto"
+        style="max-height: calc(100vh - 220px)"
+      >
+        <div
+          *ngIf="isLoading"
+          class="absolute inset-0 flex justify-center items-center bg-white bg-opacity-75 z-20 text-gray-500 text-lg font-medium"
+        >
+          Loading...
+        </div>
+        <div
+          *ngFor="let movie of tvshows"
+          class="bg-gray-50 p-4 rounded shadow hover:shadow-lg flex flex-col md:flex-row gap-4 cursor-pointer"
+        >
+          <!-- Poster -->
+          <div
+            class="w-24 h-36 bg-gray-200 rounded flex-shrink-0 overflow-hidden"
+          >
+            <img
+              *ngIf="movie.poster_path"
+              [src]="movie.poster_path"
+              alt="{{ movie.original_name }}"
+              class="w-full h-full object-cover"
+            />
+          </div>
+
+          <!-- Infos du film -->
+          <div class="flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-semibold text-lg">{{ movie.original_name }}</h3>
+              <p class="text-gray-600 text-sm mt-1">{{ movie.description }}</p>
+            </div>
+
+            <!-- Score + Adult Badge -->
+            <div class="mt-2 flex items-center gap-2">
+              <!-- Score -->
+              <div
+                class="px-2 py-1 rounded text-white w-max"
+                [ngClass]="{
+                  'bg-pink-400 text-red-600':
+                    (movie.meta_critic?.score ?? 0) < 5,
+                  'bg-yellow-400 text-yellow-800':
+                    (movie.meta_critic?.score ?? 0) >= 5 &&
+                    (movie.meta_critic?.score ?? 0) <= 6.8,
+                  'bg-green-400 text-green-800':
+                    (movie.meta_critic?.score ?? 0) > 6.8,
+                }"
+              >
+                Score: {{ movie.meta_critic?.score ?? "N/A" }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right / Bottom Info Cards -->
+  <div
+    class="flex flex-col lg:flex-col w-full lg:w-64 ml-0 lg:ml-6 gap-4 mt-4 lg:mt-0"
+  >
+    <!-- Card 1 -->
+    <!-- Card 1 - Professional Version -->
+    <div class="bg-white rounded-lg shadow p-4 flex flex-col justify-start">
+      <h3 class="font-semibold text-lg mb-2">
+        Pick and Save Your Favorite Movies
+      </h3>
+      <p class="text-gray-600 text-sm">
+        Select movies you’re interested in to watch later, or save your favorite
+        titles into personalized collections for easy access anytime.
+      </p>
+    </div>
+
+    <!-- Card 2 - Professional Version -->
+    <div class="bg-white rounded-lg shadow p-4 flex flex-col justify-start">
+      <h3 class="font-semibold text-lg mb-2">
+        Create Your Own Movie Collections
+      </h3>
+      <p class="text-gray-600 text-sm mb-2">
+        Build personalized movie collections by selecting your preferred genres.
+        Once created, you can easily access all movies associated with each
+        collection.
+      </p>
+      <a
+        href="/create-collection"
+        class="text-blue-500 hover:underline font-medium"
+      >
+        Go to Create Collection
+      </a>
+    </div>
+  </div>
+</div>
