@@ -1,4 +1,4 @@
-export interface Collection {
+export interface CollectionApi {
   id: string;
   name: string;
   title: string;

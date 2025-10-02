@@ -73,6 +73,8 @@ export class AppMoviesComponent implements OnInit {
     if (this.selectedGenre) {
       // grab imdbToken from previous page's list
 
+      // TODO: handle previous page with the previous page's token
+
       const imdbToken = this.movies.length > 0 ? this.movies[0].imdb_token : '';
       this.loadMoviesByGenre(
         this.selectedGenre,
