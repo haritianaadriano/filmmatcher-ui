@@ -1,0 +1,132 @@
+<app-dashboard-nav></app-dashboard-nav>
+
+<!-- Loader -->
+<div
+  *ngIf="isLoading"
+  class="flex items-center justify-center min-h-screen text-center"
+>
+  <p class="text-lg text-black">Loading...</p>
+</div>
+
+<!-- Contenu -->
+<div
+  *ngIf="!isLoading && tvshow"
+  class="relative min-h-screen text-white"
+  [ngStyle]="{
+    'background-image':
+      'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(' +
+      tvshow.backdrop_path +
+      ')',
+    'background-size': 'cover',
+    'background-position': 'center',
+  }"
+>
+  <div class="relative z-10 flex justify-center items-center min-h-screen p-6">
+    <div
+      class="bg-white/90 backdrop-blur-md text-gray-900 rounded-2xl shadow-2xl p-8 max-w-5xl w-full"
+    >
+      <!-- Infos série -->
+      <div class="flex flex-col sm:flex-row gap-6">
+        <img
+          [src]="tvshow.poster_path"
+          [alt]="tvshow.name"
+          class="w-40 h-60 object-cover rounded-lg shadow-md"
+        />
+
+        <div class="flex-1">
+          <h1 class="text-3xl font-bold">{{ tvshow.name }}</h1>
+          <h2 class="text-md text-gray-600 italic">
+            {{ tvshow.original_name }}
+          </h2>
+          <p class="mt-2 text-sm text-gray-500 italic" *ngIf="tvshow.tagline">
+            "{{ tvshow.tagline }}"
+          </p>
+
+          <div class="mt-4 text-sm space-y-2">
+            <p>
+              <span class="font-semibold">First air date:</span>
+              {{ tvshow.first_air_date | date }}
+            </p>
+            <p>
+              <span class="font-semibold">Genres:</span>
+              {{ tvshow.genres.join(", ") }}
+            </p>
+            <p>
+              <span class="font-semibold">Languages:</span>
+              {{ tvshow.languages.join(", ") }}
+            </p>
+            <p>
+              <span class="font-semibold">Meta Critic:</span>
+              {{
+                tvshow.meta_critic
+                  ? tvshow.meta_critic.score +
+                    " / 10 (" +
+                    tvshow.meta_critic.review_count +
+                    " reviews)"
+                  : "Not available"
+              }}
+            </p>
+            <p>
+              <span class="font-semibold">Total seasons:</span>
+              {{ tvshow.total_number_of_seasons }}
+            </p>
+            <p>
+              <span class="font-semibold">Total episodes:</span>
+              {{ tvshow.total_number_of_episodes }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <p class="mt-6 text-gray-700">{{ tvshow.description }}</p>
+
+      <!-- Dernier & prochain épisode -->
+      <div class="mt-8 grid sm:grid-cols-2 gap-6 shadow-md">
+        <div
+          *ngIf="tvshow.last_episode_to_air"
+          class="bg-gray-100 p-4 rounded-lg"
+        >
+          <h3 class="font-semibold text-lg">Last Episode</h3>
+          <p>{{ tvshow.last_episode_to_air.name }}</p>
+          <p class="text-sm text-gray-600">
+            {{ tvshow.last_episode_to_air.air_date | date }}
+          </p>
+        </div>
+        <div
+          *ngIf="tvshow.next_episode_to_air"
+          class="bg-gray-100 p-4 rounded-lg"
+        >
+          <h3 class="font-semibold text-lg">Next Episode</h3>
+          <p>{{ tvshow.next_episode_to_air.name }}</p>
+          <p class="text-sm text-gray-600">
+            {{ tvshow.next_episode_to_air.air_date | date }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Saisons -->
+      <div class="mt-10">
+        <h2 class="text-2xl font-bold mb-4">Seasons</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div
+            *ngFor="let season of tvshow.seasons"
+            class="bg-gray-900 text-white rounded-lg shadow-md p-4 flex flex-col"
+          >
+            <img
+              [src]="season.poster_path"
+              [alt]="season.name"
+              class="w-full h-48 object-cover rounded-lg mb-4"
+            />
+            <h3 class="text-lg font-bold">{{ season.name }}</h3>
+            <p class="text-sm text-gray-300">{{ season.air_date | date }}</p>
+            <p class="mt-2 text-sm">{{ season.description }}</p>
+            <p class="mt-2 text-xs text-gray-400">
+              Episodes: {{ season.episode_count }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

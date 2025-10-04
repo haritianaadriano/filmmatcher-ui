@@ -88,6 +88,7 @@
         </div>
         <div
           *ngFor="let movie of tvshows"
+          (click)="onSelectTvShow(movie)"
           class="bg-gray-50 p-4 rounded shadow hover:shadow-lg flex flex-col md:flex-row gap-4 cursor-pointer"
         >
           <!-- Poster -->

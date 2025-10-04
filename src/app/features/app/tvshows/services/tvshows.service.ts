@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
 import { catchError, Observable, throwError } from 'rxjs';
-import { TvShowApi } from '../../../../types/tvshow.type';
+import { TvShowApi, TvShowDetailsApi } from '../../../../types/tvshow.type';
 import { environment } from '../../../../../environments/environment';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class TvshowsService {
   private http = inject(HttpClient);
   private authService = inject(AuthService);
 
-  getTvShowsById(id: string): Observable<TvShowApi> {
+  getTvShowsById(id: string): Observable<TvShowDetailsApi> {
     const token = this.authService.getToken();
 
     if (!token) {
@@ -24,7 +24,7 @@ export class TvshowsService {
     });
 
     return this.http
-      .get<TvShowApi>(`${environment.apiURL}/tvshows/${id}`, { headers })
+      .get<TvShowDetailsApi>(`${environment.apiURL}/tvshows/${id}`, { headers })
       .pipe(
         catchError((error) => {
           console.error('Error fetching movies', error);
