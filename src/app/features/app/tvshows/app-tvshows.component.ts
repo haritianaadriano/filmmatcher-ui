@@ -37,6 +37,10 @@ export class AppTvShowComponent implements OnInit {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
+  onSelectTvShow(tvshow: TvShowApi) {
+    this.router.navigate(['/app/tvshows', tvshow.id]);
+  }
+
   selectCategory(category: string) {
     this.selectedCategory = category;
     this.currentPage = 1;

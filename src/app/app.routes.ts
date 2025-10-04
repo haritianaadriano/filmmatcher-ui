@@ -73,6 +73,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'tvshows/:id',
+        loadComponent: () =>
+          import(
+            './features/app/tvshows/detail/tvshow-detail/tvshow-detail.component'
+          ).then((m) => m.TvshowDetailComponent),
+      },
+      {
         path: 'search',
         loadComponent: () =>
           import('./features/app/search/search.component').then(
