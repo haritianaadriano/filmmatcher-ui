@@ -148,7 +148,7 @@
               <p class="text-gray-600 text-sm mt-1">{{ movie.description }}</p>
             </div>
 
-            <!-- Score + Adult Badge -->
+            <!-- Score + Adult Badge + Media Source -->
             <div class="mt-2 flex items-center gap-2">
               <!-- Score -->
               <div
@@ -173,6 +173,20 @@
                 title="May contain -18 content"
               >
                 -18
+              </div>
+
+              <!-- Media Source -->
+              <div
+                *ngIf="movie.media_source"
+                [ngClass]="{
+                  'border border-yellow-400 text-black bg-yellow-100':
+                    movie.media_source === 'IMDB',
+                  'bg-blue-900 text-gray-300': movie.media_source === 'TMDB',
+                }"
+                class="text-xs font-semibold px-2 py-1 rounded flex items-center gap-1"
+              >
+                <span class="opacity-70">Source:</span>
+                <span>{{ movie.media_source }}</span>
               </div>
             </div>
           </div>
