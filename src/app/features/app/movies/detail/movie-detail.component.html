@@ -85,6 +85,25 @@
                   : "Not available"
               }}
             </p>
+
+            <!-- Media Source -->
+            <div
+              *ngIf="movie.media_source"
+              class="flex items-center gap-2 text-xs font-semibold mt-2"
+            >
+              <span class="text-gray-600">Source:</span>
+              <span
+                [ngClass]="{
+                  'border-yellow-600 bg-yellow-100 text-black':
+                    movie.media_source === 'IMDB',
+                  'border-blue-500 bg-blue-100 text-black':
+                    movie.media_source === 'TMDB',
+                }"
+                class="border rounded px-2 py-0.5 font-bold"
+              >
+                {{ movie.media_source }}
+              </span>
+            </div>
           </div>
         </div>
       </div>
