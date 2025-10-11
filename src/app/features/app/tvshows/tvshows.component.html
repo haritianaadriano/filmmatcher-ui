@@ -87,8 +87,8 @@
           Loading...
         </div>
         <div
-          *ngFor="let movie of tvshows"
-          (click)="onSelectTvShow(movie)"
+          *ngFor="let tvshow of tvshows"
+          (click)="onSelectTvShow(tvshow)"
           class="bg-gray-50 p-4 rounded shadow hover:shadow-lg flex flex-col md:flex-row gap-4 cursor-pointer"
         >
           <!-- Poster -->
@@ -96,18 +96,18 @@
             class="w-24 h-36 bg-gray-200 rounded flex-shrink-0 overflow-hidden"
           >
             <img
-              *ngIf="movie.poster_path"
-              [src]="movie.poster_path"
-              alt="{{ movie.original_name }}"
+              *ngIf="tvshow.poster_path"
+              [src]="tvshow.poster_path"
+              alt="{{ tvshow.original_name }}"
               class="w-full h-full object-cover"
             />
           </div>
 
-          <!-- Infos du film -->
+          <!-- Infos du TV Show -->
           <div class="flex-1 flex flex-col justify-between">
             <div>
-              <h3 class="font-semibold text-lg">{{ movie.original_name }}</h3>
-              <p class="text-gray-600 text-sm mt-1">{{ movie.description }}</p>
+              <h3 class="font-semibold text-lg">{{ tvshow.original_name }}</h3>
+              <p class="text-gray-600 text-sm mt-1">{{ tvshow.description }}</p>
             </div>
 
             <!-- Score + Adult Badge -->
@@ -116,17 +116,29 @@
               <div
                 class="px-2 py-1 rounded text-white w-max"
                 [ngClass]="{
-                  'bg-pink-400 text-red-600':
-                    (movie.meta_critic?.score ?? 0) < 5,
-                  'bg-yellow-400 text-yellow-800':
-                    (movie.meta_critic?.score ?? 0) >= 5 &&
-                    (movie.meta_critic?.score ?? 0) <= 6.8,
-                  'bg-green-400 text-green-800':
-                    (movie.meta_critic?.score ?? 0) > 6.8,
+                  'bg-orange-500': (tvshow.meta_critic?.score ?? 0) < 5,
+                  'bg-yellow-400':
+                    (tvshow.meta_critic?.score ?? 0) >= 5 &&
+                    (tvshow.meta_critic?.score ?? 0) <= 6.8,
+                  'bg-green-400': (tvshow.meta_critic?.score ?? 0) > 6.8,
                 }"
               >
-                Score: {{ movie.meta_critic?.score ?? "N/A" }}
+                Score: {{ tvshow.meta_critic?.score ?? "N/A" }}
               </div>
+            </div>
+
+            <!-- Media Source -->
+            <div
+              *ngIf="tvshow.media_source"
+              [ngClass]="{
+                'border border-yellow-400 text-black bg-yellow-100':
+                  tvshow.media_source === 'IMDB',
+                'bg-blue-900 text-gray-300': tvshow.media_source === 'TMDB',
+              }"
+              class="text-xs font-semibold px-2 py-1 rounded inline-flex items-center gap-1 w-max mt-2"
+            >
+              <span class="opacity-70">Source:</span>
+              <span>{{ tvshow.media_source }}</span>
             </div>
           </div>
         </div>
