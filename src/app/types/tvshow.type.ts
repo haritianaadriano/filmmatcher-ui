@@ -13,6 +13,7 @@ export interface TvShowApi {
     score: number;
     review_count: number;
   } | null;
+  imdb_token: string;
 }
 
 export interface TvShowDetailsApi {
