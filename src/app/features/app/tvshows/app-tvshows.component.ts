@@ -19,11 +19,23 @@ export class AppTvShowComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   private router = inject(Router);
 
-  categories = ['TRENDING', 'POPULAR', 'TOP_RATED', 'UPCOMING', 'NOW_PLAYING'];
+  categories = ['TRENDING', 'POPULAR', 'TOP_RATED'];
+  genres = [
+    'Romance',
+    'Action',
+    'Comedy',
+    'Horror',
+    'Drama',
+    'Sci-Fi',
+    'Documentary',
+    'Animation',
+  ];
   selectedCategory = 'TRENDING';
+  selectedGenre = '';
   currentPage = 1;
   totalPages = 50;
   isDropdownOpen = false;
+  isGenreDropdownOpen = false;
 
   tvshows: TvShowApi[] = [];
   isLoading = false;
@@ -37,6 +49,10 @@ export class AppTvShowComponent implements OnInit {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
+  toggleGenreDropdown() {
+    this.isGenreDropdownOpen = !this.isGenreDropdownOpen;
+  }
+
   onSelectTvShow(tvshow: TvShowApi) {
     this.router.navigate(['/app/tvshows', tvshow.id]);
   }
@@ -48,10 +64,73 @@ export class AppTvShowComponent implements OnInit {
     this.loadTvShows(category, this.currentPage);
   }
 
+  selectGenre(genre: string) {
+    this.selectedGenre = genre;
+    this.currentPage = 1;
+    this.isDropdownOpen = false;
+    this.loadTvShowByGenre(genre, this.selectedCategory, this.currentPage, '');
+  }
+
   goToPage(page: number) {
     if (page < 1 || page > this.totalPages) return;
     this.currentPage = page;
-    this.loadTvShows(this.selectedCategory, this.currentPage);
+
+    if (this.selectedGenre) {
+      // grab imdbToken from previous page's list
+
+      // TODO: handle previous page with the previous page's token
+
+      const imdbToken =
+        this.tvshows.length > 0 ? this.tvshows[0].imdb_token : '';
+      this.loadTvShowByGenre(
+        this.selectedGenre,
+        this.selectedCategory,
+        this.currentPage,
+        imdbToken,
+      );
+    } else {
+      this.loadTvShows(this.selectedCategory, this.currentPage);
+    }
+  }
+
+  private loadTvShowByGenre(
+    genre: string,
+    category: string,
+    page: number,
+    imdbToken: string,
+  ) {
+    this.isLoading = true;
+    this.errorMessage = null;
+    this.tvshows = [];
+    this.cdr.detectChanges();
+
+    // Toujours refresh token avant d'appeler l'API
+    this.authService
+      .refreshToken()
+      .pipe(
+        concatMap(() =>
+          this.tvShowsService.getTvShowByGenre(
+            genre,
+            category,
+            this.currentPage,
+            imdbToken,
+          ),
+        ),
+      )
+      .subscribe({
+        next: (shows) => {
+          this.tvshows = shows;
+          this.isLoading = false;
+          this.cdr.detectChanges();
+          console.log('Tv shows loaded', shows);
+        },
+        error: (err) => {
+          console.error('Error fetching Tv shows', err);
+          this.errorMessage = err.message || 'Failed to load movies';
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        },
+      });
   }
 
   private loadTvShows(category: string, page: number) {

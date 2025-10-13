@@ -54,6 +54,44 @@
           </ul>
         </div>
 
+        <h2 class="text-xl font-semibold">Genres</h2>
+
+        <!-- Dropdown Angular -->
+        <div class="relative" (click)="toggleGenreDropdown()">
+          <button
+            class="bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded inline-flex items-center"
+          >
+            {{ selectedGenre }}
+            <svg
+              class="w-4 h-4 ml-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </button>
+
+          <ul
+            *ngIf="isGenreDropdownOpen"
+            class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg z-50"
+          >
+            <li
+              *ngFor="let genre of genres"
+              (click)="selectGenre(genre)"
+              class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+            >
+              {{ genre }}
+            </li>
+          </ul>
+        </div>
+
         <div class="flex items-center gap-2">
           <button
             class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"

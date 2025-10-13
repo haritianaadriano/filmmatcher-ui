@@ -58,4 +58,32 @@ export class TvshowsService {
         }),
       );
   }
+
+  getTvShowByGenre(
+    genre: string,
+    category: string,
+    page: number,
+    imdbToken: string,
+  ): Observable<TvShowApi[]> {
+    const token = this.authService.getToken();
+
+    if (!token) {
+      return throwError(() => new Error('User is not authenticated'));
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http
+      .get<
+        TvShowApi[]
+      >(`${environment.apiURL}/tvshows?genre=${genre}&category=${category}&page=${page}&imdb_token=${imdbToken}`, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching tv shows', error);
+          return throwError(() => error);
+        }),
+      );
+  }
 }
