@@ -148,19 +148,17 @@
               <p class="text-gray-600 text-sm mt-1">{{ movie.description }}</p>
             </div>
 
-            <!-- Score + Adult Badge -->
+            <!-- Score + Adult Badge + Media Source -->
             <div class="mt-2 flex items-center gap-2">
               <!-- Score -->
               <div
                 class="px-2 py-1 rounded text-white w-max"
                 [ngClass]="{
-                  'bg-pink-400 text-red-600':
-                    (movie.meta_critic?.score ?? 0) < 5,
-                  'bg-yellow-400 text-yellow-800':
+                  'bg-orange-500': (movie.meta_critic?.score ?? 0) < 5,
+                  'bg-yellow-400':
                     (movie.meta_critic?.score ?? 0) >= 5 &&
                     (movie.meta_critic?.score ?? 0) <= 6.8,
-                  'bg-green-400 text-green-800':
-                    (movie.meta_critic?.score ?? 0) > 6.8,
+                  'bg-green-400': (movie.meta_critic?.score ?? 0) > 6.8,
                 }"
               >
                 Score: {{ movie.meta_critic?.score ?? "N/A" }}
@@ -173,6 +171,21 @@
                 title="May contain -18 content"
               >
                 -18
+              </div>
+
+              <!-- Media Source -->
+              <div
+                *ngIf="movie.media_source"
+                [ngClass]="{
+                  'border border-yellow-600 text-black bg-yellow-100':
+                    movie.media_source === 'IMDB',
+                  'border border-blue-500 text-black bg-blue-100':
+                    movie.media_source === 'TMDB',
+                }"
+                class="text-xs font-semibold px-2 py-1 rounded flex items-center gap-1"
+              >
+                <span class="opacity-70">Source:</span>
+                <span>{{ movie.media_source }}</span>
               </div>
             </div>
           </div>

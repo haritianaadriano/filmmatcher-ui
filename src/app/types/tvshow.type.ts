@@ -1,4 +1,5 @@
 export interface TvShowApi {
+  media_source: string;
   id: string;
   original_name: string;
   genres: string[];
@@ -15,6 +16,7 @@ export interface TvShowApi {
 }
 
 export interface TvShowDetailsApi {
+  media_source: string;
   id: string;
   original_name: string;
   genres: string[];

@@ -1,5 +1,6 @@
 export interface MovieApi {
   id: string;
+  media_source: string;
   primary_title: string;
   original_title: string;
   description: string;
@@ -23,6 +24,7 @@ export interface MovieApi {
 
 export interface MovieDetailsApi {
   id: string;
+  media_source: string;
   primary_title: string;
   original_title: string;
   description: string;
