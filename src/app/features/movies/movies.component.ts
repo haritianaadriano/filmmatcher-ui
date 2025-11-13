@@ -1,9 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Navbar } from '../../../shared/navbar/navbar';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Navbar } from '../../shared/navbar/navbar';
 import { CommonModule } from '@angular/common';
-import { MoviesService } from '../service/movies.service';
-import { TitlesResponse, Title } from '../../../types/movie.type';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MoviesService } from './service/movies.service';
+import { Title, TitlesResponse } from '../../types/movie.type';
 
 @Component({
   selector: 'app-movies',
