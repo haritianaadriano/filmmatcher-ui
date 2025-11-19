@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { concatMap, Observable, tap } from 'rxjs';
 import { Authenticated } from '../../../types/authenticated.type';
 import { UserProfile } from '../../../types/user.type';
 import { environment } from '../../../../environments/environment';
+import { SKIP_AUTH } from '../../../core/http-context';
 
 @Injectable({
   providedIn: 'root',
@@ -47,11 +48,7 @@ export class AuthService {
 
   public refreshToken(): Observable<Authenticated> {
     return this.http
-      .get<Authenticated>(`${environment.apiURL}/auth/whoami`, {
-        headers: {
-          Authorization: `Bearer ${this.getToken()}`,
-        },
-      })
+      .get<Authenticated>(`${environment.apiURL}/auth/whoami`)
       .pipe(
         tap((response) => {
           this.setToken(response.token, response.email);
@@ -61,7 +58,9 @@ export class AuthService {
 
   signup(data: any): Observable<Authenticated> {
     return this.http
-      .post<UserProfile>(`${environment.apiURL}/auth/signup`, data)
+      .post<UserProfile>(`${environment.apiURL}/auth/signup`, data, {
+        context: new HttpContext().set(SKIP_AUTH, true), // <-- options
+      })
       .pipe(
         concatMap(() =>
           this.signin({ email: data.email, password: data.password }),
@@ -71,7 +70,9 @@ export class AuthService {
 
   signin(data: any): Observable<Authenticated> {
     return this.http
-      .post<Authenticated>(`${environment.apiURL}/auth/signin`, data)
+      .post<Authenticated>(`${environment.apiURL}/auth/signin`, data, {
+        context: new HttpContext().set(SKIP_AUTH, true),
+      })
       .pipe(
         tap((response) => {
           this.setToken(response.token, response.email);
