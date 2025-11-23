@@ -1,6 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { AuthService } from '../../../auth/services/auth.service';
 import { MovieApi, MovieDetailsApi } from '../../../../types/movies-api.type';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
@@ -10,21 +9,10 @@ import { environment } from '../../../../../environments/environment';
 })
 export class MoviesService {
   private http = inject(HttpClient);
-  private authService = inject(AuthService);
 
   getMovieById(id: string): Observable<MovieDetailsApi> {
-    const token = this.authService.getToken();
-
-    if (!token) {
-      return throwError(() => new Error('User is not authenticated'));
-    }
-
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
     return this.http
-      .get<MovieDetailsApi>(`${environment.apiURL}/movies/${id}`, { headers })
+      .get<MovieDetailsApi>(`${environment.apiURL}/movies/${id}`)
       .pipe(
         catchError((error) => {
           console.error('Error fetching movies', error);
@@ -39,20 +27,10 @@ export class MoviesService {
     page: number,
     imdbToken: string,
   ): Observable<MovieApi[]> {
-    const token = this.authService.getToken();
-
-    if (!token) {
-      return throwError(() => new Error('User is not authenticated'));
-    }
-
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
     return this.http
       .get<
         MovieApi[]
-      >(`${environment.apiURL}/movies?genre=${genre}&category=${category}&page=${page}&page_size=20&imdb_token=${imdbToken}`, { headers })
+      >(`${environment.apiURL}/movies?genre=${genre}&category=${category}&page=${page}&page_size=20&imdb_token=${imdbToken}`)
       .pipe(
         catchError((error) => {
           console.error('Error fetching movies', error);
@@ -62,20 +40,10 @@ export class MoviesService {
   }
 
   getMoviesByCategory(category: string, page: number): Observable<MovieApi[]> {
-    const token = this.authService.getToken();
-
-    if (!token) {
-      return throwError(() => new Error('User is not authenticated'));
-    }
-
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
     return this.http
       .get<
         MovieApi[]
-      >(`${environment.apiURL}/movies?category=${category}&page=${page}&page_size=20`, { headers })
+      >(`${environment.apiURL}/movies?category=${category}&page=${page}&page_size=20`)
       .pipe(
         catchError((error) => {
           console.error('Error fetching movies', error);

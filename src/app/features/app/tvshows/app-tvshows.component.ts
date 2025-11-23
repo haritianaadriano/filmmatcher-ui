@@ -3,7 +3,7 @@ import { TvshowsService } from './services/tvshows.service';
 import { AuthService } from '../../auth/services/auth.service';
 import { Router } from '@angular/router';
 import { TvShowApi } from '../../../types/tvshow.type';
-import { concatMap } from 'rxjs';
+import { concatMap, Observable } from 'rxjs';
 import { DashboardNav } from '../../../shared/dashboard-nav/dashboard-nav.component';
 import { CommonModule } from '@angular/common';
 
@@ -99,67 +99,39 @@ export class AppTvShowComponent implements OnInit {
     page: number,
     imdbToken: string,
   ) {
-    this.isLoading = true;
-    this.errorMessage = null;
-    this.tvshows = [];
-    this.cdr.detectChanges();
-
-    // Toujours refresh token avant d'appeler l'API
-    this.authService
-      .refreshToken()
-      .pipe(
-        concatMap(() =>
-          this.tvShowsService.getTvShowByGenre(
-            genre,
-            category,
-            this.currentPage,
-            imdbToken,
-          ),
-        ),
-      )
-      .subscribe({
-        next: (shows) => {
-          this.tvshows = shows;
-          this.isLoading = false;
-          this.cdr.detectChanges();
-          console.log('Tv shows loaded', shows);
-        },
-        error: (err) => {
-          console.error('Error fetching Tv shows', err);
-          this.errorMessage = err.message || 'Failed to load movies';
-          this.isLoading = false;
-          this.cdr.detectChanges();
-        },
-      });
+    this.loadData(() =>
+      this.tvShowsService.getTvShowByGenre(genre, category, page, imdbToken),
+    );
   }
 
   private loadTvShows(category: string, page: number) {
+    this.loadData(() =>
+      this.tvShowsService.getTvShowsByCategory(category, page),
+    );
+  }
+
+  /**
+   * Generic method to load data and handle loading / error state
+   */
+  private loadData<T>(apiCall: () => Observable<T>) {
     this.isLoading = true;
     this.errorMessage = null;
     this.tvshows = [];
     this.cdr.detectChanges();
 
-    // Toujours refresh token avant d'appeler l'API
-    this.authService
-      .refreshToken()
-      .pipe(
-        concatMap(() =>
-          this.tvShowsService.getTvShowsByCategory(category, page),
-        ),
-      )
-      .subscribe({
-        next: (tvshows) => {
-          this.tvshows = tvshows;
-          this.isLoading = false;
-          this.cdr.detectChanges();
-          console.log('TV shows loaded', tvshows);
-        },
-        error: (err) => {
-          console.error('Error fetching tv shows', err);
-          this.errorMessage = err.message || 'Failed to load tv shows';
-          this.isLoading = false;
-          this.cdr.detectChanges();
-        },
-      });
+    apiCall().subscribe({
+      next: (data: T) => {
+        this.tvshows = data as any; // cast if needed
+        this.isLoading = false;
+        this.cdr.detectChanges();
+        console.log('Data loaded', data);
+      },
+      error: (err) => {
+        console.error('Error fetching data', err);
+        this.errorMessage = err.message || 'Failed to load data';
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      },
+    });
   }
 }
