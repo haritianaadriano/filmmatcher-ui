@@ -5,11 +5,13 @@ import { Authenticated } from '../../../types/authenticated.type';
 import { UserProfile } from '../../../types/user.type';
 import { environment } from '../../../../environments/environment';
 import { SKIP_AUTH } from '../../../core/http-context';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private router = inject(Router);
   private http = inject(HttpClient);
   private TOKEN_KEY = 'auth_token';
   private USER_KEY = 'user_email';
@@ -48,7 +50,9 @@ export class AuthService {
 
   public refreshToken(): Observable<Authenticated> {
     return this.http
-      .get<Authenticated>(`${environment.apiURL}/auth/whoami`)
+      .get<Authenticated>(`${environment.apiURL}/auth/whoami`, {
+        context: new HttpContext().set(SKIP_AUTH, true),
+      })
       .pipe(
         tap((response) => {
           this.setToken(response.token, response.email);
@@ -78,5 +82,14 @@ export class AuthService {
           this.setToken(response.token, response.email);
         }),
       );
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/auth/login']);
   }
 }

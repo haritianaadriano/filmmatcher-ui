@@ -19,14 +19,8 @@ export class ProfileService {
       return throwError(() => new Error('User is not authenticated'));
     }
 
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
     return this.http
-      .get<UserProfile>(`${environment.apiURL}/users?email=${email}`, {
-        headers,
-      })
+      .get<UserProfile>(`${environment.apiURL}/users?email=${email}`)
       .pipe(
         catchError((error) => {
           console.error('Error fetching user profile', error);
