@@ -3,7 +3,7 @@ import { TvshowsService } from './services/tvshows.service';
 import { AuthService } from '../../auth/services/auth.service';
 import { Router } from '@angular/router';
 import { TvShowApi } from '../../../types/tvshow.type';
-import { concatMap, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { DashboardNav } from '../../../shared/dashboard-nav/dashboard-nav.component';
 import { CommonModule } from '@angular/common';
 
@@ -15,7 +15,6 @@ import { CommonModule } from '@angular/common';
 })
 export class AppTvShowComponent implements OnInit {
   private tvShowsService = inject(TvshowsService);
-  private authService = inject(AuthService);
   private cdr = inject(ChangeDetectorRef);
   private router = inject(Router);
 

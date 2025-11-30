@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { ReviewService } from './service/review.service';
 import { InstantCrushReview, TmdbReview } from '../../types/review.type';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-review',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './review.html',
   styleUrl: './review.css',
 })
@@ -15,7 +16,16 @@ export class ReviewComponent {
   isLoading: boolean = false;
   errorMessage: string = '';
 
+  showSidebar = false;
+
   constructor(private reviewService: ReviewService) {}
+
+  toggleSidebar() {
+    this.showSidebar = !this.showSidebar;
+    if (this.showSidebar) {
+      this.loadReviews();
+    }
+  }
 
   loadReviews(mediaId: string) {
     this.isLoading = true;
