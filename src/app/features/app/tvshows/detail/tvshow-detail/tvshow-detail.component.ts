@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { TvShowDetailsApi } from '../../../../../types/tvshow.type';
 import { TvshowsService } from '../../services/tvshows.service';
+import { ReviewComponent } from '../../../../../shared/review/review.component';
 
 @Component({
   selector: 'app-tvshow-detail',
   standalone: true,
-  imports: [DashboardNav, CommonModule],
+  imports: [DashboardNav, CommonModule, ReviewComponent],
   templateUrl: './tvshow-detail.html',
   styleUrl: './tvshow-detail.css',
 })
@@ -21,31 +22,29 @@ export class TvshowDetailComponent implements OnInit {
   isLoading = true;
   productionCountriesStr = '';
   spokenLanguagesStr = '';
+  id = '';
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (!id) return;
+    this.id = this.route.snapshot.paramMap.get('id') ?? '';
 
-    this.tvshowService.getTvShowsById(id).subscribe({
+    if (!this.id) return;
+
+    this.tvshowService.getTvShowsById(this.id).subscribe({
       next: (data) => {
         this.tvshow = data;
         this.isLoading = false;
         this.cdr.detectChanges();
+
+        this.productionCountriesStr =
+          data.production_countries?.map((c: any) => c.name).join(', ') ?? '';
+
+        this.spokenLanguagesStr =
+          data.spoken_languages?.map((l: any) => l.english_name).join(', ') ??
+          '';
       },
       error: () => {
         this.isLoading = false;
       },
     });
-
-    if (this.tvshow) {
-      this.productionCountriesStr =
-        this.tvshow.production_countries?.map((c: any) => c.name).join(', ') ??
-        '';
-
-      this.spokenLanguagesStr =
-        this.tvshow.spoken_languages
-          ?.map((l: any) => l.english_name)
-          .join(', ') ?? '';
-    }
   }
 }

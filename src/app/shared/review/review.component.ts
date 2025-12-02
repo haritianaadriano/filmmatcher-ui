@@ -5,39 +5,39 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-review',
+  standalone: true,
   imports: [CommonModule],
-  templateUrl: './review.html',
+  templateUrl: './review.component.html',
   styleUrl: './review.css',
 })
 export class ReviewComponent {
   @Input() mediaType!: 'movie' | 'show';
+  @Input() mediaId!: string;
+
   reviews: TmdbReview[] = [];
   instantReviews: InstantCrushReview[] = [];
-  isLoading: boolean = false;
-  errorMessage: string = '';
-
+  isLoading = false;
+  errorMessage = '';
   showSidebar = false;
 
   constructor(private reviewService: ReviewService) {}
 
   toggleSidebar() {
     this.showSidebar = !this.showSidebar;
+
     if (this.showSidebar) {
       this.loadReviews();
     }
   }
 
-  loadReviews(mediaId: string) {
+  private loadReviews() {
     this.isLoading = true;
     this.errorMessage = '';
 
-    let request$;
-
-    if (this.mediaType === 'movie') {
-      request$ = this.reviewService.getMovieReviews(mediaId);
-    } else {
-      request$ = this.reviewService.getTvShowReviews(mediaId);
-    }
+    const request$ =
+      this.mediaType === 'movie'
+        ? this.reviewService.getMovieReviews(this.mediaId)
+        : this.reviewService.getTvShowReviews(this.mediaId);
 
     request$.subscribe({
       next: (data) => {
@@ -51,7 +51,7 @@ export class ReviewComponent {
       },
     });
 
-    this.reviewService.getInstantCrushReviews(mediaId).subscribe({
+    this.reviewService.getInstantCrushReviews(this.mediaId).subscribe({
       next: (data) => {
         this.instantReviews = data;
       },

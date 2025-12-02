@@ -16,7 +16,9 @@ export class ReviewService {
 
   getTvShowReviews(tvShowId: string): Observable<TmdbReview[]> {
     return this.http
-      .get<TmdbReview[]>(`${environment.apiURL}/tvshows/${tvShowId}/reviews`)
+      .get<
+        TmdbReview[]
+      >(`${environment.apiURL}/tvshows/${tvShowId}/reviews?page=1`)
       .pipe(
         catchError((error) => {
           console.error('Error fetching reviews', error);
@@ -27,7 +29,9 @@ export class ReviewService {
 
   getMovieReviews(movieId: string): Observable<TmdbReview[]> {
     return this.http
-      .get<TmdbReview[]>(`${environment.apiURL}/movies/${movieId}/reviews`)
+      .get<
+        TmdbReview[]
+      >(`${environment.apiURL}/movies/${movieId}/reviews?page=1`)
       .pipe(
         catchError((error) => {
           console.error('Error fetching reviews', error);
