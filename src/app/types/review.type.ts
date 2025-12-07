@@ -7,7 +7,7 @@ export interface Author {
 
 export interface TmdbReview {
   id: string;
-  author: Author;
+  author: Author | null;
   content: string;
   url: string;
   created_at: string; // ISO date string

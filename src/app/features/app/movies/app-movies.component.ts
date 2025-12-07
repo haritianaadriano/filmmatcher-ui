@@ -108,7 +108,6 @@ export class AppMoviesComponent implements OnInit {
           this.movies = movies;
           this.isLoading = false;
           this.cdr.detectChanges();
-          console.log('Movies loaded', movies);
         },
         error: (err) => {
           console.error('Error fetching movies', err);

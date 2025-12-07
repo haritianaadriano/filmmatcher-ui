@@ -123,7 +123,6 @@ export class AppTvShowComponent implements OnInit {
         this.tvshows = data as any; // cast if needed
         this.isLoading = false;
         this.cdr.detectChanges();
-        console.log('Data loaded', data);
       },
       error: (err) => {
         console.error('Error fetching data', err);

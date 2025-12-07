@@ -4,11 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { MoviesService } from '../services/movies.service';
 import { MovieDetailsApi } from '../../../../types/movies-api.type';
 import { CommonModule } from '@angular/common';
+import { ReviewComponent } from '../../../../shared/review/review.component';
 
 @Component({
   selector: 'app-movie-detail',
   standalone: true,
-  imports: [DashboardNav, CommonModule],
+  imports: [DashboardNav, CommonModule, ReviewComponent],
   templateUrl: './movie-detail.component.html',
   styleUrls: ['./movie-detail.component.css'],
 })
@@ -21,12 +22,13 @@ export class MovieDetailComponent implements OnInit {
   isLoading = true;
   productionCountriesStr = '';
   spokenLanguagesStr = '';
+  id = '';
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (!id) return;
+    this.id = this.route.snapshot.paramMap.get('id') || '';
+    if (!this.id) return;
 
-    this.movieService.getMovieById(id).subscribe({
+    this.movieService.getMovieById(this.id).subscribe({
       next: (data) => {
         this.movie = data;
         this.isLoading = false;
