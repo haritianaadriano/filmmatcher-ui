@@ -1,0 +1,67 @@
+<!-- Floating glass button -->
+<button
+  (click)="toggleSidebar()"
+  class="p-3 rounded-full bg-black/80 text-white shadow-lg hover:scale-110 transition z-50 fixed bottom-8 right-6"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke-width="1.5"
+    stroke="currentColor"
+    class="size-6"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z"
+    />
+  </svg>
+</button>
+
+<!-- Overlay -->
+@if (showSidebar) {
+  <div
+    (click)="toggleSidebar()"
+    class="fixed inset-0 bg-black/30 backdrop-blur-sm z-40"
+  ></div>
+}
+
+<!-- Sidebar -->
+<div
+  class="fixed top-0 right-0 h-full w-80 bg-black/20 backdrop-blur-xl border border-black/30 shadow-2xl z-50 transform transition-transform duration-300 overflow-y-auto"
+  [class.translate-x-full]="!showSidebar"
+  [class.translate-x-0]="showSidebar"
+>
+  <div class="space-y-5 px-4 py-6">
+    @for (review of reviews; track review.id) {
+      <div class="flex">
+        <div
+          class="relative max-w-[85%] bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 px-4 py-3 rounded-2xl shadow-md"
+        >
+          <!-- Auteur -->
+          <p
+            class="font-semibold text-sm text-gray-700 dark:text-gray-200 mb-1"
+          >
+            {{ review.author?.name ?? "Unknown user" }}
+          </p>
+
+          <!-- Contenu -->
+          <p class="text-sm whitespace-pre-line">
+            {{ review.content }}
+          </p>
+
+          <!-- Date -->
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-right">
+            {{ review.created_at | date: "short" }}
+          </p>
+
+          <!-- Petite queue de bulle -->
+          <div
+            class="absolute -left-2 bottom-3 w-3 h-3 bg-white dark:bg-gray-800 rounded-br-xl rotate-45 shadow-sm"
+          ></div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,6 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { AuthService } from '../../../auth/services/auth.service';
 import { catchError, Observable, throwError } from 'rxjs';
 import { TvShowApi, TvShowDetailsApi } from '../../../../types/tvshow.type';
 import { environment } from '../../../../../environments/environment';

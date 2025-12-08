@@ -38,7 +38,6 @@ export class Profile implements OnInit {
         this.userProfile = profile;
         this.isLoading = false;
         this.cdr.detectChanges();
-        console.log('Profile loaded', profile);
       },
       error: (err) => {
         this.errorMessage = err.message || 'Failed to load profile';
