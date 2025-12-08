@@ -25,30 +25,26 @@ export class Profile implements OnInit {
     this.isLoading = true;
     this.errorMessage = null;
 
-    this.authService
-      .refreshToken()
-      .pipe(
-        concatMap(() => {
-          const email = this.authService.getUserEmail();
-          if (!email) {
-            throw new Error('User email not found');
-          }
-          return this.profileService.getUserProfileByEmail(email);
-        }),
-      )
-      .subscribe({
-        next: (profile) => {
-          this.userProfile = profile;
-          this.isLoading = false;
-          this.cdr.detectChanges(); // force update du DOM
-          console.log('Profile loaded', profile);
-        },
-        error: (err) => {
-          this.errorMessage = err.message || 'Failed to load profile';
-          this.isLoading = false;
-          this.cdr.detectChanges();
-          console.error('Error fetching profile', err);
-        },
-      });
+    const email = this.authService.getUserEmail();
+
+    if (!email) {
+      this.errorMessage = 'User email not found';
+      this.isLoading = false;
+      return;
+    }
+
+    this.profileService.getUserProfileByEmail(email).subscribe({
+      next: (profile) => {
+        this.userProfile = profile;
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.errorMessage = err.message || 'Failed to load profile';
+        this.isLoading = false;
+        this.cdr.detectChanges();
+        console.error('Error fetching profile', err);
+      },
+    });
   }
 }

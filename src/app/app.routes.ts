@@ -20,7 +20,7 @@ export const routes: Routes = [
   {
     path: 'movies',
     loadComponent: () =>
-      import('./features/movies/components/movies.component').then(
+      import('./features/movies/movies.component').then(
         (m) => m.MoviesComponent,
       ),
   },

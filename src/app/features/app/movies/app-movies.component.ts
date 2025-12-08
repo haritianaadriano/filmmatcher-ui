@@ -15,7 +15,6 @@ import { Router } from '@angular/router';
 })
 export class AppMoviesComponent implements OnInit {
   private moviesService = inject(MoviesService);
-  private authService = inject(AuthService);
   private cdr = inject(ChangeDetectorRef);
   private router = inject(Router);
 
@@ -102,25 +101,13 @@ export class AppMoviesComponent implements OnInit {
     this.movies = [];
     this.cdr.detectChanges();
 
-    // Toujours refresh token avant d'appeler l'API
-    this.authService
-      .refreshToken()
-      .pipe(
-        concatMap(() =>
-          this.moviesService.getMoviesByGenre(
-            genre,
-            category,
-            this.currentPage,
-            imdbToken,
-          ),
-        ),
-      )
+    this.moviesService
+      .getMoviesByGenre(genre, category, page, imdbToken)
       .subscribe({
         next: (movies) => {
           this.movies = movies;
           this.isLoading = false;
           this.cdr.detectChanges();
-          console.log('Movies loaded', movies);
         },
         error: (err) => {
           console.error('Error fetching movies', err);
@@ -137,25 +124,19 @@ export class AppMoviesComponent implements OnInit {
     this.movies = [];
     this.cdr.detectChanges();
 
-    // Toujours refresh token avant d'appeler l'API
-    this.authService
-      .refreshToken()
-      .pipe(
-        concatMap(() => this.moviesService.getMoviesByCategory(category, page)),
-      )
-      .subscribe({
-        next: (movies) => {
-          this.movies = movies;
-          this.isLoading = false;
-          this.cdr.detectChanges();
-          console.log('Movies loaded', movies);
-        },
-        error: (err) => {
-          console.error('Error fetching movies', err);
-          this.errorMessage = err.message || 'Failed to load movies';
-          this.isLoading = false;
-          this.cdr.detectChanges();
-        },
-      });
+    this.moviesService.getMoviesByCategory(category, page).subscribe({
+      next: (movies) => {
+        this.movies = movies;
+        this.isLoading = false;
+        this.cdr.detectChanges();
+        console.log('Movies loaded', movies);
+      },
+      error: (err) => {
+        console.error('Error fetching movies', err);
+        this.errorMessage = err.message || 'Failed to load movies';
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      },
+    });
   }
 }
