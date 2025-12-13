@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { ReviewService } from './service/review.service';
 import { InstantCrushReview, TmdbReview } from '../../types/review.type';
 import { CommonModule } from '@angular/common';
@@ -19,8 +19,13 @@ export class ReviewComponent {
   isLoading = false;
   errorMessage = '';
   showSidebar = false;
+  activeTab: 'instant' | 'reviews' = 'reviews';
+  isMobile = window.innerWidth < 640;
 
-  constructor(private reviewService: ReviewService) {}
+  constructor(
+    private reviewService: ReviewService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   toggleSidebar() {
     this.showSidebar = !this.showSidebar;
@@ -43,11 +48,13 @@ export class ReviewComponent {
       next: (data) => {
         this.reviews = data;
         this.isLoading = false;
+        this.cdr.detectChanges();
       },
       error: (error) => {
         this.errorMessage = 'Failed to load reviews.';
         console.error(error);
         this.isLoading = false;
+        this.cdr.detectChanges();
       },
     });
 
