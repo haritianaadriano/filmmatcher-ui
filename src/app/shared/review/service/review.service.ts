@@ -55,7 +55,7 @@ export class ReviewService {
 
   createInstantCrushReview(
     mediaId: string,
-    body: CreateReview,
+    body: CreateReview[],
   ): Observable<InstantCrushReview[]> {
     return this.http
       .put<

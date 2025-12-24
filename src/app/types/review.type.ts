@@ -36,11 +36,13 @@ export interface InstantCrushReview {
   media_type: 'REVIEW' | string;
 }
 
-export interface CreateReview {
-  id: string;
-  author: string; // id ou username de l'auteur
-  content: string;
-  created_at: string; // ISO date string
-  updated_at: string; // ISO date string
-  media_type: 'REVIEW' | string;
+export class CreateReview {
+  id: string | null = '';
+  author: string | null = ''; // id ou username de l'auteur
+  content: string = '';
+  created_at: Date | null = null; // ISO date string
+  updated_at: Date | null = null; // ISO date string
+  media_type: 'REVIEW' | string = 'REVIEW';
+
+  constructor() {}
 }

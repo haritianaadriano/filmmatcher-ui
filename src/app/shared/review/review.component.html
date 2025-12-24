@@ -101,6 +101,32 @@
         <span class="font-mistrully">Crush</span> reviews
       </h2>
 
+      <!-- Add Instant Review -->
+      <form
+        class="bg-blue-500/20 p-3 rounded-2xl border border-blue-400/20 space-y-2"
+        (ngSubmit)="submitInstantReview()"
+      >
+        <!-- Content -->
+        <textarea
+          [(ngModel)]="newInstantReview.content"
+          name="content"
+          rows="3"
+          placeholder="Write your review..."
+          required
+          class="w-full px-3 py-2 rounded-xl bg-blue-900/40 text-white placeholder-blue-300 outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+        ></textarea>
+
+        <!-- Submit -->
+        <div class="flex justify-end">
+          <button
+            type="submit"
+            class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition"
+          >
+            Post
+          </button>
+        </div>
+      </form>
+
       @for (instantReview of instantReviews; track instantReview.id) {
         <div
           class="relative bg-blue-50/90 dark:bg-blue-900/40 text-gray-800 dark:text-gray-100 px-4 py-3 rounded-2xl shadow-md"
@@ -108,7 +134,7 @@
           <p
             class="font-semibold text-sm text-blue-700 dark:text-blue-200 mb-1"
           >
-            {{ instantReview.author }}
+            {{ instantReview.author.username }}
           </p>
           <p class="text-sm whitespace-pre-line">{{ instantReview.content }}</p>
           <p class="text-xs text-gray-500 dark:text-gray-300 mt-2 text-right">
