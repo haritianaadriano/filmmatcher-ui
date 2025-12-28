@@ -5,11 +5,12 @@ import {
   CreateCollection,
 } from '../../../../types/collection.type';
 import { catchError, Observable, throwError } from 'rxjs';
+import { environment } from '../../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
-export class Service {
+export class CollectionService {
   private http = inject(HttpClient);
 
   createCollection(
@@ -17,10 +18,23 @@ export class Service {
     body: CreateCollection,
   ): Observable<Collection[]> {
     return this.http
-      .put<Collection[]>(`/users/${userId}/collections`, body)
+      .put<
+        Collection[]
+      >(`${environment.apiURL}/users/${userId}/collections`, body)
       .pipe(
         catchError((error) => {
-          console.error('Error creating review', error);
+          console.error('Error creating collections', error);
+          return throwError(() => error);
+        }),
+      );
+  }
+
+  fetchUserCollections(userId: string): Observable<Collection[]> {
+    return this.http
+      .get<Collection[]>(`${environment.apiURL}/users/${userId}/collections`)
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching collections', error);
           return throwError(() => error);
         }),
       );
