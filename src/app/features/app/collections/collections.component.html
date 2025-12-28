@@ -9,9 +9,7 @@
   >
     <div>
       <h2 class="text-2xl font-bold mb-4">Collections</h2>
-      <p class="text-gray-700">
-        Easily manage your personal movie collections.
-      </p>
+      <p class="text-gray-700">Easily manage your personal collections.</p>
     </div>
 
     <!-- Bottom section -->
@@ -19,7 +17,7 @@
       <!-- Header row -->
       <div class="flex justify-between items-center pb-2">
         <h3 class="text-lg font-semibold">
-          Your Movies <span class="font-mistrully text-2xl">Collections</span> :
+          Your <span class="font-mistrully text-2xl">Collections</span> :
         </h3>
 
         <!-- Open modal -->
@@ -45,22 +43,22 @@
         >
           <div class="grid grid-cols-3 h-32">
             <img
-              [src]="c.posters[0] || placeholder"
+              [src]="c.movies_id[0] || placeholder"
               class="object-cover w-full h-full"
             />
             <img
-              [src]="c.posters[1] || placeholder"
+              [src]="c.movies_id[1] || placeholder"
               class="object-cover w-full h-full"
             />
             <img
-              [src]="c.posters[2] || placeholder"
+              [src]="c.movies_id[2] || placeholder"
               class="object-cover w-full h-full"
             />
           </div>
           <div
             class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-center justify-center"
           >
-            <span class="text-white text-lg font-semibold">{{ c.title }}</span>
+            <span class="text-white text-lg font-semibold">{{ c.name }}</span>
           </div>
         </a>
       </div>
@@ -109,7 +107,7 @@
         <label class="block text-sm font-medium text-black">Description</label>
         <input
           type="text"
-          formControlName="id"
+          formControlName="description"
           placeholder="optional, auto-generated from title"
           class="w-full mt-1 p-2 border rounded-lg placeholder-gray-300"
         />
