@@ -37,28 +37,34 @@
         style="max-height: 60vh"
       >
         <!-- Card -->
+        <!-- Collection Card -->
         <a
           *ngFor="let c of collections"
-          class="relative rounded-xl overflow-hidden shadow-md group"
+          class="relative group rounded-xl overflow-hidden shadow-lg h-40 flex items-center justify-center bg-gradient-to-br from-neutral-900 via-neutral-800 to-black hover:scale-[1.02] transition-transform duration-300"
         >
-          <div class="grid grid-cols-3 h-32">
-            <img
-              [src]="c.movies_id[0] || placeholder"
-              class="object-cover w-full h-full"
-            />
-            <img
-              [src]="c.movies_id[1] || placeholder"
-              class="object-cover w-full h-full"
-            />
-            <img
-              [src]="c.movies_id[2] || placeholder"
-              class="object-cover w-full h-full"
-            />
-          </div>
+          <!-- Overlay -->
           <div
-            class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-center justify-center"
+            class="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition"
+          ></div>
+
+          <!-- Content -->
+          <div
+            class="relative z-10 flex flex-col items-center leading-none text-center"
           >
-            <span class="text-white text-lg font-semibold">{{ c.name }}</span>
+            <!-- Title -->
+            <span
+              class="font-anton font-semibold text-3xl sm:text-4xl text-white"
+            >
+              {{ c.name }}
+            </span>
+
+            <!-- Genre -->
+            <span
+              class="font-mistrully font-semibold text-2xl sm:text-4xl transition-colors"
+              [ngClass]="getGenreClass(c.genre!)"
+            >
+              {{ c.genre | lowercase }}
+            </span>
           </div>
         </a>
       </div>
