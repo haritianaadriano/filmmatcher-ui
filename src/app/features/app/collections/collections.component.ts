@@ -47,6 +47,28 @@ export class AppCollectionsComponent implements OnInit {
     });
   }
 
+  genreColorMap: Record<string, string> = {
+    COMEDY: 'text-yellow-400', // fun, light
+    DRAMA: 'text-purple-400', // emotional depth
+    HORROR: 'text-red-600', // fear, blood
+    THRILLER: 'text-orange-500', // tension, urgency
+    FANTASY: 'text-indigo-400', // magic, wonder
+    ACTION: 'text-blue-500', // intensity
+    ROMANCE: 'text-pink-400', // love
+    MYSTERY: 'text-slate-400', // secrecy, unknown
+    WESTERN: 'text-amber-500', // dust, desert
+    ADVENTURE: 'text-emerald-400', // exploration
+    DOCUMENTARY: 'text-teal-400', // realism
+    CRIME: 'text-neutral-300', // gritty
+    ANIMATION: 'text-orange-400', // playful
+    MUSICAL: 'text-fuchsia-400', // expressive
+    SCIENCE_FICTION: 'text-cyan-400', // technology
+  };
+
+  getGenreClass(genre: string): string {
+    return this.genreColorMap[genre] ?? 'text-neutral-300';
+  }
+
   ngOnInit(): void {
     this.genres = collectionsGenres;
 
