@@ -12,11 +12,12 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SaveMediaComponent {
-  @Input({ required: true }) mediaId!: number;
+  @Input({ required: true }) mediaId!: string;
 
-  @Output() saveRequested = new EventEmitter<number>();
+  @Output() saveRequested = new EventEmitter<string>();
 
-  onClick(): void {
+  onClick(event: MouseEvent): void {
+    event.stopPropagation();
     this.saveRequested.emit(this.mediaId);
   }
 }

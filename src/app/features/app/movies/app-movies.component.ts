@@ -3,13 +3,12 @@ import { DashboardNav } from '../../../shared/dashboard-nav/dashboard-nav.compon
 import { CommonModule } from '@angular/common';
 import { MoviesService } from './services/movies.service';
 import { MovieApi } from '../../../types/movies-api.type';
-import { AuthService } from '../../auth/services/auth.service';
-import { concatMap } from 'rxjs';
 import { Router } from '@angular/router';
+import { CollectionPickerComponent } from '../../../shared/save-media/collection-picker.component';
 
 @Component({
   selector: 'app-features-movies',
-  imports: [DashboardNav, CommonModule],
+  imports: [DashboardNav, CommonModule, CollectionPickerComponent],
   templateUrl: './movies.component.html',
   styleUrl: './movies.css',
 })

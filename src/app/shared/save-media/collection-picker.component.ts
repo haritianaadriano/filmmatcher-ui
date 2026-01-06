@@ -11,15 +11,16 @@ import { finalize, Observable } from 'rxjs';
 import { CollectionService } from '../../features/app/collections/service/collections.service';
 import { SaveMediaComponent } from './save-media.component';
 import { Collection } from '../../types/collection.type';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-collection-picker',
   templateUrl: './collection-picker.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SaveMediaComponent],
+  imports: [SaveMediaComponent, CommonModule],
 })
 export class CollectionPickerComponent implements OnInit {
-  @Input({ required: true }) mediaId!: number;
+  @Input({ required: true }) mediaId!: string;
 
   isOpen = false;
   isSaving = false;

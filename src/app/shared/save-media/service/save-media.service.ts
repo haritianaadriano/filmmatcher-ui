@@ -16,7 +16,7 @@ export class SaveMediaService {
     body: GiveSavedMedia,
   ): Observable<SavedMovie[]> {
     return this.http
-      .put<
+      .post<
         SavedMovie[]
       >(`${environment.apiURL}/users/${userId}/collections/${collectionId}/movies`, body)
       .pipe(
