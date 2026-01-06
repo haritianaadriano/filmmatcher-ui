@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SaveMedia } from './save-media';
+import { SaveMedia } from './save-media.component';
 
 describe('SaveMedia', () => {
   let component: SaveMedia;

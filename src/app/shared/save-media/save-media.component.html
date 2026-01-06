@@ -1,0 +1,19 @@
+<button
+  type="button"
+  (click)="save()"
+  class="group cursor-pointer disabled:opacity-50"
+  [disabled]="isSaving"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    class="w-6 h-6 transition-all fill-none stroke-current text-gray-400 group-hover:text-red-500"
+    stroke-width="2"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M5 5v14l7-4 7 4V5a2 2 0 00-2-2H7a2 2 0 00-2 2z"
+    />
+  </svg>
+</button>
