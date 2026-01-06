@@ -3,6 +3,7 @@ import {
   Input,
   ChangeDetectionStrategy,
   OnInit,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { ProfileService } from '../../features/profile/services/profile.service';
 import { SaveMediaService } from '../save-media/service/save-media.service';
@@ -31,6 +32,7 @@ export class CollectionPickerComponent implements OnInit {
     private profileService: ProfileService,
     private collectionService: CollectionService,
     private saveMediaService: SaveMediaService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -60,6 +62,7 @@ export class CollectionPickerComponent implements OnInit {
       .pipe(finalize(() => (this.isSaving = false)))
       .subscribe(() => {
         this.isOpen = false;
+        this.cdr.detectChanges();
       });
   }
 }
