@@ -63,6 +63,7 @@ export class ReviewComponent {
         next: (createdReviews) => {
           if (createdReviews?.length) {
             this.instantReviews.unshift(createdReviews[0]);
+            this.cdr.detectChanges();
           }
 
           // reset input
@@ -100,6 +101,7 @@ export class ReviewComponent {
     this.reviewService.getInstantCrushReviews(this.mediaId).subscribe({
       next: (data) => {
         this.instantReviews = data;
+        this.cdr.detectChanges();
       },
       error: (error) => {
         console.error('Failed to load Instant Crush reviews.', error);

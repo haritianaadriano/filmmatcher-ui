@@ -187,6 +187,9 @@
                 <span class="opacity-70">Source:</span>
                 <span>{{ movie.media_source }}</span>
               </div>
+
+              <app-collection-picker [mediaId]="movie.id">
+              </app-collection-picker>
             </div>
           </div>
         </div>

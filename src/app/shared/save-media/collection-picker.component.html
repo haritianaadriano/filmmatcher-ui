@@ -1,0 +1,37 @@
+<div class="relative inline-block">
+  <!-- bouton cœur -->
+  <app-save-media
+    [mediaId]="mediaId"
+    (saveRequested)="toggle()"
+  ></app-save-media>
+
+  <!-- dropdown -->
+  <div
+    *ngIf="isOpen"
+    class="absolute right-0 mt-2 w-48 border-neutral-700 backdrop-blur-md rounded-lg shadow-lg z-50"
+    (click)="$event.stopPropagation()"
+  >
+    <button
+      *ngFor="let collection of collections$ | async"
+      (click)="saveToCollection(collection.id!)"
+      class="w-full text-left px-4 py-2 hover:bg-neutral-500 rounded-lg transition"
+    >
+      {{ collection.name }}
+    </button>
+
+    <!-- Modal overlay -->
+    <div
+      *ngIf="isSaving"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+    >
+      <!-- Card centrale -->
+      <div
+        class="bg-white rounded-lg p-6 flex flex-col items-center gap-4 shadow-lg animate-fade-in"
+      >
+        <p class="text-gray-700 font-medium">
+          <span class="font-mistrully">Saving...</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
