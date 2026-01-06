@@ -1,0 +1,25 @@
+<div class="relative inline-block">
+  <!-- bouton cœur -->
+  <app-save-media
+    [mediaId]="mediaId"
+    (saveRequested)="toggle()"
+  ></app-save-media>
+
+  <!-- dropdown -->
+  <div
+    *ngIf="isOpen"
+    class="absolute right-0 mt-2 w-48 bg-neutral-900 border border-neutral-700 rounded-lg shadow-lg z-50"
+  >
+    <button
+      *ngFor="let collection of collections$ | async"
+      (click)="saveToCollection(collection.id)"
+      class="w-full text-left px-4 py-2 hover:bg-neutral-800 transition"
+    >
+      {{ collection.name }}
+    </button>
+
+    <div *ngIf="isSaving" class="px-4 py-2 text-sm text-gray-400">
+      Saving...
+    </div>
+  </div>
+</div>
