@@ -10,7 +10,12 @@ import { CollectionPickerComponent } from '../../../../shared/save-media/collect
 @Component({
   selector: 'app-movie-detail',
   standalone: true,
-  imports: [DashboardNav, CommonModule, ReviewComponent, CollectionPickerComponent],
+  imports: [
+    DashboardNav,
+    CommonModule,
+    ReviewComponent,
+    CollectionPickerComponent,
+  ],
   templateUrl: './movie-detail.component.html',
   styleUrls: ['./movie-detail.component.css'],
 })
