@@ -6,10 +6,11 @@ import { TvShowApi } from '../../../types/tvshow.type';
 import { Observable } from 'rxjs';
 import { DashboardNav } from '../../../shared/dashboard-nav/dashboard-nav.component';
 import { CommonModule } from '@angular/common';
+import { CollectionPickerComponent } from '../../../shared/save-media/collection-picker.component';
 
 @Component({
   selector: 'app-features-tvshows',
-  imports: [DashboardNav, CommonModule],
+  imports: [DashboardNav, CommonModule, CollectionPickerComponent],
   templateUrl: './tvshows.component.html',
   styleUrl: './tvshows.css',
 })
