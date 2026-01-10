@@ -163,20 +163,25 @@
               >
                 Score: {{ tvshow.meta_critic?.score ?? "N/A" }}
               </div>
-            </div>
+              <!-- Media Source -->
+              <div
+                *ngIf="tvshow.media_source"
+                [ngClass]="{
+                  'border border-yellow-400 text-black bg-yellow-100':
+                    tvshow.media_source === 'IMDB',
+                  'bg-blue-900 text-gray-300': tvshow.media_source === 'TMDB',
+                }"
+                class="text-xs font-semibold px-2 py-1 rounded inline-flex items-center gap-1 w-max"
+              >
+                <span class="opacity-70">Source:</span>
+                <span>{{ tvshow.media_source }}</span>
+              </div>
 
-            <!-- Media Source -->
-            <div
-              *ngIf="tvshow.media_source"
-              [ngClass]="{
-                'border border-yellow-400 text-black bg-yellow-100':
-                  tvshow.media_source === 'IMDB',
-                'bg-blue-900 text-gray-300': tvshow.media_source === 'TMDB',
-              }"
-              class="text-xs font-semibold px-2 py-1 rounded inline-flex items-center gap-1 w-max mt-2"
-            >
-              <span class="opacity-70">Source:</span>
-              <span>{{ tvshow.media_source }}</span>
+              <app-collection-picker
+                [mediaId]="tvshow.id"
+                [mediaType]="mediaType"
+              >
+              </app-collection-picker>
             </div>
           </div>
         </div>

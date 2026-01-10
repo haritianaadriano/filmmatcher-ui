@@ -22,6 +22,7 @@ import { CommonModule } from '@angular/common';
 })
 export class CollectionPickerComponent implements OnInit {
   @Input({ required: true }) mediaId!: string;
+  @Input({ required: true }) mediaType!: string;
 
   isOpen = false;
   isSaving = false;
@@ -52,13 +53,14 @@ export class CollectionPickerComponent implements OnInit {
 
     const payload: GiveSavedMedia = {
       tmdb_movie_id: String(this.mediaId),
+      tmdb_tv_show_id: String(this.mediaId),
       saved_on: new Date(),
     };
 
     this.isSaving = true;
 
     this.saveMediaService
-      .saveMedia(this.userId, collectionId, payload)
+      .saveMedia(this.userId, collectionId, payload, this.mediaType)
       .pipe(finalize(() => (this.isSaving = false)))
       .subscribe(() => {
         this.isOpen = false;

@@ -14,16 +14,17 @@ export class SaveMediaService {
     userId: string,
     collectionId: string,
     body: GiveSavedMedia,
+    mediaType: string,
   ): Observable<SavedMovie[]> {
-    return this.http
-      .post<
-        SavedMovie[]
-      >(`${environment.apiURL}/users/${userId}/collections/${collectionId}/movies`, body)
-      .pipe(
-        catchError((error) => {
-          console.error('Error when saving media', error);
-          return throwError(() => error);
-        }),
-      );
+    const url =
+      mediaType === 'movie'
+        ? `${environment.apiURL}/users/${userId}/collections/${collectionId}/movies`
+        : `${environment.apiURL}/users/${userId}/collections/${collectionId}/tvshows`;
+    return this.http.post<SavedMovie[]>(url, body).pipe(
+      catchError((error) => {
+        console.error('Error when saving media', error);
+        return throwError(() => error);
+      }),
+    );
   }
 }

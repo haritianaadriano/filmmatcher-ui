@@ -5,11 +5,17 @@ import { MoviesService } from '../services/movies.service';
 import { MovieDetailsApi } from '../../../../types/movies-api.type';
 import { CommonModule } from '@angular/common';
 import { ReviewComponent } from '../../../../shared/review/review.component';
+import { CollectionPickerComponent } from '../../../../shared/save-media/collection-picker.component';
 
 @Component({
   selector: 'app-movie-detail',
   standalone: true,
-  imports: [DashboardNav, CommonModule, ReviewComponent],
+  imports: [
+    DashboardNav,
+    CommonModule,
+    ReviewComponent,
+    CollectionPickerComponent,
+  ],
   templateUrl: './movie-detail.component.html',
   styleUrls: ['./movie-detail.component.css'],
 })
