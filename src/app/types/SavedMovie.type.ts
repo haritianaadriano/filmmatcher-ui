@@ -1,6 +1,8 @@
 export class GiveSavedMedia {
   saved_on: Date | null = null;
   tmdb_movie_id: string | null = null;
+  tmdb_tv_show_id: string | null = null;
+
 
   constructor() {}
 }
