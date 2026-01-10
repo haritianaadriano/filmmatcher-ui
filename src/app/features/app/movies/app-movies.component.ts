@@ -37,7 +37,7 @@ export class AppMoviesComponent implements OnInit {
 
   movies: MovieApi[] = [];
   isLoading = false;
-  mediaType = "movie";
+  mediaType = 'movie';
   errorMessage: string | null = null;
 
   ngOnInit(): void {

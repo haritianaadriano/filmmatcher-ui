@@ -60,7 +60,7 @@ export class CollectionPickerComponent implements OnInit {
     this.isSaving = true;
 
     this.saveMediaService
-      .saveMedia(this.userId, collectionId, payload,this.mediaType)
+      .saveMedia(this.userId, collectionId, payload, this.mediaType)
       .pipe(finalize(() => (this.isSaving = false)))
       .subscribe(() => {
         this.isOpen = false;

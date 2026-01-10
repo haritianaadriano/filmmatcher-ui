@@ -39,7 +39,7 @@ export class AppTvShowComponent implements OnInit {
 
   tvshows: TvShowApi[] = [];
   isLoading = false;
-  mediaType = "tv_show";
+  mediaType = 'tv_show';
   errorMessage: string | null = null;
 
   ngOnInit(): void {
