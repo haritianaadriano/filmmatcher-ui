@@ -5,11 +5,17 @@ import { ActivatedRoute } from '@angular/router';
 import { TvShowDetailsApi } from '../../../../../types/tvshow.type';
 import { TvshowsService } from '../../services/tvshows.service';
 import { ReviewComponent } from '../../../../../shared/review/review.component';
+import { CollectionPickerComponent } from '../../../../../shared/save-media/collection-picker.component';
 
 @Component({
   selector: 'app-tvshow-detail',
   standalone: true,
-  imports: [DashboardNav, CommonModule, ReviewComponent],
+  imports: [
+    DashboardNav,
+    CommonModule,
+    ReviewComponent,
+    CollectionPickerComponent,
+  ],
   templateUrl: './tvshow-detail.html',
   styleUrl: './tvshow-detail.css',
 })

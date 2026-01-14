@@ -1,15 +1,15 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { TvshowsService } from './services/tvshows.service';
-import { AuthService } from '../../auth/services/auth.service';
 import { Router } from '@angular/router';
 import { TvShowApi } from '../../../types/tvshow.type';
 import { Observable } from 'rxjs';
 import { DashboardNav } from '../../../shared/dashboard-nav/dashboard-nav.component';
 import { CommonModule } from '@angular/common';
+import { CollectionPickerComponent } from '../../../shared/save-media/collection-picker.component';
 
 @Component({
   selector: 'app-features-tvshows',
-  imports: [DashboardNav, CommonModule],
+  imports: [DashboardNav, CommonModule, CollectionPickerComponent],
   templateUrl: './tvshows.component.html',
   styleUrl: './tvshows.css',
 })
@@ -38,6 +38,7 @@ export class AppTvShowComponent implements OnInit {
 
   tvshows: TvShowApi[] = [];
   isLoading = false;
+  mediaType = 'tv_show';
   errorMessage: string | null = null;
 
   ngOnInit(): void {
