@@ -134,11 +134,26 @@ export class CollectionPickerComponent implements OnInit {
     this.isSaving = true;
 
     this.saveMediaService
-      .saveMedia(this.userId, collectionId, payload, this.mediaType)
-      .pipe(finalize(() => (this.isSaving = false)))
-      .subscribe(() => {
+    .saveMedia(this.userId, collectionId, payload, this.mediaType)
+    .pipe(
+      finalize(() => {
+        this.isSaving = false;
+        this.cdr.detectChanges();
+        console.log("Final state - isSaving:", this.isSaving);
+      })
+    )
+    .subscribe({
+      next: () => {
         this.isOpen = false;
         this.cdr.detectChanges();
-      });
+        // notification de succès hanaovana debug
+        alert('Saved successfully!');
+      },
+      error: (error) => {
+        console.error('Failed to save:', error);
+        // notification d'erreur hanaovana debug
+        alert('Failed to save. Please try again.');
+      }
+    });
   }
 }
