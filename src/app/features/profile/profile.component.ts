@@ -4,7 +4,6 @@ import { ProfileService } from './services/profile.service';
 import { AuthService } from '../auth/services/auth.service';
 import { UserProfile } from '../../types/user.type';
 import { CommonModule } from '@angular/common';
-import { concatMap } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -33,7 +32,7 @@ export class Profile implements OnInit {
       return;
     }
 
-    this.profileService.getUserProfileByEmail(email).subscribe({
+    this.authService.whoami().subscribe({
       next: (profile) => {
         this.userProfile = profile;
         this.isLoading = false;
