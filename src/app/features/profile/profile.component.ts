@@ -34,6 +34,7 @@ export class Profile implements OnInit {
 
     this.authService.whoami().subscribe({
       next: (profile) => {
+        this.profileService.storeConnectedUserId(profile.id);
         this.userProfile = profile;
         this.isLoading = false;
         this.cdr.detectChanges();
