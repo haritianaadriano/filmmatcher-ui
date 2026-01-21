@@ -35,7 +35,7 @@ export class ProfileService {
   }
 
   /** 🔒 PRIVATE: store connected user id */
-  private storeConnectedUserId(userId: string): void {
+  storeConnectedUserId(userId: string): void {
     localStorage.setItem(this.USER_ID_KEY, userId);
   }
 
