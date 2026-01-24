@@ -3,6 +3,7 @@ import { CollectionDetailComponent } from './collection-detail.component';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
 
 describe('CollectionDetailComponent', () => {
   let component: CollectionDetailComponent;
@@ -15,6 +16,7 @@ describe('CollectionDetailComponent', () => {
         provideZonelessChangeDetection(),
         provideHttpClient(),
         provideHttpClientTesting(),
+        provideRouter([]),
       ],
     }).compileComponents();
 
