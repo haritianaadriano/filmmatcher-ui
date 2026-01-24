@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CollectionService } from '../service/collections.service';
 import { MovieApi } from '../../../../types/movies-api.type';
 import { TvShowApi } from '../../../../types/tvshow.type';
@@ -6,8 +6,6 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProfileService } from '../../../profile/services/profile.service';
 import { DashboardNav } from '../../../../shared/dashboard-nav/dashboard-nav.component';
-import { CollectionApi } from '../../../../types/collection.type';
-import { queryObjects } from 'v8';
 
 @Component({
   selector: 'app-collection-detail',
@@ -17,6 +15,8 @@ import { queryObjects } from 'v8';
   styleUrls: ['./collection-detail.component.css'],
 })
 export class CollectionDetailComponent implements OnInit {
+  private cdr = inject(ChangeDetectorRef);
+
   private collectionService = inject(CollectionService);
   private profileService = inject(ProfileService);
 
@@ -71,6 +71,8 @@ export class CollectionDetailComponent implements OnInit {
         next: (movies) => {
           this.movies = movies;
           this.isLoadingMovies = false;
+          this.cdr.detectChanges();
+
         },
         error: (err) => {
           console.error(err);
@@ -89,6 +91,7 @@ export class CollectionDetailComponent implements OnInit {
         next: (shows) => {
           this.tvshows = shows;
           this.isLoadingShows = false;
+          this.cdr.detectChanges();
         },
         error: (err) => {
           console.error(err);
