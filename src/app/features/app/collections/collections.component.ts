@@ -7,9 +7,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { DashboardNav } from '../../../shared/dashboard-nav/dashboard-nav.component';
-import { Collection, CreateCollection } from '../../../types/collection.type';
+import { Collection, CreateCollection, CollectionApi } from '../../../types/collection.type';
 import { collectionsGenres } from '../../../types/collections_genre';
 import { ProfileService } from '../../profile/services/profile.service';
 import { CollectionService } from './service/collections.service';
@@ -39,6 +40,7 @@ export class AppCollectionsComponent implements OnInit {
     private fb: FormBuilder,
     private profileService: ProfileService,
     private collectionService: CollectionService,
+    private router: Router,
   ) {
     this.createForm = this.fb.group({
       name: ['', Validators.required],
@@ -89,6 +91,18 @@ export class AppCollectionsComponent implements OnInit {
   closeCreateModal(): void {
     this.showCreateModal = false;
     this.createForm.reset();
+  }
+
+  onSelectCollection(collection: Collection | CollectionApi): void {
+    const collectionId = collection.id;
+    this.router.navigate(['/app/collections', collectionId], {
+      queryParams: {
+        userId: this.userId,
+        name: collection.name,
+        genre: collection.genre,
+        description: collection.description
+      },
+    });
   }
 
   private loadCollections(): void {
