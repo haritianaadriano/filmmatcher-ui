@@ -72,7 +72,6 @@ export class CollectionDetailComponent implements OnInit {
           this.movies = movies;
           this.isLoadingMovies = false;
           this.cdr.detectChanges();
-
         },
         error: (err) => {
           console.error(err);
