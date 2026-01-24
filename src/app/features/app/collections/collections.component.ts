@@ -10,7 +10,11 @@ import {
 import { Router } from '@angular/router';
 
 import { DashboardNav } from '../../../shared/dashboard-nav/dashboard-nav.component';
-import { Collection, CreateCollection, CollectionApi } from '../../../types/collection.type';
+import {
+  Collection,
+  CreateCollection,
+  CollectionApi,
+} from '../../../types/collection.type';
 import { collectionsGenres } from '../../../types/collections_genre';
 import { ProfileService } from '../../profile/services/profile.service';
 import { CollectionService } from './service/collections.service';
@@ -100,7 +104,7 @@ export class AppCollectionsComponent implements OnInit {
         userId: this.userId,
         name: collection.name,
         genre: collection.genre,
-        description: collection.description
+        description: collection.description,
       },
     });
   }

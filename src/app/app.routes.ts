@@ -96,9 +96,9 @@ export const routes: Routes = [
       {
         path: 'collections/:id',
         loadComponent: () =>
-          import('./features/app/collections/detail/collection-detail.component').then(
-            (m) => m.CollectionDetailComponent,
-          ),
+          import(
+            './features/app/collections/detail/collection-detail.component'
+          ).then((m) => m.CollectionDetailComponent),
       },
     ],
   },

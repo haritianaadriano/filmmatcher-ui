@@ -16,7 +16,12 @@ describe('CollectionDetailComponent', () => {
     {
       id: '1',
       originalTitle: 'Test Movie',
-      primaryImage: { url: 'https://example.com/image.jpg', width: 100, height: 150, type: 'poster' },
+      primaryImage: {
+        url: 'https://example.com/image.jpg',
+        width: 100,
+        height: 150,
+        type: 'poster',
+      },
       plot: 'Test plot',
       rating: { aggregateRating: 8.5 },
       releaseDate: { year: 2023, month: 1, day: 1 },
@@ -59,7 +64,7 @@ describe('CollectionDetailComponent', () => {
     }).compileComponents();
 
     collectionService = TestBed.inject(
-      CollectionService
+      CollectionService,
     ) as jasmine.SpyObj<CollectionService>;
     fixture = TestBed.createComponent(CollectionDetailComponent);
     component = fixture.componentInstance;
@@ -117,12 +122,14 @@ describe('CollectionDetailComponent', () => {
     it('should handle movie loading error', () => {
       const error = new Error('Failed to load movies');
       collectionService.fetchCollectionMedias.and.returnValue(
-        throwError(() => error)
+        throwError(() => error),
       );
 
       component['loadMovies']();
 
-      expect(component.errorMessage).toContain('Failed to load collection movies');
+      expect(component.errorMessage).toContain(
+        'Failed to load collection movies',
+      );
       expect(component.isLoadingMovies).toBe(false);
     });
 
@@ -149,12 +156,14 @@ describe('CollectionDetailComponent', () => {
     it('should handle TV show loading error', () => {
       const error = new Error('Failed to load shows');
       collectionService.fetchCollectionMedias.and.returnValue(
-        throwError(() => error)
+        throwError(() => error),
       );
 
       component['loadShows']();
 
-      expect(component.errorMessage).toContain('Failed to load collection shows');
+      expect(component.errorMessage).toContain(
+        'Failed to load collection shows',
+      );
       expect(component.isLoadingShows).toBe(false);
     });
   });
@@ -176,7 +185,7 @@ describe('CollectionDetailComponent', () => {
 
     it('should display error message when present', () => {
       collectionService.fetchCollectionMedias.and.returnValue(
-        throwError(() => new Error('Test error'))
+        throwError(() => new Error('Test error')),
       );
 
       fixture.detectChanges();

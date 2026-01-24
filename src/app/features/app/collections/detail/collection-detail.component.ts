@@ -1,23 +1,22 @@
-import { Component, inject, OnInit } from "@angular/core";
-import { CollectionService } from "../service/collections.service";
-import { MovieApi } from "../../../../types/movies-api.type";
-import { TvShowApi } from "../../../../types/tvshow.type";
-import { CommonModule } from "@angular/common";
-import { ActivatedRoute } from "@angular/router";
-import { ProfileService } from "../../../profile/services/profile.service";
+import { Component, inject, OnInit } from '@angular/core';
+import { CollectionService } from '../service/collections.service';
+import { MovieApi } from '../../../../types/movies-api.type';
+import { TvShowApi } from '../../../../types/tvshow.type';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { ProfileService } from '../../../profile/services/profile.service';
 import { DashboardNav } from '../../../../shared/dashboard-nav/dashboard-nav.component';
-import { CollectionApi } from "../../../../types/collection.type";
-import { queryObjects } from "v8";
+import { CollectionApi } from '../../../../types/collection.type';
+import { queryObjects } from 'v8';
 
 @Component({
   selector: 'app-collection-detail',
   standalone: true,
   imports: [CommonModule, DashboardNav],
   templateUrl: './collection-detail.component.html',
-  styleUrls: ['./collection-detail.component.css']
+  styleUrls: ['./collection-detail.component.css'],
 })
-
-export class CollectionDetailComponent implements OnInit{
+export class CollectionDetailComponent implements OnInit {
   private collectionService = inject(CollectionService);
   private profileService = inject(ProfileService);
 
@@ -34,7 +33,6 @@ export class CollectionDetailComponent implements OnInit{
   genre: string | null = null;
   description: string | null = null;
 
-
   isLoadingMovies = false;
   isLoadingShows = false;
 
@@ -47,7 +45,7 @@ export class CollectionDetailComponent implements OnInit{
       this.errorMessage = 'User not connected';
       return;
     }
-    this.userId = id ;
+    this.userId = id;
     this.route.params.subscribe((params) => {
       this.collectionId = params['id'];
       if (this.collectionId) {
@@ -55,10 +53,10 @@ export class CollectionDetailComponent implements OnInit{
       }
     });
     this.route.queryParams.subscribe((queryObjects) => {
-        this.name = queryObjects['name'];
-        this.genre = queryObjects['genre'];
-        this.description = queryObjects['description'];
-    })
+      this.name = queryObjects['name'];
+      this.genre = queryObjects['genre'];
+      this.description = queryObjects['description'];
+    });
   }
 
   switchTab(tab: 'movies' | 'shows'): void {
@@ -67,7 +65,8 @@ export class CollectionDetailComponent implements OnInit{
 
   private loadMovies(): void {
     this.isLoadingMovies = true;
-    this.collectionService.fetchCollectionMedias(this.userId, this.collectionId, "movie")
+    this.collectionService
+      .fetchCollectionMedias(this.userId, this.collectionId, 'movie')
       .subscribe({
         next: (movies) => {
           this.movies = movies;
@@ -75,15 +74,17 @@ export class CollectionDetailComponent implements OnInit{
         },
         error: (err) => {
           console.error(err);
-          this.errorMessage = err?.message ?? 'Failed to load collection movies';
+          this.errorMessage =
+            err?.message ?? 'Failed to load collection movies';
           this.isLoadingMovies = false;
-        }
-      })
+        },
+      });
   }
 
   private loadShows(): void {
     this.isLoadingShows = true;
-    this.collectionService.fetchCollectionMedias(this.userId, this.collectionId, "show")
+    this.collectionService
+      .fetchCollectionMedias(this.userId, this.collectionId, 'show')
       .subscribe({
         next: (shows) => {
           this.tvshows = shows;
@@ -93,13 +94,12 @@ export class CollectionDetailComponent implements OnInit{
           console.error(err);
           this.errorMessage = err?.message ?? 'Failed to load collection shows';
           this.isLoadingShows = false;
-        }
-      })
+        },
+      });
   }
 
   private loadMedias(): void {
     this.loadMovies();
     this.loadShows();
   }
-
 }
