@@ -69,7 +69,7 @@ export class CollectionDetailComponent implements OnInit {
       .fetchCollectionMedias(this.userId, this.collectionId, 'movie')
       .subscribe({
         next: (movies) => {
-          this.movies = movies;
+          this.movies = movies as MovieApi[];
           this.isLoadingMovies = false;
           this.cdr.detectChanges();
         },
@@ -88,7 +88,7 @@ export class CollectionDetailComponent implements OnInit {
       .fetchCollectionMedias(this.userId, this.collectionId, 'show')
       .subscribe({
         next: (shows) => {
-          this.tvshows = shows;
+          this.tvshows = shows as TvShowApi[];
           this.isLoadingShows = false;
           this.cdr.detectChanges();
         },

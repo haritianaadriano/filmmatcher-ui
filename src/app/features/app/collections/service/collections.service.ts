@@ -40,11 +40,11 @@ export class CollectionService {
       );
   }
 
-  fetchCollectionMedias(
+  fetchCollectionMedias<T>(
     userId: string,
     collectionId: string,
     mediaType: string,
-  ): Observable<[]> {
+  ): Observable<T[]> {
     const urlPrefix = `${environment.apiURL}/users/${userId}/collections/${collectionId}`;
     const url =
       mediaType === 'movie' ? `${urlPrefix}/movies` : `${urlPrefix}/shows`;
