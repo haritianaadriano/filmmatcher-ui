@@ -15,17 +15,23 @@ describe('CollectionDetailComponent', () => {
   const mockMovies: MovieApi[] = [
     {
       id: '1',
-      originalTitle: 'Test Movie',
-      primaryImage: {
+      media_source: 'imdb',
+      primary_title: 'Test Movie',
+      original_title: 'Test Movie Original',
+      description: 'Test plot description',
+      image: {
         url: 'https://example.com/image.jpg',
-        width: 100,
-        height: 150,
         type: 'poster',
       },
-      plot: 'Test plot',
-      rating: { aggregateRating: 8.5 },
-      releaseDate: { year: 2023, month: 1, day: 1 },
-      productionYear: 2023,
+      start_year: 2023,
+      end_year: 2023,
+      release_date: '2023-01-01',
+      is_adult: false,
+      duration_seconds: 7200,
+      genres: ['Drama', 'Thriller'],
+      meta_critic: { score: 85, review_count: 150 },
+      saved_on: '2024-01-15T10:30:00Z',
+      imdb_token: 'tt1234567',
     } as MovieApi,
   ];
 
@@ -33,12 +39,12 @@ describe('CollectionDetailComponent', () => {
     {
       media_source: 'tmdb',
       id: '1',
-      original_name: 'Test Show',
+      original_name: 'Test Show Original',
       name: 'Test Show',
       genres: ['Drama', 'Thriller'],
       first_air_date: '2023-01-01',
-      description: 'Test description',
-      popularity: 8.5,
+      description: 'Test description for TV show',
+      popularity: 85.5,
       poster_path: 'https://example.com/poster.jpg',
       backdrop_path: 'https://example.com/backdrop.jpg',
       meta_critic: { score: 75, review_count: 10 },
