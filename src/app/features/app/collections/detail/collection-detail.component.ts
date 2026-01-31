@@ -63,7 +63,7 @@ export class CollectionDetailComponent implements OnInit {
     this.activeTab = tab;
   }
 
-  private loadMovies(): void {
+  private loadCollectionMovies(): void {
     this.isLoadingMovies = true;
     this.collectionService
       .fetchCollectionMedias(this.userId, this.collectionId, 'movie')
@@ -82,7 +82,7 @@ export class CollectionDetailComponent implements OnInit {
       });
   }
 
-  private loadShows(): void {
+  private loadCollectionShows(): void {
     this.isLoadingShows = true;
     this.collectionService
       .fetchCollectionMedias(this.userId, this.collectionId, 'show')
@@ -101,7 +101,7 @@ export class CollectionDetailComponent implements OnInit {
   }
 
   private loadMedias(): void {
-    this.loadMovies();
-    this.loadShows();
+    this.loadCollectionMovies();
+    this.loadCollectionShows();
   }
 }
