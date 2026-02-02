@@ -39,4 +39,21 @@ export class CollectionService {
         }),
       );
   }
+
+  fetchCollectionMedias<T>(
+    userId: string,
+    collectionId: string,
+    mediaType: string,
+  ): Observable<T[]> {
+    const urlPrefix = `${environment.apiURL}/users/${userId}/collections/${collectionId}`;
+    const url =
+      mediaType === 'movie' ? `${urlPrefix}/movies` : `${urlPrefix}/shows`;
+
+    return this.http.get<[]>(url).pipe(
+      catchError((error) => {
+        console.error('Error fetching collections medias', error);
+        return throwError(() => error);
+      }),
+    );
+  }
 }

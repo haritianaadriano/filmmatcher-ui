@@ -93,6 +93,13 @@ export const routes: Routes = [
             (m) => m.AppCollectionsComponent,
           ),
       },
+      {
+        path: 'collections/:id',
+        loadComponent: () =>
+          import(
+            './features/app/collections/detail/collection-detail.component'
+          ).then((m) => m.CollectionDetailComponent),
+      },
     ],
   },
 
