@@ -38,9 +38,10 @@
       >
         <!-- Card -->
         <!-- Collection Card -->
-        <a
+        <button
           *ngFor="let c of collections"
-          class="relative group rounded-xl overflow-hidden shadow-lg h-40 flex items-center justify-center bg-gradient-to-br from-neutral-900 via-neutral-800 to-black hover:scale-[1.02] transition-transform duration-300"
+          (click)="onSelectCollection(c)"
+          class="relative group rounded-xl overflow-hidden shadow-lg h-40 flex items-center justify-center bg-gradient-to-br from-neutral-900 via-neutral-800 to-black hover:scale-[1.02] transition-transform duration-300 border-0 cursor-pointer"
         >
           <!-- Overlay -->
           <div
@@ -66,7 +67,7 @@
               {{ c.genre | lowercase }}
             </span>
           </div>
-        </a>
+        </button>
       </div>
     </div>
   </div>
