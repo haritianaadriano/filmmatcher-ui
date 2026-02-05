@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-gradient-to-br bg-gray-100 px-4 py-8">
+<div class="min-h-screen bg-gradient-to-br bg-gray-100 px-4 py-8 ml-12">
   <app-dashboard-nav></app-dashboard-nav>
   <!-- Header section -->
   <!-- Header section -->
@@ -145,6 +145,7 @@
           <div
             *ngFor="let movie of movies"
             class="group relative bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105 h-full flex flex-col border border-gray-200"
+            (click)="onSelectMovie(movie)"
           >
             <!-- Poster Image -->
             <div class="relative overflow-hidden bg-gray-200 h-64 sm:h-80">
@@ -238,6 +239,7 @@
           <div
             *ngFor="let show of tvshows"
             class="group relative bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105 h-full flex flex-col border border-gray-200"
+            (click)="onSelectTvShow(show)"
           >
             <!-- Poster Image -->
             <div class="relative overflow-hidden bg-gray-200 h-64 sm:h-80">
