@@ -3,7 +3,7 @@ import { CollectionService } from '../service/collections.service';
 import { MovieApi } from '../../../../types/movies-api.type';
 import { TvShowApi } from '../../../../types/tvshow.type';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProfileService } from '../../../profile/services/profile.service';
 import { DashboardNav } from '../../../../shared/dashboard-nav/dashboard-nav.component';
 
@@ -16,10 +16,9 @@ import { DashboardNav } from '../../../../shared/dashboard-nav/dashboard-nav.com
 })
 export class CollectionDetailComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
-
+  private router = inject(Router);
   private collectionService = inject(CollectionService);
   private profileService = inject(ProfileService);
-
   private route = inject(ActivatedRoute);
 
   private userId!: string;
@@ -98,6 +97,14 @@ export class CollectionDetailComponent implements OnInit {
           this.isLoadingShows = false;
         },
       });
+  }
+
+  onSelectMovie(movie: MovieApi) {
+    this.router.navigate(['/app/movies', movie.id]);
+  }
+
+  onSelectTvShow(tvshow: TvShowApi) {
+    this.router.navigate(['/app/tvshows', tvshow.id]);
   }
 
   private loadMedias(): void {
