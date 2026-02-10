@@ -126,8 +126,8 @@ export class CollectionPickerComponent implements OnInit {
     if (!this.userId) return;
 
     const payload: GiveSavedMedia = {
-      tmdb_movie_id: String(this.mediaId),
-      tmdb_show_id: String(this.mediaId),
+      tmdb_movie_id: this.mediaId ? Number(this.mediaId) : null,
+      imdb_movie_id: String(this.mediaId),
       saved_on: new Date(),
     };
 
