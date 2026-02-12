@@ -59,6 +59,6 @@ export class MovieDetailComponent implements OnInit {
 
   //TODO: export and use as utils
   get formattedDuration(): string {
-    return this.movie?.duration_seconds + ' seconds';
+    return this.movie?.duration_seconds + ' minutes';
   }
 }
