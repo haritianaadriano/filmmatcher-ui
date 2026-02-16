@@ -115,28 +115,41 @@
 
         <!-- 🎬 Streaming Player -->
         <div class="mt-8">
-          <h2 class="text-xl font-bold mb-4 text-gray-800">Watch now</h2>
-
-          <div
-            class="relative w-full rounded-xl overflow-hidden shadow-2xl bg-black"
-            style="padding-top: 56.25%"
+          <!-- Bouton Watch Now -->
+          <button
+            (click)="openPlayer()"
+            class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded-lg shadow-md"
           >
-            <!-- Loader -->
-            <div
-              *ngIf="!safeStreamUrl"
-              class="absolute inset-0 flex items-center justify-center text-white"
-            >
-              Loading player...
-            </div>
+            Watch Now
+          </button>
 
-            <!-- Iframe -->
-            <iframe
-              *ngIf="safeStreamUrl"
-              [src]="safeStreamUrl"
-              class="absolute top-0 left-0 w-full h-full border-0"
-              allowfullscreen
-              loading="lazy"
-            ></iframe>
+          <!-- Modal -->
+          <div
+            *ngIf="isPlayerOpen"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
+          >
+            <div
+              class="relative w-full max-w-4xl mx-4 md:mx-0 bg-black rounded-xl overflow-hidden shadow-2xl"
+            >
+              <!-- Close button -->
+              <button
+                (click)="closePlayer()"
+                class="absolute top-2 right-2 text-white text-2xl font-bold hover:text-yellow-400"
+              >
+                &times;
+              </button>
+
+              <!-- Player -->
+              <div class="relative" style="padding-top: 56.25%">
+                <iframe
+                  *ngIf="safeStreamUrl"
+                  [src]="safeStreamUrl"
+                  class="absolute top-0 left-0 w-full h-full border-0"
+                  allowfullscreen
+                  loading="lazy"
+                ></iframe>
+              </div>
+            </div>
           </div>
         </div>
       </div>

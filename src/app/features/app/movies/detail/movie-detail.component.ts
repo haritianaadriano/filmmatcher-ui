@@ -35,6 +35,15 @@ export class MovieDetailComponent implements OnInit {
   spokenLanguagesStr = '';
   id = '';
   safeStreamUrl!: SafeResourceUrl;
+  isPlayerOpen = false;
+
+  openPlayer() {
+    this.isPlayerOpen = true;
+  }
+
+  closePlayer() {
+    this.isPlayerOpen = false;
+  }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id') || '';
