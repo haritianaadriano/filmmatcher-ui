@@ -6,6 +6,9 @@ import { MovieDetailsApi } from '../../../../types/movies-api.type';
 import { CommonModule } from '@angular/common';
 import { ReviewComponent } from '../../../../shared/review/review.component';
 import { CollectionPickerComponent } from '../../../../shared/save-media/collection-picker.component';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { environment } from '../../../../../environments/environment';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-movie-detail',
@@ -23,12 +26,15 @@ export class MovieDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private movieService = inject(MoviesService);
   private cdr = inject(ChangeDetectorRef);
+  private sanitizer = inject(DomSanitizer);
+  private authService = inject(AuthService);
 
   movie?: MovieDetailsApi; // plus besoin de `null`
   isLoading = true;
   productionCountriesStr = '';
   spokenLanguagesStr = '';
   id = '';
+  safeStreamUrl!: SafeResourceUrl;
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id') || '';
@@ -38,6 +44,7 @@ export class MovieDetailComponent implements OnInit {
       next: (data) => {
         this.movie = data;
         this.isLoading = false;
+        this.generateStreamUrl();
         this.cdr.detectChanges();
       },
       error: () => {
@@ -55,6 +62,11 @@ export class MovieDetailComponent implements OnInit {
           ?.map((l: any) => l.english_name)
           .join(', ') ?? '';
     }
+  }
+
+  generateStreamUrl() {
+    const rawUrl = `${environment.apiURL}/movies/${this.id}/stream?token=${this.authService.getToken()}`;
+    this.safeStreamUrl = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
   }
 
   //TODO: export and use as utils
