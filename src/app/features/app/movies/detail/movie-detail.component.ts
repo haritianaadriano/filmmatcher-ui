@@ -74,7 +74,7 @@ export class MovieDetailComponent implements OnInit {
   }
 
   generateStreamUrl() {
-    const rawUrl = `${environment.apiURL}/movies/${this.id}/stream?token=${this.authService.getToken()}`;
+    const rawUrl = `https://vidlink.pro/movie/${this.id}?primaryColor=63b8bc&secondaryColor=a2a2a2&iconColor=eefdec&icons=default&player=jw&title=true&poster=true&autoplay=false&nextbutton=false`;
     this.safeStreamUrl = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
   }
 
