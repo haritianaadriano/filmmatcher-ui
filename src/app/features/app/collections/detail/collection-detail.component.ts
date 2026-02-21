@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProfileService } from '../../../profile/services/profile.service';
 import { DashboardNav } from '../../../../shared/dashboard-nav/dashboard-nav.component';
+import { MediaListComponent } from '../../../../shared/media-list/media-list.component';
 
 @Component({
   selector: 'app-collection-detail',
   standalone: true,
-  imports: [CommonModule, DashboardNav],
+  imports: [CommonModule, DashboardNav, MediaListComponent],
   templateUrl: './collection-detail.component.html',
   styleUrls: ['./collection-detail.component.css'],
 })
