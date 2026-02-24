@@ -2,11 +2,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TvShowApi } from '../../types/tvshow.type';
 import { MovieApi } from '../../types/movies-api.type';
+import { MovieCard } from '../../features/app/movies/card/movie-card.component';
+import { TvShowCard } from '../../features/app/tvshows/card/tvshow-card.component';
 
 @Component({
   selector: 'app-media-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,MovieCard,TvShowCard],
   templateUrl: './media-list.html',
   styleUrls: ['./media-list.css'],
 })
@@ -39,7 +41,7 @@ export class MediaListComponent {
     this.movieSelected.emit(movie);
   }
 
-  onSelectMedia(show: TvShowApi): void {
+  onSelectShow(show: TvShowApi): void {
     this.showSelected.emit(show);
   }
 }
