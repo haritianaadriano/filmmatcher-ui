@@ -6,10 +6,12 @@ import { SearchService } from './services/search.service';
 import { AuthService } from '../../auth/services/auth.service';
 import { MovieApi } from '../../../types/movies-api.type';
 import { Router } from '@angular/router';
+import { TvShowApi } from '../../../types/tvshow.type';
+import { MediaListComponent } from '../../../shared/media-list/media-list.component';
 
 @Component({
   selector: 'app-search',
-  imports: [DashboardNav, CommonModule, FormsModule],
+  imports: [DashboardNav, CommonModule, FormsModule, MediaListComponent],
   templateUrl: './search.component.html',
   styleUrls: ['./search.css'],
 })
@@ -21,8 +23,11 @@ export class AppSearchMovieComponent implements OnInit {
 
   searchQuery = '';
   movies: MovieApi[] = [];
+  shows: TvShowApi[] = [];
   filteredMovies: MovieApi[] = [];
-  isLoading = false;
+  filteredShows: TvShowApi[] = [];
+  isLoadingMovies = false;
+  isLoadingShows = false;
 
   ngOnInit(): void {
     this.filteredMovies = [...this.movies];
@@ -32,6 +37,10 @@ export class AppSearchMovieComponent implements OnInit {
     this.router.navigate(['/app/movies', movie.id]);
   }
 
+  onSelectTvShow(tvshow: TvShowApi) {
+    this.router.navigate(['/app/tvshows', tvshow.id]);
+  }
+
   onSearchClick() {
     const query = this.searchQuery.trim();
     if (!query) {
@@ -39,12 +48,16 @@ export class AppSearchMovieComponent implements OnInit {
       return;
     }
 
-    this.isLoading = true;
-    this.searchService.searchMoviesByTitle(query).subscribe({
-      next: (movies: MovieApi[]) => {
-        this.movies = movies;
-        this.filteredMovies = [...movies];
-        this.isLoading = false;
+    this.isLoadingMovies = true;
+    this.isLoadingShows = true;
+    this.searchService.searchMediaByTitle(query).subscribe({
+      next: (media) => {
+        this.movies = media.movies;
+        this.filteredMovies = [...media.movies];
+        this.isLoadingMovies = false;
+        this.shows = media.shows;
+        this.filteredShows = [...media.shows];
+        this.isLoadingShows = false;
         this.cdr.detectChanges();
       },
       error: async (err) => {
@@ -58,13 +71,17 @@ export class AppSearchMovieComponent implements OnInit {
             console.error('Refresh token failed', refreshErr);
             this.movies = [];
             this.filteredMovies = [];
-            this.isLoading = false;
+            this.shows = [];
+            this.filteredShows = [];
+            this.isLoadingMovies = false;
+            this.isLoadingShows = false;
             this.cdr.detectChanges();
           }
         } else {
           this.movies = [];
           this.filteredMovies = [];
-          this.isLoading = false;
+          this.isLoadingMovies = false;
+          this.isLoadingShows = false;
           this.cdr.detectChanges();
         }
       },
