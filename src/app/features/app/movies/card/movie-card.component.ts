@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { NgIf, NgFor, NgClass, SlicePipe } from "@angular/common";
-import { MovieApi } from "../../../../types/movies-api.type";
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { NgIf, NgFor, NgClass, SlicePipe } from '@angular/common';
+import { MovieApi } from '../../../../types/movies-api.type';
 
 @Component({
   selector: 'app-movie-card',

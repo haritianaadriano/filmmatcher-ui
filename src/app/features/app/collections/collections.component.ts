@@ -45,7 +45,7 @@ export class AppCollectionsComponent implements OnInit {
     private profileService: ProfileService,
     private collectionService: CollectionService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {
     this.createForm = this.fb.group({
       name: ['', Validators.required],

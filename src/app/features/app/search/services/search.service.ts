@@ -7,7 +7,6 @@ import { environment } from '../../../../../environments/environment';
 import { TvShowApi } from '../../../../types/tvshow.type';
 import { forkJoin } from 'rxjs';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -51,7 +50,10 @@ export class SearchService {
       .get<
         TvShowApi[]
         // nous allons definir une categorie par defaut comme l'API ne marche pas sans mention de categorie
-      >(`${environment.apiURL}/tvshows?query=${title}&page=1&category=TRENDING`, { headers })
+      >(
+        `${environment.apiURL}/tvshows?query=${title}&page=1&category=TRENDING`,
+        { headers },
+      )
       .pipe(
         catchError((error) => {
           console.error('Error fetching shows', error);
@@ -62,8 +64,8 @@ export class SearchService {
 
   searchMediaByTitle(title: string) {
     return forkJoin({
-        movies: this.searchMoviesByTitle(title),
-        shows: this.searchTvShowsByTitle(title)
+      movies: this.searchMoviesByTitle(title),
+      shows: this.searchTvShowsByTitle(title),
     });
-}
+  }
 }
