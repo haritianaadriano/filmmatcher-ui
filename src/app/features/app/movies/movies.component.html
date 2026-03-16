@@ -113,9 +113,9 @@
         </div>
       </div>
 
-      <!-- Movies List with scroll -->
+      <!-- Movies List -->
       <div
-        class="flex flex-col gap-4 p-6 overflow-y-auto"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6 overflow-y-auto"
         style="max-height: calc(100vh - 220px)"
       >
         <div
@@ -124,75 +124,71 @@
         >
           Loading...
         </div>
+
         <div
           *ngFor="let movie of movies"
-          class="bg-gray-50 p-4 rounded shadow hover:shadow-lg flex flex-col md:flex-row gap-4 cursor-pointer"
           (click)="onSelectMovie(movie)"
+          class="group relative rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition cursor-pointer bg-black"
         >
           <!-- Poster -->
-          <div
-            class="w-24 h-36 bg-gray-200 rounded flex-shrink-0 overflow-hidden"
-          >
+          <div class="aspect-[4/5] overflow-hidden">
             <img
               *ngIf="movie.image?.url"
               [src]="movie.image.url"
-              alt="{{ movie.original_title }}"
-              class="w-full h-full object-cover"
+              alt="{{ movie.primary_title }}"
+              class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500"
             />
           </div>
 
-          <!-- Infos du film -->
-          <div class="flex-1 flex flex-col justify-between">
-            <div>
-              <h3 class="font-semibold text-lg">{{ movie.primary_title }}</h3>
-              <p class="text-gray-600 text-sm mt-1">{{ movie.description }}</p>
+          <!-- Gradient overlay -->
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90"
+          ></div>
+
+          <!-- Score badge -->
+          <div
+            class="absolute top-2 left-2 px-2 py-1 text-xs font-bold rounded text-white"
+            [ngClass]="{
+              'bg-orange-500': (movie.meta_critic?.score ?? 0) < 5,
+              'bg-yellow-400':
+                (movie.meta_critic?.score ?? 0) >= 5 &&
+                (movie.meta_critic?.score ?? 0) <= 6.8,
+              'bg-green-500': (movie.meta_critic?.score ?? 0) > 6.8,
+            }"
+          >
+            ⭐ {{ movie.meta_critic?.score ?? "N/A" }}
+          </div>
+
+          <!-- Adult badge -->
+          <div
+            *ngIf="movie.is_adult"
+            class="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded"
+          >
+            18+
+          </div>
+
+          <!-- Bottom content -->
+          <div class="absolute bottom-0 left-0 right-0 p-3 flex flex-col gap-1">
+            <!-- Title -->
+            <h3 class="text-white font-semibold text-sm line-clamp-2">
+              {{ movie.primary_title }}
+            </h3>
+
+            <div class="flex flex-wrap gap-1 mt-1">
+              <span
+                *ngFor="let genre of movie.genres"
+                class="bg-white/90 backdrop-blur text-gray-900 text-xs font-semibold px-2 py-0.5 rounded-full"
+              >
+                {{ genre }}
+              </span>
             </div>
 
-            <!-- Score + Adult Badge + Media Source -->
-            <div class="mt-2 flex items-center gap-2">
-              <!-- Score -->
-              <div
-                class="px-2 py-1 rounded text-white w-max"
-                [ngClass]="{
-                  'bg-orange-500': (movie.meta_critic?.score ?? 0) < 5,
-                  'bg-yellow-400':
-                    (movie.meta_critic?.score ?? 0) >= 5 &&
-                    (movie.meta_critic?.score ?? 0) <= 6.8,
-                  'bg-green-400': (movie.meta_critic?.score ?? 0) > 6.8,
-                }"
-              >
-                Score: {{ movie.meta_critic?.score ?? "N/A" }}
-              </div>
-
-              <!-- Adult Badge -->
-              <div
-                *ngIf="movie.is_adult"
-                class="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded"
-                title="May contain -18 content"
-              >
-                -18
-              </div>
-
-              <!-- Media Source -->
-              <div
-                *ngIf="movie.media_source"
-                [ngClass]="{
-                  'border border-yellow-600 text-black bg-yellow-100':
-                    movie.media_source === 'IMDB',
-                  'border border-blue-500 text-black bg-blue-100':
-                    movie.media_source === 'TMDB',
-                }"
-                class="text-xs font-semibold px-2 py-1 rounded flex items-center gap-1"
-              >
-                <span class="opacity-70">Source:</span>
-                <span>{{ movie.media_source }}</span>
-              </div>
-
+            <!-- Collection picker -->
+            <div class="mt-1">
               <app-collection-picker
                 [mediaId]="movie.id"
                 [mediaType]="mediaType"
-              >
-              </app-collection-picker>
+              ></app-collection-picker>
             </div>
           </div>
         </div>
