@@ -117,38 +117,69 @@
         <div class="mt-8">
           <!-- Bouton Watch Now -->
           <button
-            (click)="openPlayer()"
+            (click)="openLanguageChoice()"
             class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded-lg shadow-md"
           >
             Watch Now
           </button>
 
-          <!-- Modal -->
           <div
-            *ngIf="isPlayerOpen"
-            class="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
+            *ngIf="isLanguageModalOpen"
+            class="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50"
+          >
+            <div class="bg-white rounded-xl p-6 shadow-xl w-80 text-center">
+              <h3 class="text-lg font-semibold mb-4">Choose language</h3>
+
+              <div class="flex justify-center gap-4 mb-4">
+                <button
+                  (click)="watchVO()"
+                  class="bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition"
+                >
+                  Version Originale
+                </button>
+
+                <button
+                  (click)="watchVF()"
+                  class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition"
+                >
+                  Version Française
+                </button>
+              </div>
+
+              <button
+                (click)="closeLanguageChoice()"
+                class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg transition"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+          <!-- Modal vidéo -->
+          <div
+            *ngIf="safeStreamUrl"
+            class="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50"
+            (click)="closePlayerModal()"
           >
             <div
-              class="relative w-full max-w-4xl mx-4 md:mx-0 bg-black rounded-xl overflow-hidden shadow-2xl"
+              class="relative w-full max-w-4xl h-[80vh] md:h-[90vh] bg-black rounded-xl overflow-hidden shadow-xl"
+              (click)="$event.stopPropagation()"
             >
-              <!-- Close button -->
+              <!-- Bouton fermer -->
               <button
-                (click)="closePlayer()"
-                class="absolute top-2 right-2 text-white text-2xl font-bold hover:text-yellow-400"
+                (click)="closePlayerModal()"
+                class="absolute top-4 right-4 z-50 bg-gray-800/70 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-gray-700 transition"
               >
-                &times;
+                ✕
               </button>
 
-              <!-- Player -->
-              <div class="relative" style="padding-top: 56.25%">
-                <iframe
-                  *ngIf="safeStreamUrl"
-                  [src]="safeStreamUrl"
-                  class="absolute top-0 left-0 w-full h-full border-0"
-                  allowfullscreen
-                  loading="lazy"
-                ></iframe>
-              </div>
+              <!-- Iframe vidéo -->
+              <iframe
+                [src]="safeStreamUrl"
+                width="100%"
+                height="100%"
+                frameborder="0"
+                allowfullscreen
+              ></iframe>
             </div>
           </div>
         </div>

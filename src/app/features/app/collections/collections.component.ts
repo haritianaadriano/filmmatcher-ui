@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -45,6 +45,7 @@ export class AppCollectionsComponent implements OnInit {
     private profileService: ProfileService,
     private collectionService: CollectionService,
     private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {
     this.createForm = this.fb.group({
       name: ['', Validators.required],
@@ -116,6 +117,7 @@ export class AppCollectionsComponent implements OnInit {
       next: (collections) => {
         this.collections = collections;
         this.isLoading = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error(err);

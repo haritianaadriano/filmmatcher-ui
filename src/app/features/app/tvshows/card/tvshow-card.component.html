@@ -1,0 +1,65 @@
+<div
+  *ngIf="tvshow"
+  class="group relative bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105 h-full flex flex-col border border-gray-200 cursor-pointer"
+  tabindex="0"
+  (click)="isSelected.emit(tvshow)"
+  (keyup.enter)="isSelected.emit(tvshow)"
+>
+  <!-- Poster -->
+  <div class="relative overflow-hidden bg-gray-200 h-64 sm:h-80">
+    <img
+      [src]="tvshow.poster_path || 'assets/placeholder.png'"
+      [alt]="tvshow.name"
+      class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+    />
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-gray-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+    ></div>
+  </div>
+
+  <!-- Info -->
+  <div class="p-4 flex flex-col flex-1">
+    <h3
+      class="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-gray-700 transition-colors"
+    >
+      {{ tvshow.name }}
+    </h3>
+
+    <!-- Genres -->
+    <div class="flex flex-wrap gap-2 mb-3">
+      <span
+        *ngFor="let genre of tvshow.genres | slice: 0 : 3"
+        class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded border border-gray-300"
+      >
+        {{ genre }}
+      </span>
+    </div>
+
+    <!-- Description -->
+    <p class="text-gray-600 text-sm line-clamp-3 mb-4 flex-1">
+      {{ tvshow.description || "No description available." }}
+    </p>
+
+    <!-- Score badge -->
+    <div
+      [ngClass]="{
+        'bg-red-200 text-red-800': (tvshow.meta_critic?.score ?? 0) < 50,
+        'bg-yellow-200 text-yellow-800':
+          (tvshow.meta_critic?.score ?? 0) >= 50 &&
+          (tvshow.meta_critic?.score ?? 0) < 70,
+        'bg-green-200 text-green-800': (tvshow.meta_critic?.score ?? 0) >= 70,
+        'bg-gray-200 text-gray-800': !tvshow.meta_critic?.score,
+      }"
+      class="inline-flex items-center gap-1 px-3 py-1 text-xs font-bold rounded-full w-max"
+    >
+      <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+        <path
+          fill-rule="evenodd"
+          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      <span>{{ tvshow.meta_critic?.score ?? "N/A" }}</span>
+    </div>
+  </div>
+</div>
