@@ -115,7 +115,7 @@
 
       <!-- Movies List with scroll -->
       <div
-        class="flex flex-col gap-4 p-6 overflow-y-auto"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6 overflow-y-auto"
         style="max-height: calc(100vh - 220px)"
       >
         <div
@@ -127,61 +127,60 @@
         <div
           *ngFor="let tvshow of tvshows"
           (click)="onSelectTvShow(tvshow)"
-          class="bg-gray-50 p-4 rounded shadow hover:shadow-lg flex flex-col md:flex-row gap-4 cursor-pointer"
+          class="group relative rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition cursor-pointer bg-black"
         >
           <!-- Poster -->
-          <div
-            class="w-24 h-36 bg-gray-200 rounded flex-shrink-0 overflow-hidden"
-          >
+          <div class="aspect-[3/4] overflow-hidden">
             <img
               *ngIf="tvshow.poster_path"
               [src]="tvshow.poster_path"
               alt="{{ tvshow.original_name }}"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500"
             />
           </div>
 
-          <!-- Infos du TV Show -->
-          <div class="flex-1 flex flex-col justify-between">
-            <div>
-              <h3 class="font-semibold text-lg">{{ tvshow.original_name }}</h3>
-              <p class="text-gray-600 text-sm mt-1">{{ tvshow.description }}</p>
+          <!-- Gradient overlay -->
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90"
+          ></div>
+
+          <!-- Score -->
+          <div
+            class="absolute top-2 left-2 px-2 py-1 text-xs font-bold rounded text-white"
+            [ngClass]="{
+              'bg-orange-500': (tvshow.meta_critic?.score ?? 0) < 5,
+              'bg-yellow-400':
+                (tvshow.meta_critic?.score ?? 0) >= 5 &&
+                (tvshow.meta_critic?.score ?? 0) <= 6.8,
+              'bg-green-500': (tvshow.meta_critic?.score ?? 0) > 6.8,
+            }"
+          >
+            ⭐ {{ tvshow.meta_critic?.score ?? "N/A" }}
+          </div>
+
+          <!-- Bottom content -->
+          <div class="absolute bottom-0 left-0 right-0 p-2 flex flex-col gap-1">
+            <!-- Title -->
+            <h3 class="text-white font-semibold text-sm line-clamp-2">
+              {{ tvshow.original_name }}
+            </h3>
+
+            <!-- Genres -->
+            <div class="flex flex-wrap gap-1 mt-1">
+              <span
+                *ngFor="let genre of tvshow.genres | slice: 0 : 2"
+                class="bg-white text-gray-800 text-xs font-medium px-2 py-0.5 rounded-full border border-gray-300"
+              >
+                {{ genre }}
+              </span>
             </div>
 
-            <!-- Score + Adult Badge -->
-            <div class="mt-2 flex items-center gap-2">
-              <!-- Score -->
-              <div
-                class="px-2 py-1 rounded text-white w-max"
-                [ngClass]="{
-                  'bg-orange-500': (tvshow.meta_critic?.score ?? 0) < 5,
-                  'bg-yellow-400':
-                    (tvshow.meta_critic?.score ?? 0) >= 5 &&
-                    (tvshow.meta_critic?.score ?? 0) <= 6.8,
-                  'bg-green-400': (tvshow.meta_critic?.score ?? 0) > 6.8,
-                }"
-              >
-                Score: {{ tvshow.meta_critic?.score ?? "N/A" }}
-              </div>
-              <!-- Media Source -->
-              <div
-                *ngIf="tvshow.media_source"
-                [ngClass]="{
-                  'border border-yellow-400 text-black bg-yellow-100':
-                    tvshow.media_source === 'IMDB',
-                  'bg-blue-900 text-gray-300': tvshow.media_source === 'TMDB',
-                }"
-                class="text-xs font-semibold px-2 py-1 rounded inline-flex items-center gap-1 w-max"
-              >
-                <span class="opacity-70">Source:</span>
-                <span>{{ tvshow.media_source }}</span>
-              </div>
-
+            <!-- Collection picker -->
+            <div class="mt-1">
               <app-collection-picker
                 [mediaId]="tvshow.id"
                 [mediaType]="mediaType"
-              >
-              </app-collection-picker>
+              ></app-collection-picker>
             </div>
           </div>
         </div>

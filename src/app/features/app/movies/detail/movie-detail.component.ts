@@ -53,7 +53,6 @@ export class MovieDetailComponent implements OnInit {
       next: (data) => {
         this.movie = data;
         this.isLoading = false;
-        this.generateStreamUrl();
         this.cdr.detectChanges();
       },
       error: () => {
@@ -71,6 +70,35 @@ export class MovieDetailComponent implements OnInit {
           ?.map((l: any) => l.english_name)
           .join(', ') ?? '';
     }
+  }
+
+  isLanguageModalOpen = false;
+
+  openLanguageChoice() {
+    this.isLanguageModalOpen = true;
+  }
+
+  closeLanguageChoice() {
+    this.isLanguageModalOpen = false;
+  }
+
+  watchVO() {
+    this.closeLanguageChoice();
+    this.generateStreamUrl(); 
+  }
+
+  watchVF() {
+    this.closeLanguageChoice();
+    this.generateFrenchStreamUrl(); 
+  }
+
+  closePlayerModal() {
+    this.safeStreamUrl = this.sanitizer.bypassSecurityTrustResourceUrl('');
+  }
+
+  generateFrenchStreamUrl() {
+    const rawUrl = `https://frenchcloud.cam/movie/${this.movie?.imdb_id}`;
+    this.safeStreamUrl = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
   }
 
   generateStreamUrl() {
